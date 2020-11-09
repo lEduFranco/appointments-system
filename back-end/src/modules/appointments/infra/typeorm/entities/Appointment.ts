@@ -1,0 +1,64 @@
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+
+import User from '@modules/users/infra/typeorm/entities/User';
+
+export type UserPeriodType =
+  | 'integral'
+  | 'part_time_morning'
+  | 'part_time_afternoon';
+export type UserFrequencyType =
+  | 'first_contact'
+  | 'weekly'
+  | 'biweekly'
+  | 'monthly';
+
+@Entity('appointments')
+class Appointment {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column()
+  provider_id: string;
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'provider_id' })
+  provider: User;
+
+  @Column()
+  user_id: string;
+
+  @Column({
+    type: 'enum',
+    enum: ['integral', 'part_time_morning', 'part_time_afternoon'],
+  })
+  period: UserPeriodType;
+
+  @Column({
+    type: 'enum',
+    enum: ['first_contact', 'weekly', 'biweekly', 'monthly'],
+  })
+  frequency: UserFrequencyType;
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
+
+  @Column('timestamp with time zone')
+  date: Date;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
+}
+
+export default Appointment;
