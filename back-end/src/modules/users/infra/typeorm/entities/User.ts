@@ -4,11 +4,14 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 import uploadConfig from '@config/upload';
 
 import { Exclude, Expose } from 'class-transformer';
+
+import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 
 export type UserRoleType = 'admin' | 'rh' | 'secretary' | 'provider' | 'client';
 
@@ -35,6 +38,9 @@ class User {
 
   @Column()
   avatar: string;
+
+  @OneToMany(() => Appointment, appointment => appointment.provider)
+  appointments: Appointment[];
 
   @CreateDateColumn()
   created_at: Date;

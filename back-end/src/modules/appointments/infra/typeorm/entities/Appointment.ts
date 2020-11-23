@@ -32,9 +32,6 @@ class Appointment {
   @JoinColumn({ name: 'provider_id' })
   provider: User;
 
-  @Column()
-  user_id: string;
-
   @Column({
     type: 'enum',
     enum: ['integral', 'part_time_morning', 'part_time_afternoon'],
@@ -47,11 +44,14 @@ class Appointment {
   })
   frequency: UserFrequencyType;
 
+  @Column()
+  user_id: string;
+
   @ManyToOne(() => User)
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @Column('timestamp with time zone')
+  @Column()
   date: Date;
 
   @CreateDateColumn()

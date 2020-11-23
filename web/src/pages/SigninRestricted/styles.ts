@@ -69,8 +69,15 @@ export const AnimationContainer = styled.div`
 `;
 
 export const Back = styled.div`
-   padding-top: 50px;
-   padding-left: 850px;
+  width: 100%;
+
+    padding-top: 50px;
+    padding-right: 40px;
+
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: flex-end;
 
    a {
     color: #b28d9f;

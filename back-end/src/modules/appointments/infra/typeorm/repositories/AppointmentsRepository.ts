@@ -1,4 +1,4 @@
-import { getRepository, Repository, Raw, Between } from 'typeorm';
+import { getRepository, Repository, Raw, Between, In, Equal } from 'typeorm';
 
 import { startOfWeek, addDays } from 'date-fns';
 
@@ -29,13 +29,27 @@ class AppointmentsRepository implements IAppointmentsRepository {
     date: Date,
     provider_id: string,
     period: 'integral' | 'part_time_morning' | 'part_time_afternoon',
+    dates: Array<string>,
   ): Promise<Appointment | undefined> {
-    let whereAppointment: IObject = { date, provider_id };
+    let whereAppointment = [
+      {
+        provider_id,
+        date: In(dates),
+      },
+    ];
 
     if (period === 'part_time_morning' || period === 'part_time_afternoon') {
       whereAppointment = [
-        { ...whereAppointment, period },
-        { ...whereAppointment, period: 'integral' },
+        {
+          provider_id,
+          period: Equal(period),
+          date: In(dates),
+        },
+        {
+          provider_id,
+          period: Equal('integral'),
+          date: In(dates),
+        },
       ];
     }
 
@@ -129,6 +143,22 @@ class AppointmentsRepository implements IAppointmentsRepository {
     await this.ormRepository.save(appointment);
 
     return appointment;
+  }
+
+  public async createMany(
+    data: Array<ICreateAppointmentDTO>,
+  ): Promise<boolean> {
+    data.forEach(async ({ provider_id, period, frequency, user_id, date }) => {
+      await this.create({
+        provider_id,
+        period,
+        frequency,
+        user_id,
+        date,
+      });
+    });
+
+    return true;
   }
 }
 

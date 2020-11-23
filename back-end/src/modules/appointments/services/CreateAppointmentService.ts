@@ -1,11 +1,8 @@
-import { startOfHour, isBefore, getHours, format } from 'date-fns';
+import { isBefore, format, addYears, eachDayOfInterval } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 
-import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
-import Appointment from '../infra/typeorm/entities/Appointment';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 
 interface IRequest {
@@ -13,7 +10,13 @@ interface IRequest {
   period: 'integral' | 'part_time_morning' | 'part_time_afternoon';
   frequency: 'first_contact' | 'weekly' | 'biweekly' | 'monthly';
   user_id: string;
-  date: Date;
+  day: number;
+  month: number;
+  year: number;
+}
+
+interface IResponse {
+  message: string;
 }
 
 @injectable()
@@ -21,24 +24,20 @@ class CreateAppointmentService {
   constructor(
     @inject('AppointmentsRepository')
     private appointmentsRepository: IAppointmentsRepository,
-
-    @inject('NotificationsRepository')
-    private notificationsRepository: INotificationsRepository,
-
-    @inject('CacheProvider')
-    private cacheProvider: ICacheProvider,
   ) {}
 
   public async execute({
     provider_id,
     period,
     frequency,
-    date,
+    day,
+    month,
+    year,
     user_id,
-  }: IRequest): Promise<Appointment> {
-    const appointmentDate = startOfHour(date);
+  }: IRequest): Promise<IResponse> {
+    const date = new Date(year, month, day);
 
-    if (isBefore(appointmentDate, Date.now())) {
+    if (isBefore(date, Date.now())) {
       throw new AppError("You can't create an appointment on a past date.");
     }
 
@@ -46,42 +45,64 @@ class CreateAppointmentService {
       throw new AppError("You can't create an appointment with yourself.");
     }
 
-    // Se for integral, se retornar qualquer data, já não pode cadastrar.
-    // Se for meio periodo, verificar se não tem um integral ou no mesmo periodo que quer ser cadastrado.
+    let dates = [];
+
+    if (frequency === 'first_contact' || frequency === 'monthly') {
+      dates.push(date);
+    }
+
+    if (frequency === 'weekly') {
+      dates = eachDayOfInterval(
+        {
+          start: date,
+          end: addYears(date, 1),
+        },
+        {
+          step: 7,
+        },
+      );
+    }
+
+    if (frequency === 'biweekly') {
+      dates = eachDayOfInterval(
+        {
+          start: date,
+          end: addYears(date, 1),
+        },
+        {
+          step: 14,
+        },
+      );
+    }
+
+    const datesFormatted = dates.map(dateToFormat =>
+      format(dateToFormat, 'yyyy-MM-dd'),
+    );
 
     const findAppointmentInSamePeriod = await this.appointmentsRepository.findByDate(
-      appointmentDate,
-      period,
+      date,
       provider_id,
+      period,
+      datesFormatted,
     );
 
     if (findAppointmentInSamePeriod) {
       throw new AppError('This appointment is already booked');
     }
 
-    const appointment = await this.appointmentsRepository.create({
+    const datesToCreate = dates.map(dateToCreate => ({
+      date: dateToCreate,
       provider_id,
       period,
       frequency,
       user_id,
-      date: appointmentDate,
-    });
+    }));
 
-    const dateFormatted = format(appointmentDate, "dd/MM/yyyy 'às' HH:mm'h'");
+    await this.appointmentsRepository.createMany(datesToCreate);
 
-    await this.notificationsRepository.create({
-      recipient_id: provider_id,
-      content: `Novo agendamento para dia ${dateFormatted}`,
-    });
-
-    await this.cacheProvider.invalidate(
-      `provider-appointments: ${provider_id}:${format(
-        appointmentDate,
-        'yyyy-M-d',
-      )}`,
-    );
-
-    return appointment;
+    return {
+      message: 'Your appointment has been booked',
+    };
   }
 }
 

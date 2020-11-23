@@ -6,11 +6,13 @@ import IFindAllInDayFromProvidersDTO from '../dtos/IFindAllInDayFromProvidersDTO
 
 export default interface IAppointmentsRepository {
   create(data: ICreateAppointmentDTO): Promise<Appointment>;
+  createMany(data: Array<ICreateAppointmentDTO>): Promise<boolean>;
 
   findByDate(
     date: Date,
-    period: 'integral' | 'part_time_morning' | 'part_time_afternoon',
     provider_id: string,
+    period: 'integral' | 'part_time_morning' | 'part_time_afternoon',
+    dates: Array<string>,
   ): Promise<Appointment | undefined>;
 
   findAllInMonthFromProvider(
