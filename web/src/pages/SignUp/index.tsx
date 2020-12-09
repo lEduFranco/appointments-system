@@ -15,11 +15,13 @@ import logoImg from '../../assets/Logo 15@2x.png';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+// import Select from '../../components/Select';
 
 import { Container, Content, AnimationContainer, Background } from './styles';
 
 interface SignUpFormData {
   name: string;
+  role: 'admin' | 'rh' | 'secretary' | 'provider' | 'client';
   email: string;
 }
 
@@ -28,6 +30,8 @@ const SignUp: React.FC = () => {
   const { addToast } = useToast();
   const history = useHistory();
 
+  // const [role, setRole] = useState('');
+
   const handleSubmit = useCallback(
     async (data: SignUpFormData) => {
       try {
@@ -35,6 +39,7 @@ const SignUp: React.FC = () => {
 
         const schema = Yup.object().shape({
           name: Yup.string().required('campo obrigató não preenchido'),
+
           email: Yup.string()
             .required('campo obrigató não preenchido')
             .email('Digite um e-mail válido'),
@@ -47,7 +52,7 @@ const SignUp: React.FC = () => {
 
         await api.post('/users', data);
 
-        history.push('/');
+        history.push('/create-appointments');
 
         addToast({
           type: 'success',
@@ -84,6 +89,23 @@ const SignUp: React.FC = () => {
             <h1>Cadastro</h1>
 
             <Input name="name" icon={FiUser} placeholder="Nome" />
+            <Input name="role" icon={FiUser} placeholder="perfil" />
+
+            {/* <Select
+              name="role"
+              label=""
+              value={role}
+              onChange={(e) => {
+                setRole(e.target.value);
+              }}
+              options={[
+                { value: 'admin', label: 'Administrador' },
+                { value: 'provider', label: 'Diarista' },
+                { value: 'rh', label: 'RH' },
+                { value: 'secretary', label: 'Secretária' },
+                { value: 'client', label: 'Cliente' },
+              ]}
+            /> */}
             <Input name="email" icon={FiMail} placeholder="E-mail" />
 
             <Input

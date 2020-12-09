@@ -4,19 +4,11 @@ import ptBR from 'date-fns/locale/pt-BR';
 import DayPicker, { DayModifiers } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
-import {
-  FiPower,
-  FiClock,
-  // FiArrowLeft,
-  FiTrash2,
-  FiEdit2,
-} from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { FiClock, FiTrash2, FiEdit2 } from 'react-icons/fi';
+
+import HeaderComponent from '../../components/Header';
 import {
   Container,
-  Header,
-  HeaderContent,
-  Profile,
   Content,
   Schedule,
   NextAppointments,
@@ -25,7 +17,6 @@ import {
   Calendar,
 } from './styles';
 
-import logoImg from '../../assets/logo_top.svg';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
 
@@ -45,7 +36,7 @@ interface Appointment {
 }
 
 const Dashboard: React.FC = () => {
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -142,25 +133,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <Container>
-      <Header>
-        <HeaderContent>
-          <img src={logoImg} alt="ToMaisVip" />
-
-          <Profile>
-            <img src={user.avatar_url} alt={user.name} />
-            <div>
-              <span>Bem-vindo,</span>
-              <Link to="/profile">
-                <strong>{user.name}</strong>
-              </Link>
-            </div>
-          </Profile>
-
-          <button type="button" onClick={signOut}>
-            <FiPower />
-          </button>
-        </HeaderContent>
-      </Header>
+      <HeaderComponent />
 
       <Content>
         <Schedule>

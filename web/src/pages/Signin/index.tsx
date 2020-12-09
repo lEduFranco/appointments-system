@@ -19,7 +19,6 @@ import {
   Content,
   AnimationContainer,
   RestrictedAccess,
-  // signInBackgroundImg,
 } from './styles';
 
 interface SignInFormData {
@@ -106,7 +105,6 @@ const SignIn: React.FC = () => {
           Acesso restrito
         </Link>
       </RestrictedAccess>
-      {/* <Background /> */}
     </Container>
   );
 };

@@ -9,6 +9,7 @@ import SignUp from '../pages/SignUp';
 import ForgotPassword from '../pages/ForgotPassword';
 import ResetPassword from '../pages/ResetPassword';
 
+import CreateAppointment from '../pages/CreateAppointment';
 import Profile from '../pages/Profile';
 import Dashboard from '../pages/Dashboard';
 import ListAppointments from '../pages/ListAppointments';
@@ -26,6 +27,11 @@ const Routes: React.FC = () => (
       path="/signup"
       component={SignUp}
       roles={['admin', 'secretary', 'rh']}
+    />
+    <PrivateRoute
+      path="/create-appointments"
+      component={CreateAppointment}
+      roles={['admin', 'secretary']}
     />
     <PrivateRoute
       path="/profile"

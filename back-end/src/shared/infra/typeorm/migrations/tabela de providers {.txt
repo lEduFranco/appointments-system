@@ -1,0 +1,41 @@
+tabela Addresses {
+  City,
+  UF,
+  CEP,
+  Bairro,
+  Numero,
+  End,
+  user_id,
+}
+
+
+tabela  UserProfiles {
+  name,
+  RG,
+  CPF/CNPJ,
+  Tel,
+  Cel, 
+  E-mail,
+  user_id,
+}
+
+tabela de providers {
+  data admissão,
+  data de demissão,
+  motivo da demissão,
+  tamanho Unif,
+  Titulo de eleitor,
+  Zona do titulo,
+  seção dod titulo,
+  senha MEI,
+  user_id,
+}
+
+tabela de clients {
+  Profissão,
+  Pontos de referência,
+  Nome do Condomínio,
+  Estação de metrô mais próxima,
+  Em caso de ser empresa, responsável,
+  user_id,
+}

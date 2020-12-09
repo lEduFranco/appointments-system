@@ -38,10 +38,10 @@ class Appointment {
   })
   period: UserPeriodType;
 
-  @Column({
+  @(Column()({
     type: 'enum',
     enum: ['first_contact', 'weekly', 'biweekly', 'monthly'],
-  })
+  }))
   frequency: UserFrequencyType;
 
   @Column()

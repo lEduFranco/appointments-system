@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
-// import signInBackgroundImg from '../../assets/logo_top.svg';
+// import signInBackgroundImg from '../../assets/logo_10_anos-01.png';
 
 export const Container = styled.div`
   height: 100vh;
@@ -61,8 +61,7 @@ export const AnimationContainer = styled.div`
       transition: color 0.2s;
 
       &:hover {
-        /* color: ${shade(0.2, '#3f1227')}; */
-        color: #b28d9f
+        color: #b28d9f;
       }
     }
   }
@@ -70,6 +69,10 @@ export const AnimationContainer = styled.div`
 
 export const Back = styled.div`
   width: 100%;
+
+  /* background: url($) no-repeat center;
+  background-size: contain;
+  margin-bottom: -147px; */
 
     padding-top: 50px;
     padding-right: 40px;

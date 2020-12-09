@@ -1,14 +1,16 @@
-import { getRepository, Repository, Raw, Between, In, Equal } from 'typeorm';
-
-import { startOfWeek, addDays } from 'date-fns';
+import { getRepository, Repository, Raw, In, Equal } from 'typeorm';
 
 import groupBy from 'lodash/groupBy';
+import map from 'lodash/map';
+import keyBy from 'lodash/keyBy';
 
-import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
+import IAppointmentsRepository, {
+  IAppointmentsProvider,
+} from '@modules/appointments/repositories/IAppointmentsRepository';
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
 import IFindAllInMonthFromProviderDTO from '@modules/appointments/dtos/IFindAllInMonthFromProviderDTO';
 import IFindAllInDayFromProvidersDTO from '@modules/appointments/dtos/IFindAllInDayFromProvidersDTO';
-import IFindAllInWeekFromProvidersDTO from '@modules/appointments/dtos/IFindAllInWeekFromProvidersDTO';
+import IFindAllAppointmentsFromProvidersByDateDTO from '@modules/appointments/dtos/IFindAllAppointmentsFromProvidersByDateDTO';
 
 import Appointment from '../entities/Appointment';
 
@@ -100,29 +102,32 @@ class AppointmentsRepository implements IAppointmentsRepository {
     return appointments;
   }
 
-  public async findAllInWeekFromProviders({
+  public async findAllAppointmentsFromProvidersByDate({
     day,
     month,
     year,
-  }: IFindAllInWeekFromProvidersDTO): Promise<Appointment[]> {
+  }: IFindAllAppointmentsFromProvidersByDateDTO): Promise<
+    IAppointmentsProvider[]
+  > {
     const parsedMonth = month - 1;
-
-    const startWeek = startOfWeek(new Date(year, parsedMonth, day), {
-      weekStartsOn: 1,
-    });
-
-    const BetweenDates = (date: Date) => Between(date, addDays(date, 4));
 
     const appointments = await this.ormRepository.find({
       where: {
-        date: BetweenDates(startWeek),
+        date: new Date(year, parsedMonth, day),
       },
-      relations: ['provider'],
+      relations: ['provider', 'user'],
     });
 
     const groupAppointments = groupBy(appointments, 'provider.name');
+    const mapAppointments = map(
+      groupAppointments,
+      (appointmentsProvider, index) => ({
+        provider: index,
+        appointments: keyBy(appointmentsProvider, 'period'),
+      }),
+    );
 
-    return groupAppointments;
+    return mapAppointments;
   }
 
   public async create({

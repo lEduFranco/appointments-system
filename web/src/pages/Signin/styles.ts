@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
-// import signInBackgroundImg from '../../assets/logo_top.svg';
+// import signInBackgroundImg from '../../assets/background_wave.svg';
 
 export const Container = styled.div`
   height: 100vh;
@@ -90,6 +90,11 @@ export const AnimationContainer = styled.div`
 
 export const RestrictedAccess = styled.div`
   width: 100%;
+  height: 40%;
+
+  /* background: url($) no-repeat center;
+  background-size: contain;
+  background-size: 100%; */
 
   padding-top: 50px;
   padding-right: 40px;

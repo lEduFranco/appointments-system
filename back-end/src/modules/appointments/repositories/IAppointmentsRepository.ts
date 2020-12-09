@@ -1,8 +1,19 @@
 import Appointment from '../infra/typeorm/entities/Appointment';
 import ICreateAppointmentDTO from '../dtos/ICreateAppointmentDTO';
 import IFindAllInMonthFromProviderDTO from '../dtos/IFindAllInMonthFromProviderDTO';
-import IFindAllInWeekFromProvidersDTO from '../dtos/IFindAllInWeekFromProvidersDTO';
+import IFindAllAppointmentsFromProvidersByDateDTO from '../dtos/IFindAllAppointmentsFromProvidersByDateDTO';
 import IFindAllInDayFromProvidersDTO from '../dtos/IFindAllInDayFromProvidersDTO';
+
+export interface IAppointmentsProvider {
+  provider: string;
+  appointments: IAppointments;
+}
+
+interface IAppointments {
+  integral?: Appointment;
+  part_time_morning?: Appointment;
+  part_time_afternoon?: Appointment;
+}
 
 export default interface IAppointmentsRepository {
   create(data: ICreateAppointmentDTO): Promise<Appointment>;
@@ -19,9 +30,9 @@ export default interface IAppointmentsRepository {
     data: IFindAllInMonthFromProviderDTO,
   ): Promise<Appointment[]>;
 
-  findAllInWeekFromProviders(
-    data: IFindAllInWeekFromProvidersDTO,
-  ): Promise<Appointment[]>;
+  findAllAppointmentsFromProvidersByDate(
+    data: IFindAllAppointmentsFromProvidersByDateDTO,
+  ): Promise<IAppointmentsProvider[]>;
 
   findAllInDayFromProviders(
     data: IFindAllInDayFromProvidersDTO,

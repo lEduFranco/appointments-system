@@ -1,64 +1,67 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
 export const Container = styled.div``;
-
-export const Header = styled.header`
-  padding: 32px 0;
-  background: #b28d9f;
+export const Div = styled.div`
+  display: flex;
+  align-items: flex-end;
 `;
 
-export const HeaderContent = styled.div`
-  max-width: 1120px;
-  margin: 0 auto;
+export const Dates = styled.div`
+  width: 25%;
+
   display: flex;
-  align-items: center;
+  flex-direction: column;
 
-  > img {
-    height: 80px;
+  padding-top: 1%;
+  padding-left: 2%;
+  h1 {
+    font-size: 36px;
   }
 
-  button {
-    margin-left: auto;
-    background: transparent;
-    border: 0;
-
-    svg {
-      color: #3f1227;
-      width: 20px;
-      height: 20px;
-    }
-  }
-`;
-
-export const Profile = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: 80px;
-
-  img {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-  }
-
-  div {
+  p {
+    margin-top: 8px;
+    color: #3f1227;
     display: flex;
-    flex-direction: column;
-    margin-left: 16px;
-    line-height: 24px;
+    align-items: center;
+    font-weight: 500;
 
     span {
-      color: #f5f5f5;
+      display: flex;
+      align-items: center;
     }
 
-    a {
-      text-decoration: none;
-      color: #3f1227;
+    span + span::before {
+      content: '';
+      width: 1px;
+      height: 12px;
+      background: #b28d9f;
+      margin: 0 8px;
+    }
+  }
+`;
+export const CreateAppointment = styled.main`
+  width: 38%;
+  display: flex;
+  justify-content: flex-end;
 
-      &:hover {
-        opacity: 0.8;
-      }
+  > a {
+    color: #b28d9f;
+    display: block;
+    margin-top: 24px;
+    text-decoration: none;
+    transition: color 0.2s;
+    font-size: 17px;
+
+    display: flex;
+    align-items: center;
+
+    svg {
+      margin-right: 16px;
+    }
+
+    &:hover {
+      color: #3f1229;
     }
   }
 `;
@@ -66,11 +69,103 @@ export const Profile = styled.div`
 export const Content = styled.main`
   max-width: 100%;
   min-height: 100%;
-  margin: 80px 40px;
+  margin: 2% 2%;
+
+  display: flex;
+  flex-direction: row;
+`;
+
+export const Appointments = styled.div`
+  width: 75%;
+  min-height: 100%;
+
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Filter = styled.div`
+  width: 25%;
+  min-height: 100%;
+  margin-top: 1%;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+`;
+
+const appearFromStart = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+export const AnimationContainer = styled.div`
+  display: flex;
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  animation: ${appearFromStart} 1s;
+
+  form {
+    margin: 80px 0;
+    width: 125%;
+
+    text-align: center;
+
+    h1 {
+      margin-bottom: 24px;
+    }
+
+    a {
+      color: #f4ede8;
+      display: block;
+      margin-top: 24px;
+      text-decoration: none;
+      transition: color 0.2s;
+
+      &:hover {
+        color: ${shade(0.2, '#f4ede8')};
+      }
+    }
+  }
+
+  > a {
+    color: #b28d9f;
+    display: block;
+    margin-top: 24px;
+    text-decoration: none;
+    transition: color 0.2s;
+
+    display: flex;
+    align-items: center;
+
+    svg {
+      margin-right: 16px;
+    }
+
+    &:hover {
+      color: #3f1229;
+    }
+  }
+`;
+
+export const BorderlessButton = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const Schedule = styled.table`
-  width: 100%;
+  width: 85%;
+
   thead {
     color: #b28d9f;
 
@@ -81,138 +176,32 @@ export const Schedule = styled.table`
   }
 
   tbody {
-    td:nth-child(1) {
+    /* td:nth-child(1) {
+      text-align: left;
+      font-weight: bold;
+      text-transform: uppercase;
+      background: #f5f5f5;
+    } */
+
+    th {
+      text-align: left;
       font-weight: bold;
       text-transform: uppercase;
       background: #f5f5f5;
     }
 
     td {
-      background: #d3d3d3;
+      background: #e8e8ea;
       text-align: center;
       padding: 20px;
-    }
-  }
-`;
 
-export const NextAppointments = styled.div`
-  margin-top: 64px;
-
-  > strong {
-    color: #3f1229;
-    font-size: 20px;
-    font-weight: 400;
-  }
-
-  div {
-    background: #b28d9f;
-    display: flex;
-    align-items: center;
-    padding: 16px 24px;
-    border-radius: 10px;
-    margin-top: 24px;
-    position: relative;
-
-    &::before {
-      position: absolute;
-      height: 80%;
-      width: 2px;
-      left: 0;
-      top: 10%;
-      content: '';
-      background: #3f1229;
-    }
-
-    img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-    }
-
-    strong {
-      margin-left: 24px;
-      color: #f5f5f5;
-    }
-
-    span {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      color: #f5f5f5;
-
-      svg {
-        color: #3f1229;
-        margin-right: 8px;
-      }
-    }
-  }
-`;
-
-export const Section = styled.section`
-  margin-top: 48px;
-
-  > strong {
-    color: #3f1229;
-    font-size: 20px;
-    line-height: 26px;
-    border-bottom: 1px solid #3f1229;
-    display: block;
-    padding-bottom: 16px;
-    margin-bottom: 16px;
-  }
-
-  > P {
-    color: #b28d9f;
-  }
-`;
-
-export const Appointments = styled.div`
-  display: flex;
-  align-items: center;
-
-  & + div {
-    margin-top: 16px;
-  }
-
-  span {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    color: #3f1229;
-    width: 70px;
-
-    svg {
-      color: #3f1229;
-      margin-right: 8px;
-    }
-  }
-
-  div {
-    flex: 1;
-    background: #b28d9f;
-    display: flex;
-    align-items: center;
-    padding: 16px 24px;
-    border-radius: 10px;
-    margin-left: 24px;
-    justify-content: space-between;
-
-    img {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-    }
-
-    strong {
-      padding-right: 210px;
-      color: #f5f5f5;
-      font-size: 20px;
+      border-radius: 10px;
     }
   }
 `;
 
 export const Calendar = styled.aside`
-  width: 380px;
+  min-width: 85%;
 
   .DayPicker {
     background: #3f1229;

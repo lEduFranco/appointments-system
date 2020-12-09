@@ -1,4 +1,12 @@
-import { isBefore, format, addYears, eachDayOfInterval } from 'date-fns';
+import {
+  setHours,
+  isAfter,
+  isBefore,
+  format,
+  addYears,
+  eachDayOfInterval,
+  startOfDay,
+} from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
@@ -36,8 +44,23 @@ class CreateAppointmentService {
     user_id,
   }: IRequest): Promise<IResponse> {
     const date = new Date(year, month, day);
+    const dateNow = new Date(Date.now());
+    const timeLimitPartTimeMorning = setHours(startOfDay(dateNow), 7);
+    const timeLimitPartTimeAfternoon = setHours(startOfDay(dateNow), 12);
 
-    if (isBefore(date, Date.now())) {
+    const isLongerThanMorningTimeLimit =
+      period === 'part_time_morning' &&
+      isAfter(dateNow, timeLimitPartTimeMorning);
+
+    const isLongerThanAfternoonTimeLimit =
+      period === 'part_time_afternoon' &&
+      isAfter(dateNow, timeLimitPartTimeAfternoon);
+
+    if (
+      isBefore(startOfDay(date), startOfDay(dateNow)) ||
+      isLongerThanMorningTimeLimit ||
+      isLongerThanAfternoonTimeLimit
+    ) {
       throw new AppError("You can't create an appointment on a past date.");
     }
 

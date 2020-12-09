@@ -1,9 +1,9 @@
 import { injectable, inject } from 'tsyringe';
 
+import IAppointmentsRepository, {
+  IAppointmentsProvider,
+} from '@modules/appointments/repositories/IAppointmentsRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-// import { classToClass } from 'class-transformer';
-import Appointmet from '../infra/typeorm/entities/Appointment';
-import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 
 interface IRequest {
   day: number;
@@ -21,8 +21,12 @@ class ListProviderAppointmentsService {
     private cacheProvider: ICacheProvider,
   ) {}
 
-  public async execute({ year, month, day }: IRequest): Promise<Appointmet[]> {
-    const appointments = await this.appointmentsRepository.findAllInWeekFromProviders(
+  public async execute({
+    year,
+    month,
+    day,
+  }: IRequest): Promise<IAppointmentsProvider[]> {
+    const appointments = await this.appointmentsRepository.findAllAppointmentsFromProvidersByDate(
       {
         year,
         month,

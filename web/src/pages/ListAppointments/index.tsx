@@ -1,118 +1,301 @@
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import map from 'lodash/map';
+import keyBy from 'lodash/keyBy';
+import has from 'lodash/has';
 
-import { startOfWeek, addDays, format } from 'date-fns';
+import {
+  isAfter,
+  startOfWeek,
+  addDays,
+  format,
+  isToday,
+  setHours,
+  startOfDay,
+} from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 
-import { Link } from 'react-router-dom';
-import { FiPower } from 'react-icons/fi';
+import { Form } from '@unform/web';
+import * as Yup from 'yup';
+import { Link, useHistory } from 'react-router-dom';
+
+import { getDate, getMonth, getYear } from 'date-fns';
+import DayPicker, { DayModifiers } from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
+
+import { FiFilter, FiPlus } from 'react-icons/fi';
+import api from '../../services/api';
+import getValidationErrors from '../../utils/getValidationErrors';
+
+import { useToast } from '../../hooks/toast';
+
+import Select from '../../components/Select';
+import Button from '../../components/Button';
+import HeaderComponent from '../../components/Header';
+
+import AppointmentComponent from './Appointment';
+
+import isLongerThanMorningTimeLimit from './isLongerThanMorningTimeLimit';
+import isLongerThanAfternoonTimeLimit from './isLongerThanAfternoonTimeLimit';
+
 import {
   Container,
-  Header,
-  HeaderContent,
+  Div,
   Content,
-  Schedule,
   Appointments,
-  Profile,
+  Dates,
+  CreateAppointment,
+  Filter,
+  Schedule,
+  AnimationContainer,
+  Calendar,
+  BorderlessButton,
 } from './styles';
 
-import logoImg from '../../assets/logo_top.svg';
-import { useAuth } from '../../hooks/auth';
-import api from '../../services/api';
+interface SignUpFormData {
+  name: string;
+}
+
+interface AppointmentsProvider {
+  provider: string;
+  appointments: Appointments;
+}
+
+interface Appointments {
+  integral?: Appointment;
+  part_time_morning?: Appointment;
+  part_time_afternoon?: Appointment;
+}
+
+interface Appointment {
+  id: string;
+  date: Date;
+  frequency: string;
+  user: {
+    name: string;
+    email: string;
+  };
+}
 
 const ListAppointments: React.FC = () => {
-  const { user, signOut } = useAuth();
-  const [appointments, setAppointments] = useState([]);
-  const [dates, setDates] = useState([]);
+  const [period, setPeriod] = useState('');
+  const [appointments, setAppointments] = useState<AppointmentsProvider[]>([]);
+  const [frequency, setFrequency] = useState('');
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [daySelected, setDaySelected] = useState(getDate(new Date()));
+  const [monthSelected, setMonthSelected] = useState(getMonth(new Date()));
+  const [yearSelected, setYearSelected] = useState(getYear(new Date()));
 
-  function getDatesBetweenDates(startDate: Date, endDate: Date): void {
-    let dates = [];
-
-    const theDate = new Date(startDate);
-    while (theDate <= endDate) {
-      dates = [...dates, new Date(theDate)];
-      theDate.setDate(theDate.getDate() + 1);
-    }
-
-    setDates(dates);
-  }
-
-  async function getAppointments(): Promise<void> {
-    const { data: appointmentsData } = await api.get('/appointments', {
-      params: {
-        year: 2020,
-        month: 10,
-        day: 27,
-      },
+  const selectedDateAsText = useMemo(() => {
+    return format(selectedDate, "'Dia' dd 'de' MMMM", {
+      locale: ptBR,
     });
+  }, [selectedDate]);
 
-    console.log(appointmentsData);
-
-    setAppointments(appointmentsData);
-  }
+  const selectedWeekDay = useMemo(() => {
+    return format(selectedDate, 'cccc', { locale: ptBR });
+  }, [selectedDate]);
 
   useEffect(() => {
-    getAppointments();
+    api
+      .get('/appointments', {
+        params: {
+          day: daySelected,
+          month: monthSelected + 1,
+          year: yearSelected,
+        },
+      })
+      .then(({ data }) => {
+        setAppointments(data);
+      });
+  }, [daySelected, monthSelected, yearSelected]);
 
-    const startWeek = startOfWeek(new Date(), {
-      weekStartsOn: 1,
-    });
-
-    const endWeek = addDays(startWeek, 4);
-
-    getDatesBetweenDates(new Date(startWeek), new Date(endWeek));
+  const handleDateChange = useCallback((day: Date, modifiers: DayModifiers) => {
+    if (modifiers.available && !modifiers.disabled) {
+      setSelectedDate(day);
+      setDaySelected(getDate(day));
+      setMonthSelected(getMonth(day));
+      setYearSelected(getYear(day));
+    }
   }, []);
 
   return (
     <Container>
-      <Header>
-        <HeaderContent>
-          <img src={logoImg} alt="ToMaisVip" />
+      <HeaderComponent />
 
-          <Profile>
-            <img src={user.avatar_url} alt={user.name} />
-            <div>
-              <span>Bem-vindo,</span>
-              <Link to="/profile">
-                <strong>{user.name}</strong>
-              </Link>
-            </div>
-          </Profile>
+      <Div>
+        <Dates>
+          <h1>Agenda</h1>
+          <p>
+            {isToday(selectedDate) && <span>Hoje</span>}
+            <span>{selectedDateAsText}</span>
+            <span>{selectedWeekDay}</span>
+          </p>
+        </Dates>
 
-          <button type="button" onClick={signOut}>
-            <FiPower />
-          </button>
-        </HeaderContent>
-      </Header>
+        <CreateAppointment>
+          <Link to="/create-appointments">
+            <FiPlus />
+            Criar agendamento
+          </Link>
+        </CreateAppointment>
+      </Div>
 
       <Content>
-        <Schedule>
-          <thead>
-            <tr>
-              <th />
-              {dates.map((date) => (
-                <th key={date}>
-                  <span>
-                    {format(date, 'EEEE', {
-                      locale: ptBR,
-                    })}
-                  </span>
-                  <br />
-                  <span>{format(date, 'd/M')}</span>
+        <Appointments>
+          <Schedule>
+            <thead>
+              <tr>
+                <th />
+                <th>
+                  <span>Manhã</span>
                 </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Márcia</td>
-              <td>Agendamento marcado pela manhã.</td>
-              <td>Agendamento marcado pela manhã.</td>
-              <td>Agendamento marcado pela manhã.</td>
-              <td>Agendamento marcado pela manhã.</td>
-              <td>Agendamento marcado pela manhã.</td>
-            </tr>
-          </tbody>
-        </Schedule>
+                <th>
+                  <span>Tarde</span>
+                </th>
+                <th>
+                  <span>Integral</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {appointments.length > 0 ? (
+                map(appointments, (appointmentsProvider) => (
+                  <tr key={appointmentsProvider.provider}>
+                    <th>{appointmentsProvider.provider}</th>
+                    <td>
+                      <AppointmentComponent
+                        appointment={
+                          appointmentsProvider.appointments.part_time_morning
+                        }
+                        isUnavailability={
+                          has(appointmentsProvider.appointments, 'integral') ||
+                          isLongerThanMorningTimeLimit({
+                            daySelected: new Date(
+                              yearSelected,
+                              monthSelected,
+                              daySelected,
+                            ),
+                            appointments: appointmentsProvider.appointments,
+                          })
+                        }
+                      />
+                    </td>
+
+                    <td>
+                      <AppointmentComponent
+                        appointment={
+                          appointmentsProvider.appointments.part_time_afternoon
+                        }
+                        isUnavailability={
+                          has(appointmentsProvider.appointments, 'integral') ||
+                          isLongerThanAfternoonTimeLimit(
+                            appointmentsProvider.appointments,
+                          )
+                        }
+                      />
+                    </td>
+                    <td>
+                      <AppointmentComponent
+                        appointment={appointmentsProvider.appointments.integral}
+                        isUnavailability={
+                          has(
+                            appointmentsProvider.appointments,
+                            'part_time_morning',
+                          ) ||
+                          has(
+                            appointmentsProvider.appointments,
+                            'part_time_afternoon',
+                          )
+                        }
+                      />
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="4">Não tem agendamento hoje.</td>
+                </tr>
+              )}
+            </tbody>
+          </Schedule>
+        </Appointments>
+
+        <Filter>
+          <Calendar>
+            <DayPicker
+              weekdaysShort={['D', 'S', 'T', 'Q', 'Q', 'S', 'S']}
+              fromMonth={new Date()}
+              disabledDays={{ before: new Date() }}
+              // disabledDays={[{ daysOfWeek: [0] }]}
+              modifiers={{
+                available: { daysOfWeek: [1, 2, 3, 4, 5, 6] },
+              }}
+              selectedDays={selectedDate}
+              onDayClick={handleDateChange}
+              months={[
+                'Janeiro',
+                'Fevereiro',
+                'Março',
+                'Abril',
+                'Maio',
+                'Junho',
+                'Julho',
+                'Agosto',
+                'Setembro',
+                'Outubro',
+                'Novembro',
+                'Dezembro',
+              ]}
+            />
+          </Calendar>
+
+          <AnimationContainer>
+            <Form onSubmit={() => {}}>
+              <BorderlessButton>
+                <h1>Filtro</h1>
+                <FiFilter size={25} />
+              </BorderlessButton>
+
+              {/* { isFiltersVisible && ( */}
+              <Select
+                name="period"
+                label=""
+                value={period}
+                onChange={(e) => {
+                  setPeriod(e.target.value);
+                }}
+                options={[
+                  {
+                    value: 'part_time_morning',
+                    label: 'Manhã - 4h (meio periodo)',
+                  },
+                  {
+                    value: 'part_time_afternoon',
+                    label: 'Tarde - 4h (meio periodo)',
+                  },
+                  { value: 'integral', label: 'Integral - 8h' },
+                ]}
+              />
+
+              <Select
+                name="frequency"
+                label=""
+                value={frequency}
+                onChange={(e) => {
+                  setFrequency(e.target.value);
+                }}
+                options={[
+                  { value: 'first_contact', label: 'Primeira diária' },
+                  { value: 'monthly', label: 'Avulso' },
+                  { value: 'weekly', label: 'Semanal' },
+                  { value: 'biweekly', label: 'Quinzenal' },
+                ]}
+              />
+              <Button type="submit">buscar</Button>
+              {/* )} */}
+            </Form>
+          </AnimationContainer>
+        </Filter>
       </Content>
     </Container>
   );

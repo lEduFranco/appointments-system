@@ -50,7 +50,7 @@ const SignInRestricted: React.FC = () => {
           password: data.password,
         });
 
-        history.push('/list-providers');
+        history.push('/list-appointments');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);

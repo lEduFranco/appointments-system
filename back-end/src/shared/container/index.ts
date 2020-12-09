@@ -9,6 +9,18 @@ import AppointmentsRepository from '@modules/appointments/infra/typeorm/reposito
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 
+import IUserProfilesRepository from '@modules/users/repositories/IUserProfilesRepository';
+import UserProfilesRepository from '@modules/users/infra/typeorm/repositories/UserProfilesRepository';
+
+import IAddressRepository from '@modules/users/repositories/IAddressRepository';
+import AddressesRepository from '@modules/users/infra/typeorm/repositories/AddressesRepository';
+
+import IClientRepository from '@modules/users/repositories/IClientRepository';
+import ClientsRepository from '@modules/users/infra/typeorm/repositories/ClientsRepository';
+
+import IProviderRepository from '@modules/users/repositories/IProviderRepository';
+import ProvidersRepository from '@modules/users/infra/typeorm/repositories/ProvidersRepository';
+
 import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
 import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 
@@ -23,6 +35,26 @@ container.registerSingleton<IAppointmentsRepository>(
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
   UsersRepository,
+);
+
+container.registerSingleton<IUserProfilesRepository>(
+  'UserProfilesRepository',
+  UserProfilesRepository,
+);
+
+container.registerSingleton<IAddressRepository>(
+  'AddressesRepository',
+  AddressesRepository,
+);
+
+container.registerSingleton<IClientRepository>(
+  'ClientsRepository',
+  ClientsRepository,
+);
+
+container.registerSingleton<IProviderRepository>(
+  'ProvidersRepository',
+  ProvidersRepository,
 );
 
 container.registerSingleton<IUserTokensRepository>(

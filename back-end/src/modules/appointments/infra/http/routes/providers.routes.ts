@@ -41,4 +41,36 @@ providersRouter.get(
   providerDayAvailabilityController.index,
 );
 
+providersRouter.post(
+  '/',
+  checkRole(['admin', 'rh', 'secretary']),
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      role: Joi.string().required(),
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+      rg: Joi.string().required(),
+      cpf: Joi.string().required(),
+      cnpj: Joi.string().required(),
+      tel: Joi.string().required(),
+      cel: Joi.string().required(),
+      city: Joi.string().required(),
+      zip_code: Joi.string().required(),
+      neighborhood: Joi.string().required(),
+      number: Joi.string().required(),
+      address: Joi.string().required(),
+      begin_date: Joi.string().required(),
+      final_date: Joi.string().required(),
+      demission_reason: Joi.string().required(),
+      uniform_size: Joi.string().required(),
+      voter_registration: Joi.string().required(),
+      voting_zone: Joi.string().required(),
+      voting_section: Joi.string().required(),
+      password_mei: Joi.string().required(),
+    },
+  }),
+  providersController.create,
+);
+
 export default providersRouter;
