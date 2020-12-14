@@ -51,7 +51,6 @@ export default class Addresses1607023551262 implements MigrationInterface {
           {
             name: 'user_id',
             type: 'uuid',
-            isNullable: true,
           },
         ],
       }),

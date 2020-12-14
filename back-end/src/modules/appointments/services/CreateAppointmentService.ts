@@ -4,6 +4,7 @@ import {
   isBefore,
   format,
   addYears,
+  isToday,
   eachDayOfInterval,
   startOfDay,
 } from 'date-fns';
@@ -50,10 +51,12 @@ class CreateAppointmentService {
 
     const isLongerThanMorningTimeLimit =
       period === 'part_time_morning' &&
+      isToday(date) &&
       isAfter(dateNow, timeLimitPartTimeMorning);
 
     const isLongerThanAfternoonTimeLimit =
       period === 'part_time_afternoon' &&
+      isToday(date) &&
       isAfter(dateNow, timeLimitPartTimeAfternoon);
 
     if (

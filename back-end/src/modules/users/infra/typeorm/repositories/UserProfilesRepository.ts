@@ -19,10 +19,6 @@ class UserProfilesRepository implements IUserProfilesRepository {
 
     return userProfile;
   }
-
-  public async save(userProfile: UserProfile): Promise<UserProfile> {
-    return this.ormRepository.save(userProfile);
-  }
 }
 
 export default UserProfilesRepository;

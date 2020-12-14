@@ -10,8 +10,6 @@ import {
 
 import User from '@modules/users/infra/typeorm/entities/User';
 
-export type UserRoleType = 'admin' | 'rh' | 'secretary' | 'provider' | 'client';
-
 @Entity('addresses')
 class Address {
   @PrimaryGeneratedColumn('uuid')

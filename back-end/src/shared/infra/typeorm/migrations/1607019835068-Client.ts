@@ -61,7 +61,6 @@ export default class Client1607019835068 implements MigrationInterface {
           {
             name: 'user_id',
             type: 'uuid',
-            isNullable: true,
           },
         ],
       }),

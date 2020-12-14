@@ -53,7 +53,6 @@ export default class UserProfile1607008603802 implements MigrationInterface {
           {
             name: 'user_id',
             type: 'uuid',
-            isNullable: true,
           },
         ],
       }),

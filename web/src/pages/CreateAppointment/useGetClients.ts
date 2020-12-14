@@ -17,7 +17,7 @@ interface Data {
 
 const useGetClients = ({ setClients }: GetClients): void => {
   async function getClients(): Promise<void> {
-    const { data }: Response = await api.get(`/clients`);
+    const { data }: Response = await api.get('/clients');
 
     const mapClients = data.map(({ id, name }) => ({
       value: id,

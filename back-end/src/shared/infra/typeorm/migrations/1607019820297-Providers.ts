@@ -63,7 +63,6 @@ export default class Providers1607019820297 implements MigrationInterface {
           {
             name: 'user_id',
             type: 'uuid',
-            isNullable: true,
           },
         ],
       }),
