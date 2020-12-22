@@ -43,7 +43,7 @@ providersRouter.get(
 
 providersRouter.post(
   '/',
-  checkRole(['admin', 'rh', 'secretary']),
+  checkRole(['admin', 'rh']),
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
@@ -55,14 +55,15 @@ providersRouter.post(
       cnpj: Joi.string().required(),
       tel: Joi.string().required(),
       cel: Joi.string().required(),
+      uf: Joi.string().required(),
       city: Joi.string().required(),
       zip_code: Joi.string().required(),
       neighborhood: Joi.string().required(),
       number: Joi.string().required(),
       address: Joi.string().required(),
       begin_date: Joi.string().required(),
-      final_date: Joi.string().required(),
-      demission_reason: Joi.string().required(),
+      final_date: Joi.string(),
+      demission_reason: Joi.string(),
       uniform_size: Joi.string().required(),
       voter_registration: Joi.string().required(),
       voting_zone: Joi.string().required(),

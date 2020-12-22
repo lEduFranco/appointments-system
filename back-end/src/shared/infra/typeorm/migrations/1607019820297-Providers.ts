@@ -25,10 +25,12 @@ export default class Providers1607019820297 implements MigrationInterface {
           {
             name: 'final_date',
             type: 'date',
+            isNullable: true,
           },
           {
             name: 'demission_reason',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'uniform_size',

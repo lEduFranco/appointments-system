@@ -115,7 +115,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
       where: {
         date: new Date(year, parsedMonth, day),
       },
-      relations: ['provider', 'user'],
+      relations: ['provider', 'user', 'user.addresses'],
     });
 
     const groupAppointments = groupBy(appointments, 'provider.name');

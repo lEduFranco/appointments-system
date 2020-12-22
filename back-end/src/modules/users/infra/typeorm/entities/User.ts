@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 
 import uploadConfig from '@config/upload';
@@ -12,6 +13,7 @@ import uploadConfig from '@config/upload';
 import { Exclude, Expose } from 'class-transformer';
 
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
+import Address from '@modules/users/infra/typeorm/entities/Address';
 
 export type UserRoleType = 'admin' | 'rh' | 'secretary' | 'provider' | 'client';
 
@@ -41,6 +43,9 @@ class User {
 
   @OneToMany(() => Appointment, appointment => appointment.provider)
   appointments: Appointment[];
+
+  @OneToOne(() => Address, address => address.user)
+  addresses: Address[];
 
   @CreateDateColumn()
   created_at: Date;

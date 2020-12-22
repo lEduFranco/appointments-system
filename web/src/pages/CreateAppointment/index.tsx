@@ -35,12 +35,7 @@ import {
 } from './styles';
 import api from '../../services/api';
 
-interface SignUpFormData {
-  name: string;
-}
-
 const CreateAppointments: React.FC = () => {
-  const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
   const history = useHistory();
 

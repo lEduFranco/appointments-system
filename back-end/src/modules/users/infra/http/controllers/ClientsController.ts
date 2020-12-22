@@ -28,6 +28,7 @@ export default class ClientsController {
       cnpj,
       tel,
       cel,
+      uf,
       city,
       zip_code,
       neighborhood,
@@ -63,6 +64,7 @@ export default class ClientsController {
     });
 
     await createAddress.execute({
+      uf,
       city,
       zip_code,
       neighborhood,

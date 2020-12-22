@@ -39,6 +39,7 @@ export default class ProvidersController {
       cnpj,
       tel,
       cel,
+      uf,
       city,
       zip_code,
       neighborhood,
@@ -76,6 +77,7 @@ export default class ProvidersController {
     });
 
     await createAddress.execute({
+      uf,
       city,
       zip_code,
       neighborhood,

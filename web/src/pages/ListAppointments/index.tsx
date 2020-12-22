@@ -44,6 +44,7 @@ import {
   Appointments,
   Dates,
   CreateAppointment,
+  CreateClient,
   Filter,
   Schedule,
   AnimationContainer,
@@ -73,6 +74,7 @@ interface Appointment {
   user: {
     name: string;
     email: string;
+    address: string;
   };
 }
 
@@ -138,6 +140,13 @@ const ListAppointments: React.FC = () => {
             Criar agendamento
           </Link>
         </CreateAppointment>
+
+        <CreateClient>
+          <Link to="/create-clients">
+            <FiPlus />
+            Cadastrar cliente
+          </Link>
+        </CreateClient>
       </Div>
 
       <Content>

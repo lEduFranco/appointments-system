@@ -1,4 +1,5 @@
 export default interface ICreateAddressDTO {
+  uf: string;
   city: string;
   zip_code: string;
   neighborhood: string;

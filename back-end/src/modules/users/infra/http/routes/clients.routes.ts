@@ -15,29 +15,33 @@ clientsRouter.use(ensureAuthenticated);
 
 clientsRouter.post(
   '/',
-  checkRole(['admin', 'rh', 'secretary']),
+  checkRole(['admin', 'secretary']),
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
       role: Joi.string().required(),
       email: Joi.string().email().required(),
       password: Joi.string().required(),
-      rg: Joi.string(),
+
+      rg: Joi.string().allow(null, ''),
       cpf: Joi.string().required(),
-      cnpj: Joi.string(),
-      tel: Joi.string().required(),
+      tel: Joi.string().allow(null, ''),
       cel: Joi.string().required(),
+      profession: Joi.string(),
+
+      uf: Joi.string().required(),
       city: Joi.string().required(),
       zip_code: Joi.string().required(),
       neighborhood: Joi.string().required(),
       number: Joi.string().required(),
       address: Joi.string().required(),
-      cf_df: Joi.string(),
-      profession: Joi.string(),
-      condominium_name: Joi.string(),
-      reference_points: Joi.string(),
-      nearest_subway_station: Joi.string(),
-      company_responsible: Joi.string(),
+      condominium_name: Joi.string().allow(null, ''),
+      reference_points: Joi.string().allow(null, ''),
+      nearest_subway_station: Joi.string().allow(null, ''),
+
+      cnpj: Joi.string().allow(null, ''),
+      cf_df: Joi.string().allow(null, ''),
+      company_responsible: Joi.string().allow(null, ''),
     },
   }),
   clientsController.create,

@@ -7,6 +7,9 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
 
+  /*max-width: 100%;
+  max-height: 100%; */
+
   h1 {
     font-size: 20px;
     text-transform: capitalize;

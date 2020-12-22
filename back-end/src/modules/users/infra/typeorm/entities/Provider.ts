@@ -18,10 +18,10 @@ class Provider {
   @Column()
   begin_date: Date;
 
-  @Column()
+  @Column({ nullable: true })
   final_date: Date;
 
-  @Column()
+  @Column({ nullable: true })
   demission_reason: string;
 
   @Column({ length: 2 })

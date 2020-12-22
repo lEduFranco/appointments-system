@@ -15,6 +15,9 @@ class Address {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column({ length: 2 })
+  uf: string;
+
   @Column()
   city: string;
 

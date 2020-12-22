@@ -4,6 +4,7 @@ import IAddressRepository from '../repositories/IAddressRepository';
 import Address from '../infra/typeorm/entities/Address';
 
 interface IRequest {
+  uf: string;
   city: string;
   zip_code: string;
   neighborhood: string;
@@ -20,6 +21,7 @@ class CreateAddressService {
   ) {}
 
   public async execute({
+    uf,
     city,
     zip_code,
     neighborhood,
@@ -28,6 +30,7 @@ class CreateAddressService {
     user_id,
   }: IRequest): Promise<Address> {
     const createAddress = await this.addressesRepository.create({
+      uf,
       city,
       zip_code,
       neighborhood,

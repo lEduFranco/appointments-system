@@ -19,6 +19,10 @@ export default class Addresses1607023551262 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
+            name: 'uf',
+            type: 'varchar',
+          },
+          {
             name: 'city',
             type: 'varchar',
           },

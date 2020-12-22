@@ -5,11 +5,12 @@ import PrivateRoute from './PrivateRoute';
 
 import SignIn from '../pages/Signin';
 import SigninRestricted from '../pages/SigninRestricted';
-import SignUp from '../pages/SignUp';
 import ForgotPassword from '../pages/ForgotPassword';
 import ResetPassword from '../pages/ResetPassword';
 
 import CreateAppointment from '../pages/CreateAppointment';
+import CreateProvider from '../pages/CreateProvider';
+import CreateClient from '../pages/CreateClient';
 import Profile from '../pages/Profile';
 import Dashboard from '../pages/Dashboard';
 import ListAppointments from '../pages/ListAppointments';
@@ -24,9 +25,14 @@ const Routes: React.FC = () => (
     <Route path="/reset-password" component={ResetPassword} />
 
     <PrivateRoute
-      path="/signup"
-      component={SignUp}
-      roles={['admin', 'secretary', 'rh']}
+      path="/create-clients"
+      component={CreateClient}
+      roles={['admin', 'secretary']}
+    />
+    <PrivateRoute
+      path="/create-providers"
+      component={CreateProvider}
+      roles={['admin', 'rh']}
     />
     <PrivateRoute
       path="/create-appointments"

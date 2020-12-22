@@ -13,20 +13,17 @@ export const Content = styled.div`
   flex-direction: column;
   align-items: center;
 
-  place-content: center;
-
   width: 100%;
-  max-width: 700px;
 `;
 
 const appearFromRight = keyframes`
   from {
     opacity: 0;
-    transform: translateX(50px);
+    transform: translateY(-50px);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
   }
 `;
 
@@ -34,12 +31,12 @@ export const AnimationContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
 
   animation: ${appearFromRight} 1s;
 
   img {
-    width: 75%;
+    width: 50%;
   }
 
   form {
@@ -48,7 +45,14 @@ export const AnimationContainer = styled.div`
     text-align: center;
 
     h1 {
-      margin-bottom: 24px;
+      margin-bottom: 20px;
+    }
+    h3 {
+      display: flex;
+      align-items: flex-end;
+      color: #c0c0c0;
+      margin-top: 20px;
+      margin-bottom: 10px;
     }
 
     a {
@@ -79,14 +83,7 @@ export const AnimationContainer = styled.div`
     }
 
     &:hover {
-      /* color: ${shade(0.2, '#ff9000')}; */
       color: #3f1229;
     }
   }
-`;
-
-export const Background = styled.div`
-  flex: 1;
-  background: #f5f5f5;
-  background-size: cover;
 `;

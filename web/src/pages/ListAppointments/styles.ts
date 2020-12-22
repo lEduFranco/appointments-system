@@ -41,7 +41,7 @@ export const Dates = styled.div`
   }
 `;
 export const CreateAppointment = styled.main`
-  width: 38%;
+  width: 39%;
   display: flex;
   justify-content: flex-end;
 
@@ -51,7 +51,34 @@ export const CreateAppointment = styled.main`
     margin-top: 24px;
     text-decoration: none;
     transition: color 0.2s;
-    font-size: 17px;
+    font-size: 22px;
+
+    display: flex;
+    align-items: center;
+
+    svg {
+      margin-right: 16px;
+    }
+
+    &:hover {
+      color: #3f1229;
+    }
+  }
+`;
+
+export const CreateClient = styled.main`
+  width: 38%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 4%;
+
+  > a {
+    color: #b28d9f;
+    display: block;
+    margin-top: 24px;
+    text-decoration: none;
+    transition: color 0.2s;
+    font-size: 22px;
 
     display: flex;
     align-items: center;
@@ -195,7 +222,7 @@ export const Schedule = styled.table`
       text-align: center;
       padding: 20px;
 
-      border-radius: 10px;
+      border-radius: 15px;
     }
   }
 `;
