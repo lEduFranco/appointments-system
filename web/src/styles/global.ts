@@ -12,6 +12,7 @@ export default createGlobalStyle`
     background: #f5f5f5;
     color: #3f1227;
     -webkit-font-smoothing: antialiased;
+
   }
 
   body, input, button, select {
@@ -26,4 +27,5 @@ export default createGlobalStyle`
   button {
     cursor: pointer;
   }
+}
 `;

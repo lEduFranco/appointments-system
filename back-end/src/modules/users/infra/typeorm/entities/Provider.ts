@@ -16,6 +16,9 @@ class Provider {
   id: string;
 
   @Column()
+  complete_name: string;
+
+  @Column()
   begin_date: Date;
 
   @Column({ nullable: true })

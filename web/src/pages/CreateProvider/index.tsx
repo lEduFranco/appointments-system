@@ -73,10 +73,13 @@ const CreateProvider: React.FC = () => {
           ),
           number: Yup.string().required('campo obrigatório não preenchido'),
           address: Yup.string().required('campo obrigatório não preenchido'),
+          complete_name: Yup.string().required(
+            'campo obrigatório não preenchido',
+          ),
           begin_date: Yup.string().required('campo obrigatório não preenchido'),
           uniform_size: Yup.string()
             .max(2, 'No máximo 2 dígitos')
-            .min(2, 'No mínimo 2 dígitos'),
+            .min(1, 'No mínimo 1 dígitos'),
           voter_registration: Yup.string()
             .max(12, 'No máximo 12 dígitos')
             .min(12, 'No mínimo 12 dígitos'),
@@ -144,7 +147,7 @@ const CreateProvider: React.FC = () => {
           >
             <h1>Cadastro Diarista</h1>
             <h3>Dados da conta</h3>
-            <Input name="name" icon={FiUser} placeholder="Nome" />
+            <Input name="name" icon={FiUser} placeholder="Nome para agenda" />
             <Input name="email" icon={FiMail} placeholder="E-mail" />
             <Input
               name="password"
@@ -153,6 +156,11 @@ const CreateProvider: React.FC = () => {
               placeholder="Senha"
             />
             <h3>Dados pessoais</h3>
+            <Input
+              name="complete_name"
+              icon={FiUser}
+              placeholder="Nome completo"
+            />
             <InputMask
               name="rg"
               icon={RiProfileLine}
@@ -175,7 +183,7 @@ const CreateProvider: React.FC = () => {
               name="cel"
               icon={FiSmartphone}
               placeholder="Celular"
-              mask="(99) 9999-99999"
+              mask="(99) 9 9999-9999"
             />
             <InputMask
               name="voter_registration"

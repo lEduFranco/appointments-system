@@ -19,7 +19,6 @@ ProfileRouter.get(
 );
 ProfileRouter.put(
   '/',
-  checkRole(['admin', 'rh', 'secretary', 'provider', 'client']),
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),

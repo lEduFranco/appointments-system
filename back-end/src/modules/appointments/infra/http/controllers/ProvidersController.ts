@@ -45,6 +45,7 @@ export default class ProvidersController {
       neighborhood,
       number,
       address,
+      complete_name,
       begin_date,
       final_date,
       demission_reason,
@@ -87,6 +88,7 @@ export default class ProvidersController {
     });
 
     await createProvider.execute({
+      complete_name,
       begin_date,
       final_date,
       demission_reason,

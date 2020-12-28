@@ -4,4 +4,5 @@ export default interface ICreateAppointmentDTO {
   frequency: 'first_contact' | 'weekly' | 'biweekly' | 'monthly';
   user_id: string;
   date: Date;
+  initial_appointment_id?: string;
 }

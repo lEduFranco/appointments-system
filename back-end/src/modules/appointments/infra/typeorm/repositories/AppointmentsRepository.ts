@@ -27,6 +27,12 @@ class AppointmentsRepository implements IAppointmentsRepository {
     this.ormRepository = getRepository(Appointment);
   }
 
+  public async findById(id: string): Promise<Appointment | undefined> {
+    const appointment = await this.ormRepository.findOne(id);
+
+    return appointment;
+  }
+
   public async findByDate(
     date: Date,
     provider_id: string,
@@ -115,7 +121,13 @@ class AppointmentsRepository implements IAppointmentsRepository {
       where: {
         date: new Date(year, parsedMonth, day),
       },
-      relations: ['provider', 'user', 'user.addresses'],
+      relations: [
+        'provider',
+        'user',
+        'user.addresses',
+        'user.user_profiles',
+        'user.clients',
+      ],
     });
 
     const groupAppointments = groupBy(appointments, 'provider.name');
@@ -136,14 +148,21 @@ class AppointmentsRepository implements IAppointmentsRepository {
     frequency,
     user_id,
     date,
+    initial_appointment_id,
   }: ICreateAppointmentDTO): Promise<Appointment> {
-    const appointment = this.ormRepository.create({
+    const data = {
       provider_id,
       period,
       frequency,
       user_id,
       date,
-    });
+    };
+
+    if (initial_appointment_id) {
+      data.initial_appointment_id = initial_appointment_id;
+    }
+
+    const appointment = this.ormRepository.create(data);
 
     await this.ormRepository.save(appointment);
 
@@ -153,6 +172,16 @@ class AppointmentsRepository implements IAppointmentsRepository {
   public async createMany(
     data: Array<ICreateAppointmentDTO>,
   ): Promise<boolean> {
+    const firstAppointment = data.shift();
+
+    let appointment = {
+      id: '',
+    };
+
+    if (firstAppointment) {
+      appointment = await this.create(firstAppointment);
+    }
+
     data.forEach(async ({ provider_id, period, frequency, user_id, date }) => {
       await this.create({
         provider_id,
@@ -160,10 +189,15 @@ class AppointmentsRepository implements IAppointmentsRepository {
         frequency,
         user_id,
         date,
+        initial_appointment_id: appointment.id,
       });
     });
 
     return true;
+  }
+
+  public async delete(params: string | object): Promise<void> {
+    await this.ormRepository.delete(params);
   }
 }
 

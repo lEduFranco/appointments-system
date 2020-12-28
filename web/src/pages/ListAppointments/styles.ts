@@ -1,7 +1,9 @@
 import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  height: 75vh;
+`;
 export const Div = styled.div`
   display: flex;
   align-items: flex-end;
@@ -96,6 +98,7 @@ export const CreateClient = styled.main`
 export const Content = styled.main`
   max-width: 100%;
   min-height: 100%;
+
   margin: 2% 2%;
 
   display: flex;
@@ -199,31 +202,43 @@ export const Schedule = styled.table`
     th {
       font-weight: bold;
       text-transform: uppercase;
+      position: relative;
     }
   }
 
   tbody {
-    /* td:nth-child(1) {
-      text-align: left;
-      font-weight: bold;
-      text-transform: uppercase;
-      background: #f5f5f5;
-    } */
-
     th {
       text-align: left;
       font-weight: bold;
       text-transform: uppercase;
       background: #f5f5f5;
+      width: 5%;
     }
 
     td {
       background: #e8e8ea;
       text-align: center;
       padding: 20px;
+      width: 25%;
 
       border-radius: 15px;
     }
+  }
+
+  .empty {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    text-transform: uppercase;
+    background: #e8e8ea;
+    border-radius: 15px;
+    height: 15vh;
+  }
+  .scroll {
+    overflow: auto;
+    width: 100%;
+    height: 75vh;
+    scrollbar-face-color: #000;
   }
 `;
 

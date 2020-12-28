@@ -1,4 +1,9 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
 export default class CreateAppointments1586994081011
   implements MigrationInterface {
@@ -13,6 +18,11 @@ export default class CreateAppointments1586994081011
             isPrimary: true,
             generationStrategy: 'uuid',
             default: 'uuid_generate_v4()',
+          },
+          {
+            name: 'initial_appointment_id',
+            type: 'uuid',
+            isNullable: true,
           },
           {
             name: 'provider',
@@ -43,6 +53,18 @@ export default class CreateAppointments1586994081011
             default: 'now()',
           },
         ],
+      }),
+    );
+
+    await queryRunner.createForeignKey(
+      'appointments',
+      new TableForeignKey({
+        name: 'AppointmentInitialAppointment',
+        columnNames: ['initial_appointment_id'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'appointments',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       }),
     );
   }

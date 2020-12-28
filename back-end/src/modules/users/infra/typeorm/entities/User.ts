@@ -14,6 +14,8 @@ import { Exclude, Expose } from 'class-transformer';
 
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import Address from '@modules/users/infra/typeorm/entities/Address';
+import UserProfile from '@modules/users/infra/typeorm/entities/UserProfile';
+import Client from '@modules/users/infra/typeorm/entities/Client';
 
 export type UserRoleType = 'admin' | 'rh' | 'secretary' | 'provider' | 'client';
 
@@ -46,6 +48,12 @@ class User {
 
   @OneToOne(() => Address, address => address.user)
   addresses: Address[];
+
+  @OneToOne(() => UserProfile, user_profile => user_profile.user)
+  user_profiles: UserProfile[];
+
+  @OneToOne(() => Client, client => client.user)
+  clients: Client[];
 
   @CreateDateColumn()
   created_at: Date;

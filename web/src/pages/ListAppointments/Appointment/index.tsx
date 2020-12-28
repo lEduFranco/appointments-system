@@ -13,11 +13,16 @@ interface AppointmentProps {
   frequency: string;
   user: {
     name: string;
-    email: string;
     addresses: {
       neighborhood: string;
       address: string;
       number: string;
+    };
+    user_profiles: {
+      cel: string;
+    };
+    clients: {
+      condominium_name: string;
     };
   };
 }
@@ -63,9 +68,13 @@ const Appointment: React.FC<Props> = ({ appointment, isUnavailability }) => {
   return (
     <Container>
       <h1>{appointment?.user.name}</h1>
-      <ul>{appointment?.user.addresses.neighborhood}</ul>
-      <ul>{appointment?.user.addresses.address}</ul>
-      <ul>{appointment?.user.addresses.number}</ul>
+      <h3>{appointment?.user.addresses.neighborhood}</h3>
+      <ul>
+        <ul>{appointment?.user.addresses.address}</ul>
+        <ul>{appointment?.user.clients.condominium_name}</ul>
+        <ul>{appointment?.user.addresses.number}</ul>
+      </ul>
+      <ul>{appointment?.user.user_profiles.cel}</ul>
       <p>{getFrequencyName(appointment?.frequency)}</p>
     </Container>
   );

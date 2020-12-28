@@ -35,4 +35,10 @@ appointmentsRouter.get(
   providerAppointmentsController.index,
 );
 
+appointmentsRouter.delete(
+  '/',
+  checkRole(['admin', 'secretary']),
+  appointmentsController.delete,
+);
+
 export default appointmentsRouter;

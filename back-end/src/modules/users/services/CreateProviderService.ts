@@ -4,6 +4,7 @@ import IProviderRepository from '../repositories/IProviderRepository';
 import Provider from '../infra/typeorm/entities/Provider';
 
 interface IRequest {
+  complete_name: string;
   begin_date: string;
   final_date: string;
   demission_reason: string;
@@ -23,6 +24,7 @@ class CreateProviderService {
   ) {}
 
   public async execute({
+    complete_name,
     begin_date,
     final_date,
     demission_reason,
@@ -34,6 +36,7 @@ class CreateProviderService {
     user_id,
   }: IRequest): Promise<Provider> {
     const createProvider = await this.providersRepository.create({
+      complete_name,
       begin_date,
       final_date,
       demission_reason,

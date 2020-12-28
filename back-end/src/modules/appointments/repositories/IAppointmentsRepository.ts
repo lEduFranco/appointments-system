@@ -16,6 +16,7 @@ interface IAppointments {
 }
 
 export default interface IAppointmentsRepository {
+  findById(id: string): Promise<Appointment | undefined>;
   create(data: ICreateAppointmentDTO): Promise<Appointment>;
   createMany(data: Array<ICreateAppointmentDTO>): Promise<boolean>;
 
@@ -37,4 +38,6 @@ export default interface IAppointmentsRepository {
   findAllInDayFromProviders(
     data: IFindAllInDayFromProvidersDTO,
   ): Promise<Appointment[]>;
+
+  delete(params: string | object): Promise<void>;
 }

@@ -25,6 +25,13 @@ class Appointment {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column({ nullable: true })
+  initial_appointment_id: string;
+
+  @ManyToOne(() => Appointment)
+  @JoinColumn({ name: 'initial_appointment_id' })
+  appointmnets: Appointment;
+
   @Column()
   provider_id: string;
 

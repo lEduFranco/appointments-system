@@ -20,7 +20,7 @@ usersRouter.use(ensureAuthenticated);
 
 usersRouter.post(
   '/',
-  checkRole(['admin', 'rh', 'secretary']),
+  checkRole(['admin']),
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),

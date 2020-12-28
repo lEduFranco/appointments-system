@@ -61,6 +61,7 @@ providersRouter.post(
       neighborhood: Joi.string().required(),
       number: Joi.string().required(),
       address: Joi.string().required(),
+      complete_name: Joi.string().required(),
       begin_date: Joi.string().required(),
       final_date: Joi.string(),
       demission_reason: Joi.string(),

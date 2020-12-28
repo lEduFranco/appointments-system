@@ -86,11 +86,7 @@ const CreateClient: React.FC = () => {
           condominium_name: Yup.string(),
           reference_points: Yup.string(),
           nearest_subway_station: Yup.string(),
-          cnpj: Yup.string().when('rg', {
-            is: (val) => !val.length,
-            then: Yup.string().required('campo obrigatório não preenchido'),
-            otherwise: Yup.string(),
-          }),
+          cnpj: Yup.string(),
           cf_df: Yup.string(),
           company_responsible: Yup.string().when('cnpj', {
             is: (val) => !!val.length,

@@ -45,9 +45,9 @@ class CreateAppointmentService {
     user_id,
   }: IRequest): Promise<IResponse> {
     const date = new Date(year, month, day);
-    const dateNow = new Date(Date.now());
-    const timeLimitPartTimeMorning = setHours(startOfDay(dateNow), 7);
-    const timeLimitPartTimeAfternoon = setHours(startOfDay(dateNow), 12);
+    const dateNow = new Date();
+    const timeLimitPartTimeMorning = setHours(startOfDay(dateNow), 10);
+    const timeLimitPartTimeAfternoon = setHours(startOfDay(dateNow), 15);
 
     const isLongerThanMorningTimeLimit =
       period === 'part_time_morning' &&
