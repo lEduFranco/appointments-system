@@ -14,15 +14,6 @@ export default class CreateUsers1587145096920 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'role',
-            type: 'enum',
-            enum: ['admin', 'rh', 'secretary', 'provider', 'client'],
-          },
-          {
-            name: 'name',
-            type: 'varchar',
-          },
-          {
             name: 'email',
             type: 'varchar',
             isUnique: true,
@@ -30,6 +21,11 @@ export default class CreateUsers1587145096920 implements MigrationInterface {
           {
             name: 'password',
             type: 'varchar',
+          },
+          {
+            name: 'role',
+            type: 'enum',
+            enum: ['admin', 'rh', 'secretary', 'provider', 'client'],
           },
           {
             name: 'created_at',

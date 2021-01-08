@@ -18,7 +18,17 @@ interface Appointment {
   frequency: string;
   user: {
     name: string;
-    email: string;
+    addresses: {
+      neighborhood: string;
+      address: string;
+      number: string;
+    };
+    user_profiles: {
+      cel: string;
+    };
+    clients: {
+      condominium_name: string;
+    };
   };
 }
 

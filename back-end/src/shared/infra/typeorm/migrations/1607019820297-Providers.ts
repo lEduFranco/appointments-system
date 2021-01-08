@@ -19,10 +19,6 @@ export default class Providers1607019820297 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'complete_name',
-            type: 'varchar',
-          },
-          {
             name: 'begin_date',
             type: 'date',
           },

@@ -12,6 +12,7 @@ import CreateAppointment from '../pages/CreateAppointment';
 import CreateProvider from '../pages/CreateProvider';
 import CreateClient from '../pages/CreateClient';
 import Profile from '../pages/Profile';
+import EditAppoitment from '../pages/EditAppoitment';
 import Dashboard from '../pages/Dashboard';
 import ListAppointments from '../pages/ListAppointments';
 import ListProviders from '../pages/ListProviders';
@@ -43,6 +44,11 @@ const Routes: React.FC = () => (
       path="/profile"
       component={Profile}
       roles={['admin', 'provider', 'secretary', 'rh', 'client']}
+    />
+    <PrivateRoute
+      path="/edit-appointments"
+      component={EditAppoitment}
+      roles={['admin', 'secretary']}
     />
     <PrivateRoute
       path="/dashboard"

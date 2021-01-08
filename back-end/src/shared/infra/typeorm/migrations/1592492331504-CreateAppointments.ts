@@ -25,12 +25,12 @@ export default class CreateAppointments1586994081011
             isNullable: true,
           },
           {
-            name: 'provider',
-            type: 'varchar',
-          },
-          {
             name: 'date',
             type: 'date',
+          },
+          {
+            name: 'observation',
+            type: 'varchar',
           },
           {
             name: 'period',
@@ -41,6 +41,52 @@ export default class CreateAppointments1586994081011
             name: 'frequency',
             type: 'enum',
             enum: ['first_contact', 'weekly', 'biweekly', 'monthly'],
+          },
+          {
+            name: 'provider_id',
+            type: 'varchar',
+          },
+          {
+            name: 'client_id',
+            type: 'varchar',
+          },
+          {
+            name: 'uf',
+            type: 'varchar',
+          },
+          {
+            name: 'zip_code',
+            type: 'varchar',
+          },
+          {
+            name: 'city',
+            type: 'varchar',
+          },
+          {
+            name: 'neighborhood',
+            type: 'varchar',
+          },
+          {
+            name: 'address',
+            type: 'varchar',
+          },
+          {
+            name: 'number',
+            type: 'varchar',
+          },
+          {
+            name: 'complement',
+            type: 'varchar',
+          },
+          {
+            name: 'reference_points',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'nearest_subway_station',
+            type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'created_at',

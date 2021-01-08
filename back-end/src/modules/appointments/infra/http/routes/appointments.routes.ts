@@ -35,6 +35,12 @@ appointmentsRouter.get(
   providerAppointmentsController.index,
 );
 
+appointmentsRouter.get(
+  '/show',
+  checkRole(['admin', 'provider', 'secretary']),
+  appointmentsController.show,
+);
+
 appointmentsRouter.delete(
   '/',
   checkRole(['admin', 'secretary']),

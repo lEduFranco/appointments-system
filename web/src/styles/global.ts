@@ -16,7 +16,7 @@ export default createGlobalStyle`
   }
 
   body, input, button, select {
-    font-family: 'Roboto Slab', serif;
+    font-family: 'Montserrat', serif;
     font-size: 16px;
   }
 
@@ -27,5 +27,5 @@ export default createGlobalStyle`
   button {
     cursor: pointer;
   }
-}
+
 `;

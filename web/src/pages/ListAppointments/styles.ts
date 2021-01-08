@@ -107,6 +107,7 @@ export const Content = styled.main`
 
 export const Appointments = styled.div`
   width: 75%;
+  max-width: 75%;
   min-height: 100%;
 
   display: flex;

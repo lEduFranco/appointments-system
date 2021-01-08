@@ -23,11 +23,11 @@ export default class Addresses1607023551262 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'city',
+            name: 'zip_code',
             type: 'varchar',
           },
           {
-            name: 'zip_code',
+            name: 'city',
             type: 'varchar',
           },
           {
@@ -35,12 +35,26 @@ export default class Addresses1607023551262 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'address',
+            type: 'varchar',
+          },
+          {
             name: 'number',
             type: 'varchar',
           },
           {
-            name: 'address',
+            name: 'complement',
             type: 'varchar',
+          },
+          {
+            name: 'reference_points',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'nearest_subway_station',
+            type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'created_at',

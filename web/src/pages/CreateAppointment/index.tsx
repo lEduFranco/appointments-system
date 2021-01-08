@@ -195,7 +195,6 @@ const CreateAppointments: React.FC = () => {
                 { value: 'biweekly', label: 'Quinzenal' },
               ]}
             />
-
             <Select
               name="providers"
               label="Diaristas"

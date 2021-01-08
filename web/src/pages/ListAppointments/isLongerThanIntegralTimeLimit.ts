@@ -32,18 +32,18 @@ interface Appointment {
   };
 }
 
-const isLongerThanMorningTimeLimit = ({
+const isLongerThanIntegralTimeLimit = ({
   daySelected,
   appointments,
 }: Props): boolean => {
   const dateNow = new Date(Date.now());
-  const timeLimitPartTimeMorning = setHours(startOfDay(dateNow), 10);
+  const timeLimitPartTimeintegral = setHours(startOfDay(dateNow), 10);
 
   return (
     isToday(new Date(daySelected)) &&
-    isAfter(new Date(Date.now()), timeLimitPartTimeMorning) &&
-    !has(appointments, 'part_time_morning')
+    isAfter(new Date(Date.now()), timeLimitPartTimeintegral) &&
+    !has(appointments, 'integral')
   );
 };
 
-export default isLongerThanMorningTimeLimit;
+export default isLongerThanIntegralTimeLimit;

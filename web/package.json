@@ -13,6 +13,8 @@
     "@types/react-datepicker": "^3.1.2",
     "@types/react-dom": "^16.9.0",
     "@types/react-input-mask": "^3.0.0",
+    "@types/react-modal": "^3.10.6",
+    "@types/styled-react-modal": "^1.2.0",
     "@unform/core": "^2.1.0",
     "@unform/web": "^2.1.0",
     "axios": "^0.19.2",
@@ -30,6 +32,7 @@
     "react-select": "^3.1.1",
     "react-spring": "^8.0.27",
     "styled-components": "^5.1.0",
+    "styled-react-modal": "^2.0.1",
     "typescript": "~3.7.2",
     "uuidv4": "^6.0.8",
     "yup": "^0.28.5"

@@ -24,22 +24,7 @@ export default class Client1607019835068 implements MigrationInterface {
             isNullable: true,
           },
           {
-            name: 'profession',
-            type: 'varchar',
-            isNullable: true,
-          },
-          {
-            name: 'condominium_name',
-            type: 'varchar',
-            isNullable: true,
-          },
-          {
-            name: 'reference_points',
-            type: 'varchar',
-            isNullable: true,
-          },
-          {
-            name: 'nearest_subway_station',
+            name: 'occuppation',
             type: 'varchar',
             isNullable: true,
           },

@@ -19,6 +19,8 @@ export default interface IAppointmentsRepository {
   findById(id: string): Promise<Appointment | undefined>;
   create(data: ICreateAppointmentDTO): Promise<Appointment>;
   createMany(data: Array<ICreateAppointmentDTO>): Promise<boolean>;
+  // findByClient(user_id: string): Promise<Appointment | undefined>;
+  // save(appointment: Appointment): Promise<Appointment>;
 
   findByDate(
     date: Date,

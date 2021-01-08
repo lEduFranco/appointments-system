@@ -25,6 +25,7 @@ import AppointmentComponent from './Appointment';
 
 import isLongerThanMorningTimeLimit from './isLongerThanMorningTimeLimit';
 import isLongerThanAfternoonTimeLimit from './isLongerThanAfternoonTimeLimit';
+import isLongerThanIntegralTimeLimit from './isLongerThanIntegralTimeLimit';
 
 import {
   Container,
@@ -62,8 +63,17 @@ interface Appointment {
   frequency: string;
   user: {
     name: string;
-    email: string;
-    address: string;
+    addresses: {
+      neighborhood: string;
+      address: string;
+      number: string;
+    };
+    user_profiles: {
+      cel: string;
+    };
+    clients: {
+      condominium_name: string;
+    };
   };
 }
 
@@ -180,6 +190,7 @@ const ListAppointments: React.FC = () => {
                               appointments: appointmentsProvider.appointments,
                             })
                           }
+                          setAppointments={setAppointments}
                         />
                       </td>
 
@@ -198,6 +209,7 @@ const ListAppointments: React.FC = () => {
                               appointmentsProvider.appointments,
                             )
                           }
+                          setAppointments={setAppointments}
                         />
                       </td>
                       <td>
@@ -213,8 +225,17 @@ const ListAppointments: React.FC = () => {
                             has(
                               appointmentsProvider.appointments,
                               'part_time_afternoon',
-                            )
+                            ) ||
+                            isLongerThanIntegralTimeLimit({
+                              daySelected: new Date(
+                                yearSelected,
+                                monthSelected,
+                                daySelected,
+                              ),
+                              appointments: appointmentsProvider.appointments,
+                            })
                           }
+                          setAppointments={setAppointments}
                         />
                       </td>
                     </tr>

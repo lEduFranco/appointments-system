@@ -47,12 +47,18 @@ class CreateAppointmentService {
     const date = new Date(year, month, day);
     const dateNow = new Date();
     const timeLimitPartTimeMorning = setHours(startOfDay(dateNow), 10);
+    const timeLimitPartTimeIntegral = setHours(startOfDay(dateNow), 10);
     const timeLimitPartTimeAfternoon = setHours(startOfDay(dateNow), 15);
 
     const isLongerThanMorningTimeLimit =
       period === 'part_time_morning' &&
       isToday(date) &&
       isAfter(dateNow, timeLimitPartTimeMorning);
+
+    const isLongerThanIntegralTimeLimit =
+      period === 'integral' &&
+      isToday(date) &&
+      isAfter(dateNow, timeLimitPartTimeIntegral);
 
     const isLongerThanAfternoonTimeLimit =
       period === 'part_time_afternoon' &&
@@ -62,6 +68,7 @@ class CreateAppointmentService {
     if (
       isBefore(startOfDay(date), startOfDay(dateNow)) ||
       isLongerThanMorningTimeLimit ||
+      isLongerThanIntegralTimeLimit ||
       isLongerThanAfternoonTimeLimit
     ) {
       throw new AppError("You can't create an appointment on a past date.");

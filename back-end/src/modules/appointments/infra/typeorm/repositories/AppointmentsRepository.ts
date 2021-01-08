@@ -68,6 +68,14 @@ class AppointmentsRepository implements IAppointmentsRepository {
     return findAppointment;
   }
 
+  // public async findByCLient(user_id: string): Promise<Appointment | undefined> {
+  //   const client = await this.ormRepository.findOne({
+  //     where: { user_id },
+  //   });
+
+  //   return client;
+  // }
+
   public async findAllInMonthFromProvider({
     provider_id,
     month,
@@ -197,7 +205,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
   }
 
   public async delete(params: string | object): Promise<void> {
-    await this.ormRepository.delete(params);
+    return this.ormRepository.delete(params);
   }
 }
 

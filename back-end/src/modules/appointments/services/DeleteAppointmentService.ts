@@ -27,7 +27,7 @@ class DeleteAppointmentService {
       };
     }
 
-    await this.appointmentsRepository.delete(appointment?.id);
+    return this.appointmentsRepository.delete(appointment?.id);
 
     return {
       message: 'Your appointment have been successfully deleted.',
