@@ -8,14 +8,13 @@ import {
   OneToOne,
 } from 'typeorm';
 
-import uploadConfig from '@config/upload';
-
 import { Exclude, Expose } from 'class-transformer';
 
-import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
-import Address from '@modules/users/infra/typeorm/entities/Address';
-import UserProfile from '@modules/users/infra/typeorm/entities/UserProfile';
-import Client from '@modules/users/infra/typeorm/entities/Client';
+import Address from './Address';
+import UserProfile from './UserProfile';
+import Client from './Client';
+import Appointment from '../../../../appointments/infra/typeorm/entities/Appointment';
+import uploadConfig from '../../../../../config/upload';
 
 export type UserRoleType = 'admin' | 'rh' | 'secretary' | 'provider' | 'client';
 
@@ -25,16 +24,13 @@ class User {
   id: string;
 
   @Column()
-  name: string;
+  email: string;
 
   @Column({
     type: 'enum',
     enum: ['admin', 'rh', 'secretary', 'provider', 'client'],
   })
   role: UserRoleType;
-
-  @Column()
-  email: string;
 
   @Column()
   @Exclude()

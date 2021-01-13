@@ -31,6 +31,7 @@ export default class CreateAppointments1586994081011
           {
             name: 'observation',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'period',
@@ -53,30 +54,37 @@ export default class CreateAppointments1586994081011
           {
             name: 'uf',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'zip_code',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'city',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'neighborhood',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'address',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'number',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'complement',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'reference_points',
@@ -89,6 +97,17 @@ export default class CreateAppointments1586994081011
             isNullable: true,
           },
           {
+            name: 'status',
+            type: 'enum',
+            enum: [
+              'created',
+              'confirmed',
+              'suspended',
+              'appeared',
+              'not_appeared',
+            ],
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',
@@ -97,6 +116,10 @@ export default class CreateAppointments1586994081011
             name: 'updated_at',
             type: 'timestamp',
             default: 'now()',
+          },
+          {
+            name: 'user_id',
+            type: 'uuid',
           },
         ],
       }),

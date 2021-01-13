@@ -154,16 +154,34 @@ class AppointmentsRepository implements IAppointmentsRepository {
     provider_id,
     period,
     frequency,
-    user_id,
+    client_id,
+    observation,
+    uf,
+    city,
+    zip_code,
+    neighborhood,
+    number,
+    address,
+    complement,
     date,
     initial_appointment_id,
+    status,
   }: ICreateAppointmentDTO): Promise<Appointment> {
     const data = {
       provider_id,
       period,
       frequency,
-      user_id,
+      client_id,
+      observation,
       date,
+      uf,
+      city,
+      zip_code,
+      neighborhood,
+      number,
+      address,
+      complement,
+      status,
     };
 
     if (initial_appointment_id) {
@@ -190,16 +208,15 @@ class AppointmentsRepository implements IAppointmentsRepository {
       appointment = await this.create(firstAppointment);
     }
 
-    data.forEach(async ({ provider_id, period, frequency, user_id, date }) => {
-      await this.create({
-        provider_id,
-        period,
-        frequency,
-        user_id,
-        date,
+    const appointmentsMap = data.map(appointmentMap => {
+      return {
         initial_appointment_id: appointment.id,
-      });
+        ...appointmentMap,
+      };
     });
+
+    const appointments = this.ormRepository.create(appointmentsMap);
+    await this.ormRepository.save(appointments);
 
     return true;
   }

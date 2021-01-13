@@ -18,10 +18,22 @@ interface IRequest {
   provider_id: string;
   period: 'integral' | 'part_time_morning' | 'part_time_afternoon';
   frequency: 'first_contact' | 'weekly' | 'biweekly' | 'monthly';
-  user_id: string;
   day: number;
   month: number;
   year: number;
+  client_id: string;
+  initial_appointment_id?: string;
+  observation: string;
+  uf: string;
+  city: string;
+  zip_code: string;
+  neighborhood: string;
+  number: string;
+  address: string;
+  complement: string;
+  reference_points: string;
+  nearest_subway_station: string;
+  status: 'created' | 'confirmed' | 'suspended' | 'appeared' | 'not_appeared';
 }
 
 interface IResponse {
@@ -36,13 +48,24 @@ class CreateAppointmentService {
   ) {}
 
   public async execute({
-    provider_id,
-    period,
-    frequency,
     day,
     month,
     year,
-    user_id,
+    provider_id,
+    period,
+    frequency,
+    client_id,
+    observation,
+    uf,
+    city,
+    zip_code,
+    neighborhood,
+    number,
+    address,
+    complement,
+    reference_points,
+    nearest_subway_station,
+    status,
   }: IRequest): Promise<IResponse> {
     const date = new Date(year, month, day);
     const dateNow = new Date();
@@ -72,10 +95,6 @@ class CreateAppointmentService {
       isLongerThanAfternoonTimeLimit
     ) {
       throw new AppError("You can't create an appointment on a past date.");
-    }
-
-    if (user_id === provider_id) {
-      throw new AppError("You can't create an appointment with yourself.");
     }
 
     let dates = [];
@@ -128,7 +147,18 @@ class CreateAppointmentService {
       provider_id,
       period,
       frequency,
-      user_id,
+      client_id,
+      observation,
+      uf,
+      city,
+      zip_code,
+      neighborhood,
+      number,
+      address,
+      complement,
+      reference_points,
+      nearest_subway_station,
+      status,
     }));
 
     await this.appointmentsRepository.createMany(datesToCreate);

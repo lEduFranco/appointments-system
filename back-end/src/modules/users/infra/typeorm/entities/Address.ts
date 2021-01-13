@@ -8,30 +8,39 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import User from '@modules/users/infra/typeorm/entities/User';
+import User from './User';
 
 @Entity('addresses')
 class Address {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 2 })
+  @Column({ length: 2, nullable: true })
   uf: string;
 
-  @Column()
+  @Column({ nullable: true })
   city: string;
 
-  @Column({ length: 8 })
+  @Column({ length: 8, nullable: true })
   zip_code: string;
 
-  @Column()
+  @Column({ nullable: true })
   neighborhood: string;
 
-  @Column()
+  @Column({ nullable: true })
   number: string;
 
-  @Column()
+  @Column({ nullable: true })
   address: string;
+
+  @Column({ nullable: true })
+  complement: string;
+
+  @Column({ nullable: true })
+  reference_points: string;
+
+  @Column({ nullable: true })
+  nearest_subway_station: string;
 
   @CreateDateColumn()
   created_at: Date;

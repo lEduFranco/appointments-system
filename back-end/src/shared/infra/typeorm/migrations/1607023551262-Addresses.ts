@@ -21,6 +21,7 @@ export default class Addresses1607023551262 implements MigrationInterface {
           {
             name: 'uf',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'zip_code',
@@ -29,22 +30,28 @@ export default class Addresses1607023551262 implements MigrationInterface {
           {
             name: 'city',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'neighborhood',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'address',
             type: 'varchar',
+            isNullable: true,
           },
+
           {
             name: 'number',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'complement',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'reference_points',

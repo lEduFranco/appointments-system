@@ -28,6 +28,11 @@ export default class CreateUsers1587145096920 implements MigrationInterface {
             enum: ['admin', 'rh', 'secretary', 'provider', 'client'],
           },
           {
+            name: 'avatar',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

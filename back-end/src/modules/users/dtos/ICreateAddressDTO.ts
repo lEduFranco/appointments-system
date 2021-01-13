@@ -5,5 +5,8 @@ export default interface ICreateAddressDTO {
   neighborhood: string;
   number: string;
   address: string;
+  complement: string;
+  reference_points: string;
+  nearest_subway_station: string;
   user_id: string;
 }

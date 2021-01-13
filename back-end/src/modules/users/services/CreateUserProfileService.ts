@@ -4,6 +4,8 @@ import IUserProfilesRepository from '../repositories/IUserProfilesRepository';
 import UserProfile from '../infra/typeorm/entities/UserProfile';
 
 interface IRequest {
+  firstname: string;
+  lastname: string;
   rg: string;
   cpf: string;
   cnpj: string;
@@ -20,6 +22,8 @@ class CreateUserProfileService {
   ) {}
 
   public async execute({
+    firstname,
+    lastname,
     rg,
     cpf,
     cnpj,
@@ -28,6 +32,8 @@ class CreateUserProfileService {
     user_id,
   }: IRequest): Promise<UserProfile> {
     const userProfile = await this.userProfilesRepository.create({
+      firstname,
+      lastname,
       rg,
       cpf,
       cnpj,

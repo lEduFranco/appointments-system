@@ -5,11 +5,9 @@ import Client from '../infra/typeorm/entities/Client';
 
 interface IRequest {
   cf_df: string;
-  profession: string;
-  condominium_name: string;
-  reference_points: string;
-  nearest_subway_station: string;
+  occuppation: string;
   company_responsible: string;
+  status: 'active' | 'inactive' | 'suspended';
   user_id: string;
 }
 
@@ -22,20 +20,16 @@ class CreateClientService {
 
   public async execute({
     cf_df,
-    profession,
-    condominium_name,
-    reference_points,
-    nearest_subway_station,
+    occuppation,
     company_responsible,
+    status,
     user_id,
   }: IRequest): Promise<Client> {
     const createClient = await this.clientsRepository.create({
       cf_df,
-      profession,
-      condominium_name,
-      reference_points,
-      nearest_subway_station,
+      occuppation,
       company_responsible,
+      status,
       user_id,
     });
 

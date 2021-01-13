@@ -3,30 +3,28 @@ import { container } from 'tsyringe';
 
 import CreateAppointmentService from '@modules/appointments/services/CreateAppointmentService';
 import DeleteAppointmentService from '@modules/appointments/services/DeleteAppointmentService';
-import ShowEditAppointmentsService from '@modules/appointments/services/ShowEditAppointmentsService';
 
 export default class AppointmentsController {
-  public async show(request: Request, response: Response): Promise<Response> {
-    const { appointment_id } = request.body;
-
-    const editAppointment = container.resolve(ShowEditAppointmentsService);
-
-    const appointment = await editAppointment.execute({
-      appointment_id,
-    });
-
-    return response.json(appointment);
-  }
-
   public async create(request: Request, response: Response): Promise<Response> {
     const {
       day,
       month,
       year,
+      provider_id,
       period,
       frequency,
-      provider_id,
-      user_id,
+      client_id,
+      observation,
+      uf,
+      city,
+      zip_code,
+      neighborhood,
+      number,
+      address,
+      complement,
+      reference_points,
+      nearest_subway_station,
+      status,
     } = request.body;
 
     const createAppointment = container.resolve(CreateAppointmentService);
@@ -35,10 +33,21 @@ export default class AppointmentsController {
       day,
       month,
       year,
+      client_id,
+      provider_id,
       period,
       frequency,
-      provider_id,
-      user_id,
+      observation,
+      uf,
+      city,
+      zip_code,
+      neighborhood,
+      number,
+      address,
+      complement,
+      reference_points,
+      nearest_subway_station,
+      status,
     });
 
     return response.json(appointment);

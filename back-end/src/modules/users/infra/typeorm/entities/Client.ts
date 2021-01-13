@@ -8,7 +8,9 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import User from '@modules/users/infra/typeorm/entities/User';
+import User from './User';
+
+export type ClientStatusType = 'active' | 'inactive' | 'suspended';
 
 @Entity('clients')
 class Client {
@@ -19,19 +21,17 @@ class Client {
   cf_df: string;
 
   @Column({ nullable: true })
-  profession: string;
-
-  @Column({ nullable: true })
-  condominium_name: string;
-
-  @Column({ nullable: true })
-  reference_points: string;
-
-  @Column({ nullable: true })
-  nearest_subway_station: string;
+  occuppation: string;
 
   @Column({ nullable: true })
   company_responsible: string;
+
+  @Column({
+    type: 'enum',
+    enum: ['active', 'inactive', 'suspended'],
+    default: 'active',
+  })
+  status: ClientStatusType;
 
   @CreateDateColumn()
   created_at: Date;

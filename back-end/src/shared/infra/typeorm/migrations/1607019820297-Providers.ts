@@ -53,6 +53,11 @@ export default class Providers1607019820297 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'status',
+            type: 'enum',
+            enum: ['active', 'inative', 'suspended'],
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

@@ -8,12 +8,18 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import User from '@modules/users/infra/typeorm/entities/User';
+import User from './User';
 
 @Entity('user_profiles')
 class UserProfile {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column({ nullable: true })
+  firstname: string;
+
+  @Column({ nullable: true })
+  lastname: string;
 
   @Column({ length: 10, nullable: true })
   rg: string;
@@ -24,10 +30,10 @@ class UserProfile {
   @Column({ length: 14, nullable: true })
   cnpj: string;
 
-  @Column({ length: 11 })
+  @Column({ length: 11, nullable: true })
   tel: string;
 
-  @Column({ length: 11 })
+  @Column({ length: 11, nullable: true })
   cel: string;
 
   @CreateDateColumn()

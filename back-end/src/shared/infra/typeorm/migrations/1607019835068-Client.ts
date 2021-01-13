@@ -34,6 +34,11 @@ export default class Client1607019835068 implements MigrationInterface {
             isNullable: true,
           },
           {
+            name: 'status',
+            type: 'enum',
+            enum: ['active', 'inative', 'suspended'],
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

@@ -1,4 +1,6 @@
 export default interface ICreateUserProfileDTO {
+  firstname: string;
+  lastname: string;
   rg: string;
   cpf: string;
   cnpj: string;

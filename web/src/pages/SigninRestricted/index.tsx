@@ -88,8 +88,6 @@ const SignInRestricted: React.FC = () => {
             />
 
             <Button type="submit">Entrar</Button>
-
-            <Link to="/forgot-password">Esqueci minha senha</Link>
           </Form>
         </AnimationContainer>
       </Content>
@@ -99,8 +97,6 @@ const SignInRestricted: React.FC = () => {
           Voltar
         </Link>
       </Back>
-
-      {/* <Background /> */}
     </Container>
   );
 };

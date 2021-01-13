@@ -23,7 +23,6 @@ usersRouter.post(
   checkRole(['admin']),
   celebrate({
     [Segments.BODY]: {
-      name: Joi.string().required(),
       role: Joi.string().required(),
       email: Joi.string().email().required(),
       password: Joi.string().required(),

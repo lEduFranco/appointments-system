@@ -30,10 +30,11 @@ export default class ProvidersController {
 
   public async create(request: Request, response: Response): Promise<Response> {
     const {
-      name,
       role,
       email,
       password,
+      firstname,
+      lastname,
       rg,
       cpf,
       cnpj,
@@ -45,7 +46,9 @@ export default class ProvidersController {
       neighborhood,
       number,
       address,
-      complete_name,
+      complement,
+      reference_points,
+      nearest_subway_station,
       begin_date,
       final_date,
       demission_reason,
@@ -54,6 +57,7 @@ export default class ProvidersController {
       voting_zone,
       voting_section,
       password_mei,
+      status,
     } = request.body;
 
     const createUser = container.resolve(CreateUserService);
@@ -62,13 +66,14 @@ export default class ProvidersController {
     const createProvider = container.resolve(CreateProviderService);
 
     const user = await createUser.execute({
-      name,
       role,
       email,
       password,
     });
 
     await createUserProfile.execute({
+      firstname,
+      lastname,
       rg,
       cpf,
       cnpj,
@@ -84,11 +89,13 @@ export default class ProvidersController {
       neighborhood,
       number,
       address,
+      complement,
+      reference_points,
+      nearest_subway_station,
       user_id: user.id,
     });
 
     await createProvider.execute({
-      complete_name,
       begin_date,
       final_date,
       demission_reason,
@@ -97,6 +104,7 @@ export default class ProvidersController {
       voting_zone,
       voting_section,
       password_mei,
+      status,
       user_id: user.id,
     });
 

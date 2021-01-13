@@ -19,7 +19,8 @@ export default class ClientsController {
 
   public async create(request: Request, response: Response): Promise<Response> {
     const {
-      name,
+      firstname,
+      lastname,
       role,
       email,
       password,
@@ -35,11 +36,12 @@ export default class ClientsController {
       number,
       address,
       cf_df,
-      profession,
-      condominium_name,
+      occuppation,
+      complement,
       reference_points,
       nearest_subway_station,
       company_responsible,
+      status,
     } = request.body;
 
     const createUser = container.resolve(CreateUserService);
@@ -48,13 +50,14 @@ export default class ClientsController {
     const createClient = container.resolve(CreateClientService);
 
     const user = await createUser.execute({
-      name,
       role,
       email,
       password,
     });
 
     await createUserProfile.execute({
+      firstname,
+      lastname,
       rg,
       cpf,
       cnpj,
@@ -70,16 +73,17 @@ export default class ClientsController {
       neighborhood,
       number,
       address,
+      complement,
+      reference_points,
+      nearest_subway_station,
       user_id: user.id,
     });
 
     await createClient.execute({
       cf_df,
-      profession,
-      condominium_name,
-      reference_points,
-      nearest_subway_station,
+      occuppation,
       company_responsible,
+      status,
       user_id: user.id,
     });
 

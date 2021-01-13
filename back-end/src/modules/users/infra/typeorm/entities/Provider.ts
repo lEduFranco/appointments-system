@@ -8,15 +8,14 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import User from '@modules/users/infra/typeorm/entities/User';
+import User from './User';
+
+export type ProviderStatusType = 'active' | 'inactive' | 'suspended';
 
 @Entity('providers')
 class Provider {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @Column()
-  complete_name: string;
 
   @Column()
   begin_date: Date;
@@ -41,6 +40,13 @@ class Provider {
 
   @Column()
   password_mei: string;
+
+  @Column({
+    type: 'enum',
+    enum: ['active', 'inactive', 'suspended'],
+    default: 'active',
+  })
+  status: ProviderStatusType;
 
   @CreateDateColumn()
   created_at: Date;

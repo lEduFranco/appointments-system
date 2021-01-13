@@ -1,5 +1,4 @@
 export default interface ICreateProviderDTO {
-  complete_name: string;
   begin_date: string;
   final_date: string;
   demission_reason: string;
@@ -8,5 +7,6 @@ export default interface ICreateProviderDTO {
   voting_zone: string;
   voting_section: string;
   password_mei: string;
+  status: 'active' | 'inactive' | 'suspended';
   user_id: string;
 }

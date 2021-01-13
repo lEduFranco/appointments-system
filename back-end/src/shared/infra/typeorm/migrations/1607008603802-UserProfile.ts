@@ -21,10 +21,12 @@ export default class UserProfile1607008603802 implements MigrationInterface {
           {
             name: 'firstname',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'lastname',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'rg',
@@ -43,10 +45,12 @@ export default class UserProfile1607008603802 implements MigrationInterface {
           {
             name: 'tel',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'cel',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'created_at',
