@@ -68,14 +68,6 @@ class AppointmentsRepository implements IAppointmentsRepository {
     return findAppointment;
   }
 
-  // public async findByCLient(user_id: string): Promise<Appointment | undefined> {
-  //   const client = await this.ormRepository.findOne({
-  //     where: { user_id },
-  //   });
-
-  //   return client;
-  // }
-
   public async findAllInMonthFromProvider({
     provider_id,
     month,
@@ -131,10 +123,11 @@ class AppointmentsRepository implements IAppointmentsRepository {
       },
       relations: [
         'provider',
-        'user',
-        'user.addresses',
-        'user.user_profiles',
-        'user.clients',
+        'provider.user',
+        'provider.user.user_profile',
+        'client',
+        'client.user',
+        'client.user.user_profile',
       ],
     });
 

@@ -1,20 +1,20 @@
 import { injectable, inject } from 'tsyringe';
 
-import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import IClientRepository from '@modules/users/repositories/IClientRepository';
 
-import User from '@modules/users/infra/typeorm/entities/User';
+import Client from '@modules/users/infra/typeorm/entities/Client';
 
 @injectable()
 class ListProvidersService {
   constructor(
-    @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
+    @inject('ClientsRepository')
+    private clientRepository: IClientRepository,
   ) {}
 
-  public async execute(): Promise<User[]> {
-    const users = await this.usersRepository.findAllClients();
+  public async execute(): Promise<Client[]> {
+    const clients = await this.clientRepository.findAllClients();
 
-    return users;
+    return clients;
   }
 }
 

@@ -12,16 +12,21 @@ interface Response {
 
 interface Data {
   id: string;
-  name: string;
+  user: {
+    user_profile: {
+      firstname: string;
+      lastname: string;
+    };
+  };
 }
 
 const useGetClients = ({ setClients }: GetClients): void => {
   async function getClients(): Promise<void> {
     const { data }: Response = await api.get('/clients');
 
-    const mapClients = data.map(({ id, name }) => ({
+    const mapClients = data.map(({ id, user }) => ({
       value: id,
-      label: name,
+      label: `${user.user_profile.firstname} ${user.user_profile.lastname}`,
     }));
 
     setClients(mapClients);

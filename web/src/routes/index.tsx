@@ -3,21 +3,17 @@ import { Route, Switch } from 'react-router-dom';
 
 import PrivateRoute from './PrivateRoute';
 
-import SignIn from '../pages/Signin';
-import SigninRestricted from '../pages/SigninRestricted';
+import SignIn from '../pages/SignIn';
 import CreateAppointment from '../pages/CreateAppointment';
 import CreateProvider from '../pages/CreateProvider';
 import CreateClient from '../pages/CreateClient';
 import Profile from '../pages/Profile';
 
 import ListAppointments from '../pages/ListAppointments';
-import ListProviders from '../pages/ListProviders';
-import ListClient from '../pages/ListClient';
 
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={SignIn} />
-    <Route path="/restricted" exact component={SigninRestricted} />
     <PrivateRoute
       path="/create-clients"
       component={CreateClient}
@@ -43,16 +39,6 @@ const Routes: React.FC = () => (
       path="/list-appointments"
       component={ListAppointments}
       roles={['admin', 'provider', 'secretary', 'client']}
-    />
-    <PrivateRoute
-      path="/list-providers"
-      component={ListProviders}
-      roles={['admin', 'secretary', 'rh']}
-    />
-    <PrivateRoute
-      path="/list-client"
-      component={ListClient}
-      roles={['admin', 'secretary']}
     />
   </Switch>
 );

@@ -8,7 +8,8 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import User from '../../../../users/infra/typeorm/entities/User';
+import Provider from '../../../../users/infra/typeorm/entities/Provider';
+import Client from '../../../../users/infra/typeorm/entities/Client';
 
 export type UserPeriodType =
   | 'integral'
@@ -45,16 +46,16 @@ class Appointment {
   @Column()
   provider_id: string;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => Provider, provider => provider.appointment)
   @JoinColumn({ name: 'provider_id' })
-  provider: User;
+  provider: Provider;
 
   @Column()
   client_id: string;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => Client, client => client.appointment)
   @JoinColumn({ name: 'client_id' })
-  user: User;
+  client: Client;
 
   @Column({
     type: 'enum',

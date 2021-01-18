@@ -11,10 +11,10 @@ import {
 import { Exclude, Expose } from 'class-transformer';
 
 import Address from './Address';
+import uploadConfig from '../../../../../config/upload';
 import UserProfile from './UserProfile';
 import Client from './Client';
-import Appointment from '../../../../appointments/infra/typeorm/entities/Appointment';
-import uploadConfig from '../../../../../config/upload';
+import Provider from './Provider';
 
 export type UserRoleType = 'admin' | 'rh' | 'secretary' | 'provider' | 'client';
 
@@ -39,17 +39,17 @@ class User {
   @Column()
   avatar: string;
 
-  @OneToMany(() => Appointment, appointment => appointment.provider)
-  appointments: Appointment[];
-
-  @OneToOne(() => Address, address => address.user)
+  @OneToMany(() => Address, address => address.user)
   addresses: Address[];
 
   @OneToOne(() => UserProfile, user_profile => user_profile.user)
-  user_profiles: UserProfile[];
+  user_profile: UserProfile;
+
+  @OneToOne(() => Provider, provider => provider.user)
+  provider: Provider;
 
   @OneToOne(() => Client, client => client.user)
-  clients: Client[];
+  client: Client;
 
   @CreateDateColumn()
   created_at: Date;

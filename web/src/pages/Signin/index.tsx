@@ -1,9 +1,9 @@
 import React, { useRef, useCallback } from 'react';
-import { FiMail, FiLock, FiSlash } from 'react-icons/fi';
+import { FiMail, FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
@@ -14,12 +14,7 @@ import logoImg from '../../assets/Logo 15@2x.png';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
-import {
-  Container,
-  Content,
-  AnimationContainer,
-  RestrictedAccess,
-} from './styles';
+import { Container, Content, AnimationContainer } from './styles';
 
 interface SignInFormData {
   email: string;
@@ -29,7 +24,7 @@ interface SignInFormData {
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const { signIn, user } = useAuth();
+  const { signIn } = useAuth();
   const { addToast } = useToast();
 
   const history = useHistory();
@@ -55,7 +50,7 @@ const SignIn: React.FC = () => {
           password: data.password,
         });
 
-        history.push('/dashboard');
+        history.push('/list-appointments');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -81,7 +76,7 @@ const SignIn: React.FC = () => {
           <img src={logoImg} alt="ToMaisVip" />
 
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <h1>Faça seu login</h1>
+            <h1>Acesso restrito</h1>
 
             <Input name="email" icon={FiMail} placeholder="E-mail" />
 
@@ -96,13 +91,6 @@ const SignIn: React.FC = () => {
           </Form>
         </AnimationContainer>
       </Content>
-
-      <RestrictedAccess>
-        <Link to="/restricted">
-          <FiSlash />
-          Acesso restrito
-        </Link>
-      </RestrictedAccess>
     </Container>
   );
 };

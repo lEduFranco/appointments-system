@@ -4,7 +4,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
+  OneToOne,
   JoinColumn,
 } from 'typeorm';
 
@@ -45,7 +45,7 @@ class UserProfile {
   @Column('uuid')
   user_id: string;
 
-  @ManyToOne(() => User)
+  @OneToOne(() => User)
   @JoinColumn({ name: 'user_id' })
   user: User;
 }

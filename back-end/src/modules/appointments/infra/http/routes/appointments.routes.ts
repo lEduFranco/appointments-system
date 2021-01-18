@@ -35,6 +35,8 @@ appointmentsRouter.post(
       address: Joi.string().allow(null, ''),
       reference_points: Joi.string().allow(null, ''),
       nearest_subway_station: Joi.string().allow(null, ''),
+
+      status: Joi.string().default('created'),
     },
   }),
   appointmentsController.create,

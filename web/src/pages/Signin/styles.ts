@@ -1,7 +1,4 @@
 import styled, { keyframes } from 'styled-components';
-import { shade } from 'polished';
-
-// import signInBackgroundImg from '../../assets/background_wave.svg';
 
 export const Container = styled.div`
   height: 100vh;
@@ -61,64 +58,8 @@ export const AnimationContainer = styled.div`
       transition: color 0.2s;
 
       &:hover {
-        /* color: ${shade(0.2, '#3f1227')}; */
-        color: #b28d9f
+        color: #b28d9f;
       }
-    }
-  }
-
-    > a {
-    color: #b28d9f;
-
-    text-decoration: none;
-    transition: color 0.2s;
-
-    display: flex;
-    align-items: center;
-
-    svg {
-      margin-right: 16px;
-    }
-
-    &:hover {
-      /* color: ${shade(0.5, '#b28d9f')}; */
-      color: #3f1227;
-    }
-  }
-
-`;
-
-export const RestrictedAccess = styled.div`
-  width: 100%;
-  height: 40%;
-
-  /* background: url($) no-repeat center;
-  background-size: contain;
-  background-size: 100%; */
-
-  padding-top: 50px;
-  padding-right: 40px;
-
-  display: flex;
-
-  align-items: flex-start;
-  justify-content: flex-end;
-
-  a {
-    color: #b28d9f;
-
-    text-decoration: none;
-    transition: color 0.2s;
-
-    display: flex;
-    align-items: center;
-
-    svg {
-      margin-right: 16px;
-    }
-
-    &:hover {
-      color: #3f1227;
     }
   }
 `;

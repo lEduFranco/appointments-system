@@ -4,10 +4,12 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
   JoinColumn,
+  OneToMany,
+  OneToOne,
 } from 'typeorm';
 
+import Appointment from '../../../../appointments/infra/typeorm/entities/Appointment';
 import User from './User';
 
 export type ProviderStatusType = 'active' | 'inactive' | 'suspended';
@@ -57,7 +59,10 @@ class Provider {
   @Column('uuid')
   user_id: string;
 
-  @ManyToOne(() => User)
+  @OneToMany(() => Appointment, appointment => appointment.provider)
+  appointment: Appointment[];
+
+  @OneToOne(() => User, user => user.provider)
   @JoinColumn({ name: 'user_id' })
   user: User;
 }

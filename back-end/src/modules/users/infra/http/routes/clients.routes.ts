@@ -43,7 +43,7 @@ clientsRouter.post(
       cf_df: Joi.string().allow(null, ''),
       company_responsible: Joi.string().allow(null, ''),
 
-      status: Joi.string().allow(null, ''),
+      status: Joi.string().default('active'),
     },
   }),
   clientsController.create,

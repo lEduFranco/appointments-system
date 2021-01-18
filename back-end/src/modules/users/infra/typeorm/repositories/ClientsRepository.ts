@@ -12,6 +12,14 @@ class ClientsRepository implements IClientRepository {
     this.ormRepository = getRepository(Client);
   }
 
+  public async findAllClients(): Promise<Client[]> {
+    const clients = await this.ormRepository.find({
+      relations: ['user', 'user.user_profile'],
+    });
+
+    return clients;
+  }
+
   public async create(userData: ICreateClientDTO): Promise<Client> {
     const client = this.ormRepository.create(userData);
 

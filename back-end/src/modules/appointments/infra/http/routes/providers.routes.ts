@@ -68,15 +68,15 @@ providersRouter.post(
       nearest_subway_station: Joi.string().allow(null, ''),
 
       begin_date: Joi.string().required(),
-      final_date: Joi.string(),
-      demission_reason: Joi.string(),
+      final_date: Joi.string().allow(null, ''),
+      demission_reason: Joi.string().allow(null, ''),
       uniform_size: Joi.string().required(),
       voter_registration: Joi.string().required(),
       voting_zone: Joi.string().required(),
       voting_section: Joi.string().required(),
       password_mei: Joi.string().required(),
 
-      status: Joi.string().required(),
+      status: Joi.string().default('active'),
     },
   }),
   providersController.create,

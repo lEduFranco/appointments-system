@@ -1,12 +1,11 @@
 import { format, addYears, eachDayOfInterval } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 
-import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import IProviderRepository from '@modules/users/repositories/IProviderRepository';
 
-import User from '@modules/users/infra/typeorm/entities/User';
+import Provider from '@modules/users/infra/typeorm/entities/Provider';
 
 interface IRequest {
-  user_id: string;
   period: 'integral' | 'part_time_morning' | 'part_time_afternoon';
   frequency: 'first_contact' | 'weekly' | 'biweekly' | 'monthly';
   day: number;
@@ -17,8 +16,8 @@ interface IRequest {
 @injectable()
 class ListProvidersService {
   constructor(
-    @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
+    @inject('ProvidersRepository')
+    private providersRepository: IProviderRepository,
   ) {}
 
   public async execute({
@@ -27,8 +26,7 @@ class ListProvidersService {
     day,
     month,
     year,
-    user_id,
-  }: IRequest): Promise<User[]> {
+  }: IRequest): Promise<Provider[]> {
     const date = new Date(year, month, day);
 
     let dates = [];
@@ -65,13 +63,12 @@ class ListProvidersService {
       format(dateToFormat, 'yyyy-MM-dd'),
     );
 
-    const users = await this.usersRepository.findAllProviders({
-      except_user_id: user_id,
+    const providers = await this.providersRepository.findAllProviders({
       period,
       dates: datesFormatted,
     });
 
-    return users;
+    return providers;
   }
 }
 

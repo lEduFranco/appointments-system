@@ -1,15 +1,7 @@
-import React, {
-  useCallback,
-  useState,
-  FormEvent,
-  useMemo,
-  useRef,
-} from 'react';
+import React, { useCallback, useState, FormEvent, useMemo } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
-
-import { FormHandles } from '@unform/core';
 
 import { format, getDate, getMonth, getYear, isToday } from 'date-fns';
 import DayPicker, { DayModifiers } from 'react-day-picker';
@@ -77,7 +69,7 @@ const CreateAppointments: React.FC = () => {
       e.preventDefault();
 
       const data = {
-        user_id: client,
+        client_id: client,
         period,
         frequency,
         provider_id: provider,
@@ -87,7 +79,7 @@ const CreateAppointments: React.FC = () => {
       };
 
       const schema = Yup.object().shape({
-        user_id: Yup.string().required('Selecione o cliente, por favor!'),
+        client_id: Yup.string().required('Selecione o cliente, por favor!'),
         period: Yup.string().required('Selecione o período, por favor!'),
         frequency: Yup.string().required('Selecione a frequência, por favor!'),
         provider_id: Yup.string().required('Selecione a diarista, por favor!'),
@@ -102,7 +94,7 @@ const CreateAppointments: React.FC = () => {
 
       api
         .post('/appointments', {
-          user_id: client,
+          client_id: client,
           period,
           frequency,
           provider_id: provider,

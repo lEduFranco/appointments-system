@@ -11,14 +11,8 @@ import { getDate, getMonth, getYear } from 'date-fns';
 import DayPicker, { DayModifiers } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
-import { FiFilter, FiPlus } from 'react-icons/fi';
+import { FiPlus } from 'react-icons/fi';
 import api from '../../services/api';
-import getValidationErrors from '../../utils/getValidationErrors';
-
-import { useToast } from '../../hooks/toast';
-
-import Select from '../../components/Select';
-import Button from '../../components/Button';
 import HeaderComponent from '../../components/Header';
 
 import AppointmentComponent from './Appointment';
@@ -37,9 +31,7 @@ import {
   CreateClient,
   Filter,
   Schedule,
-  AnimationContainer,
   Calendar,
-  BorderlessButton,
 } from './styles';
 
 interface SignUpFormData {
@@ -61,18 +53,27 @@ interface Appointment {
   id: string;
   date: Date;
   frequency: string;
-  user: {
-    name: string;
-    addresses: {
-      neighborhood: string;
-      address: string;
-      number: string;
+  neighborhood: string;
+  address: string;
+  number: string;
+  provider: {
+    user: {
+      user_profiles: {
+        cel: string;
+        tel: string;
+        firstname: string;
+        lastname: string;
+      };
     };
-    user_profiles: {
-      cel: string;
-    };
-    clients: {
-      condominium_name: string;
+  };
+  client: {
+    user: {
+      user_profiles: {
+        cel: string;
+        tel: string;
+        firstname: string;
+        lastname: string;
+      };
     };
   };
 }
@@ -258,7 +259,6 @@ const ListAppointments: React.FC = () => {
               weekdaysShort={['D', 'S', 'T', 'Q', 'Q', 'S', 'S']}
               fromMonth={new Date()}
               disabledDays={{ before: new Date() }}
-              // disabledDays={[{ daysOfWeek: [0] }]}
               modifiers={{
                 available: { daysOfWeek: [1, 2, 3, 4, 5, 6] },
               }}
@@ -280,53 +280,6 @@ const ListAppointments: React.FC = () => {
               ]}
             />
           </Calendar>
-
-          {/* <AnimationContainer>
-            <Form onSubmit={() => {}}>
-              <BorderlessButton>
-                <h1>Filtro</h1>
-                <FiFilter size={25} />
-              </BorderlessButton>
-
-
-              <Select
-                name="period"
-                label=""
-                value={period}
-                onChange={(e) => {
-                  setPeriod(e.target.value);
-                }}
-                options={[
-                  {
-                    value: 'part_time_morning',
-                    label: 'Manhã - 4h (meio periodo)',
-                  },
-                  {
-                    value: 'part_time_afternoon',
-                    label: 'Tarde - 4h (meio periodo)',
-                  },
-                  { value: 'integral', label: 'Integral - 8h' },
-                ]}
-              />
-
-              <Select
-                name="frequency"
-                label=""
-                value={frequency}
-                onChange={(e) => {
-                  setFrequency(e.target.value);
-                }}
-                options={[
-                  { value: 'first_contact', label: 'Primeira diária' },
-                  { value: 'monthly', label: 'Avulso' },
-                  { value: 'weekly', label: 'Semanal' },
-                  { value: 'biweekly', label: 'Quinzenal' },
-                ]}
-              />
-              <Button type="submit">buscar</Button>
-
-            </Form>
-          </AnimationContainer> */}
         </Filter>
       </Content>
     </Container>

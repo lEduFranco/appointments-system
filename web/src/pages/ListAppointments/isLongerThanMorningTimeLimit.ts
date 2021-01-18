@@ -16,18 +16,27 @@ interface Appointment {
   id: string;
   date: Date;
   frequency: string;
-  user: {
-    name: string;
-    addresses: {
-      neighborhood: string;
-      address: string;
-      number: string;
+  neighborhood: string;
+  address: string;
+  number: string;
+  provider: {
+    user: {
+      user_profiles: {
+        cel: string;
+        tel: string;
+        firstname: string;
+        lastname: string;
+      };
     };
-    user_profiles: {
-      cel: string;
-    };
-    clients: {
-      condominium_name: string;
+  };
+  client: {
+    user: {
+      user_profiles: {
+        cel: string;
+        tel: string;
+        firstname: string;
+        lastname: string;
+      };
     };
   };
 }
