@@ -48,6 +48,10 @@ class UserProfile {
   @OneToOne(() => User)
   @JoinColumn({ name: 'user_id' })
   user: User;
+
+  public get fullName(): string {
+    return `${this.firstname} ${this.lastname}`;
+  }
 }
 
 export default UserProfile;

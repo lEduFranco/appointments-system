@@ -5,7 +5,11 @@ import IFindAllAppointmentsFromProvidersByDateDTO from '../dtos/IFindAllAppointm
 import IFindAllInDayFromProvidersDTO from '../dtos/IFindAllInDayFromProvidersDTO';
 
 export interface IAppointmentsProvider {
-  provider: string;
+  provider: {
+    id: string;
+    name: string;
+  };
+
   appointments: IAppointments;
 }
 

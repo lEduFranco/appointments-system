@@ -67,7 +67,8 @@ class CreateAppointmentService {
     nearest_subway_station,
     status,
   }: IRequest): Promise<IResponse> {
-    const date = new Date(year, month, day);
+    const parsedMonth = month - 1;
+    const date = new Date(year, parsedMonth, day);
     const dateNow = new Date();
     const timeLimitPartTimeMorning = setHours(startOfDay(dateNow), 10);
     const timeLimitPartTimeIntegral = setHours(startOfDay(dateNow), 10);

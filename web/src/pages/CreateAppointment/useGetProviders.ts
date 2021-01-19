@@ -47,10 +47,7 @@ const useGetProviders = ({
   }
 
   useEffect(() => {
-    if (
-      (period && frequency && day && month && year) ||
-      (period && frequency && day && month === 0 && year)
-    ) {
+    if (period && frequency && day && month && year) {
       getProviders();
     }
   }, [day, frequency, month, period, year]);

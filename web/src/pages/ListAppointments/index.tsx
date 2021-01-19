@@ -39,7 +39,10 @@ interface SignUpFormData {
 }
 
 interface AppointmentsProvider {
-  provider: string;
+  provider: {
+    id: string;
+    name: string;
+  };
   appointments: Appointments;
 }
 
@@ -170,8 +173,8 @@ const ListAppointments: React.FC = () => {
               <tbody>
                 {appointments.length > 0 ? (
                   map(appointments, (appointmentsProvider) => (
-                    <tr key={appointmentsProvider.provider}>
-                      <th>{appointmentsProvider.provider}</th>
+                    <tr key={appointmentsProvider.provider.id}>
+                      <th>{appointmentsProvider.provider.name}</th>
                       <td>
                         <AppointmentComponent
                           appointment={

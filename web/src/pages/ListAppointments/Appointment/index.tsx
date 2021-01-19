@@ -35,7 +35,7 @@ interface AppointmentProps {
   number: string;
   provider: {
     user: {
-      user_profiles: {
+      user_profile: {
         cel: string;
         tel: string;
         firstname: string;
@@ -45,7 +45,7 @@ interface AppointmentProps {
   };
   client: {
     user: {
-      user_profiles: {
+      user_profile: {
         cel: string;
         tel: string;
         firstname: string;
@@ -146,14 +146,15 @@ const Appointment: React.FC<Props> = ({
   return (
     <>
       <Container>
-        <h1>{appointment?.user.name}</h1>
-        <h3>{appointment?.user.addresses.neighborhood}</h3>
+        <h1>
+          {appointment?.client.user.user_profile.firstname}{' '}
+          {appointment?.client.user.user_profile.lastname}
+        </h1>
+        <h3>{appointment?.neighborhood}</h3>
         <p className="address">
-          {appointment?.user.addresses.address}{' '}
-          {appointment?.user.clients.condominium_name}{' '}
-          {appointment?.user.addresses.number}
+          {appointment?.address} {appointment?.number}
         </p>
-        <p>{appointment?.user.user_profiles.cel}</p>
+        <p>{appointment?.client.user.user_profile.cel}</p>
         <p>{getFrequencyName(appointment?.frequency)}</p>
 
         <button type="button" onClick={toggleModal}>
@@ -167,15 +168,16 @@ const Appointment: React.FC<Props> = ({
         >
           <div className="modal">
             <div className="dados">
-              <h1>{appointment?.user.name}</h1>
+              <h1>
+                {appointment?.client.user.user_profile.firstname}{' '}
+                {appointment?.client.user.user_profile.lastname}
+              </h1>
               <p className="address">
-                {appointment?.user.addresses.address}{' '}
-                {appointment?.user.clients.condominium_name}{' '}
-                {appointment?.user.addresses.number}
+                {appointment?.address} {appointment?.number}
               </p>
               <p className="contact">
-                {appointment?.user.user_profiles.cel}{' '}
-                {appointment?.user.user_profiles.tel}
+                {appointment?.client.user.user_profile.cel}{' '}
+                {appointment?.client.user.user_profile.tel}
               </p>
               <p>{getFrequencyName(appointment?.frequency)}</p>
             </div>

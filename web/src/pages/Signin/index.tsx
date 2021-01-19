@@ -76,7 +76,7 @@ const SignIn: React.FC = () => {
           <img src={logoImg} alt="ToMaisVip" />
 
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <h1>Acesso restrito</h1>
+            <h1>Login</h1>
 
             <Input name="email" icon={FiMail} placeholder="E-mail" />
 

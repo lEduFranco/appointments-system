@@ -8,7 +8,6 @@ import {
   FiSmartphone,
   FiMap,
   FiBriefcase,
-  FiHome,
   FiMapPin,
 } from 'react-icons/fi';
 import {
@@ -54,17 +53,24 @@ const CreateClient: React.FC = () => {
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
-          name: Yup.string().required('campo obrigatório não preenchido'),
+          firstname: Yup.string().required('campo obrigatório não preenchido'),
+          lastname: Yup.string().required('campo obrigatório não preenchido'),
 
           email: Yup.string()
             .required('campo obrigatório não preenchido')
             .email('Digite um e-mail válido'),
           password: Yup.string().min(6, 'No mínimo 6 dígitos'),
           rg: Yup.string(),
-          cpf: Yup.string(),
+          cpf: Yup.string().min(11, 'No mínimo 11 dígitos'),
 
           tel: Yup.string(),
-          cel: Yup.string().min(11, 'No máximo 11 dígitos'),
+          cel: Yup.string().min(11, 'No mínimo 11 dígitos'),
+          occuppation: Yup.string().when('cpf', {
+            is: (val) => !!val.length,
+            then: Yup.string().required('campo obrigatório não preenchido'),
+            otherwise: Yup.string(),
+          }),
+
           uf: Yup.string()
             .max(2, 'No máximo 2 dígitos')
             .min(1, 'No mínimo 2 dígitos'),
@@ -78,12 +84,6 @@ const CreateClient: React.FC = () => {
           number: Yup.string().required('campo obrigatório não preenchido'),
           address: Yup.string().required('campo obrigatório não preenchido'),
 
-          profession: Yup.string().when('rg', {
-            is: (val) => !!val.length,
-            then: Yup.string().required('campo obrigatório não preenchido'),
-            otherwise: Yup.string(),
-          }),
-          condominium_name: Yup.string(),
           reference_points: Yup.string(),
           nearest_subway_station: Yup.string(),
           cnpj: Yup.string(),
@@ -99,12 +99,12 @@ const CreateClient: React.FC = () => {
           abortEarly: false,
         });
 
-        const dataProviders = {
+        const datacClients = {
           ...data,
           role: 'client',
         };
 
-        await api.post('/clients', dataProviders);
+        await api.post('/clients', datacClients);
 
         history.push('/list-appointments');
 
@@ -136,12 +136,10 @@ const CreateClient: React.FC = () => {
     <Container>
       <Content>
         <AnimationContainer>
-          {/* <img src={logoImg} alt="ToMaisVip" /> */}
-
           <Form ref={formRef} onSubmit={handleSubmit}>
             <h1>Cadastro Cliente</h1>
             <h3>Dados da conta</h3>
-            <Input name="name" icon={FiUser} placeholder="Nome" />
+
             <Input name="email" icon={FiMail} placeholder="E-mail" />
             <Input
               name="password"
@@ -150,6 +148,8 @@ const CreateClient: React.FC = () => {
               placeholder="Senha"
             />
             <h3>Dados pessoais</h3>
+            <Input name="firstname" icon={FiUser} placeholder="Primeiro nome" />
+            <Input name="lastname" icon={FiUser} placeholder="Sobrenome" />
             <InputMask
               name="rg"
               icon={RiProfileLine}
@@ -176,7 +176,7 @@ const CreateClient: React.FC = () => {
             />
 
             <Input
-              name="profession"
+              name="occuppation"
               icon={FiBriefcase}
               placeholder="Profissão"
             />
@@ -204,11 +204,6 @@ const CreateClient: React.FC = () => {
             <Input name="address" icon={RiRoadMapLine} placeholder="Endereço" />
             <Input name="number" icon={RiRoadMapLine} placeholder="Número" />
 
-            <Input
-              name="condominium_name"
-              icon={FiHome}
-              placeholder="Nome do condomínio"
-            />
             <Input
               name="reference_points"
               icon={FiMapPin}

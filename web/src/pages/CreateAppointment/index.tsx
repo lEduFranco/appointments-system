@@ -44,7 +44,7 @@ const CreateAppointments: React.FC = () => {
 
   useGetProviders({
     day: daySelected,
-    month: monthSelected,
+    month: monthSelected + 1,
     year: yearSelected,
     period,
     frequency,
@@ -74,7 +74,7 @@ const CreateAppointments: React.FC = () => {
         frequency,
         provider_id: provider,
         day: daySelected,
-        month: monthSelected,
+        month: monthSelected + 1,
         year: yearSelected,
       };
 
@@ -99,7 +99,7 @@ const CreateAppointments: React.FC = () => {
           frequency,
           provider_id: provider,
           day: daySelected,
-          month: monthSelected,
+          month: monthSelected + 1,
           year: yearSelected,
         })
         .then(() => {
@@ -218,7 +218,6 @@ const CreateAppointments: React.FC = () => {
               weekdaysShort={['D', 'S', 'T', 'Q', 'Q', 'S', 'S']}
               fromMonth={new Date()}
               disabledDays={{ before: new Date() }}
-              // disabledDays={[{ daysOfWeek: [0] }]}
               modifiers={{
                 available: { daysOfWeek: [1, 2, 3, 4, 5, 6] },
               }}

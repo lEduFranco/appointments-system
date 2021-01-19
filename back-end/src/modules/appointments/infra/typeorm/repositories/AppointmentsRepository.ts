@@ -131,13 +131,18 @@ class AppointmentsRepository implements IAppointmentsRepository {
       ],
     });
 
-    const groupAppointments = groupBy(appointments, 'provider.name');
+    const groupAppointments = groupBy(appointments, 'provider.id');
     const mapAppointments = map(
       groupAppointments,
-      (appointmentsProvider, index) => ({
-        provider: index,
-        appointments: keyBy(appointmentsProvider, 'period'),
-      }),
+      (appointmentsProvider, index) => {
+        return {
+          provider: {
+            id: index,
+            name: `${appointmentsProvider[0].provider.user.user_profile.firstname} ${appointmentsProvider[0].provider.user.user_profile.lastname}`,
+          },
+          appointments: keyBy(appointmentsProvider, 'period'),
+        };
+      },
     );
 
     return mapAppointments;

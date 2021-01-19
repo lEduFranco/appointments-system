@@ -24,7 +24,7 @@ clientsRouter.post(
 
       firstname: Joi.string().required(),
       lastname: Joi.string().required(),
-      rg: Joi.string().allow(null, ''),
+      rg: Joi.string().allow(null, 'null'),
       cpf: Joi.string().required(),
       tel: Joi.string().allow(null, ''),
       cel: Joi.string().required(),

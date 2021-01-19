@@ -50,7 +50,8 @@ const CreateProvider: React.FC = () => {
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
-          name: Yup.string().required('campo obrigatório não preenchido'),
+          firstname: Yup.string().required('campo obrigatório não preenchido'),
+          lastname: Yup.string().required('campo obrigatório não preenchido'),
 
           email: Yup.string()
             .required('campo obrigatório não preenchido')
@@ -73,9 +74,7 @@ const CreateProvider: React.FC = () => {
           ),
           number: Yup.string().required('campo obrigatório não preenchido'),
           address: Yup.string().required('campo obrigatório não preenchido'),
-          complete_name: Yup.string().required(
-            'campo obrigatório não preenchido',
-          ),
+
           begin_date: Yup.string().required('campo obrigatório não preenchido'),
           uniform_size: Yup.string()
             .max(2, 'No máximo 2 dígitos')
@@ -147,7 +146,7 @@ const CreateProvider: React.FC = () => {
           >
             <h1>Cadastro Diarista</h1>
             <h3>Dados da conta</h3>
-            <Input name="name" icon={FiUser} placeholder="Nome para agenda" />
+
             <Input name="email" icon={FiMail} placeholder="E-mail" />
             <Input
               name="password"
@@ -156,11 +155,8 @@ const CreateProvider: React.FC = () => {
               placeholder="Senha"
             />
             <h3>Dados pessoais</h3>
-            <Input
-              name="complete_name"
-              icon={FiUser}
-              placeholder="Nome completo"
-            />
+            <Input name="firstname" icon={FiUser} placeholder="Primeiro nome" />
+            <Input name="lastname" icon={FiUser} placeholder="Sobrenome" />
             <InputMask
               name="rg"
               icon={RiProfileLine}
