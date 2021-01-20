@@ -36,6 +36,7 @@ clientsRouter.post(
       neighborhood: Joi.string().allow(null, ''),
       number: Joi.string().allow(null, ''),
       address: Joi.string().allow(null, ''),
+      complement: Joi.string().allow(null, ''),
       reference_points: Joi.string().allow(null, ''),
       nearest_subway_station: Joi.string().allow(null, ''),
 

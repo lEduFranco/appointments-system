@@ -83,6 +83,7 @@ const CreateClient: React.FC = () => {
           ),
           number: Yup.string().required('campo obrigatório não preenchido'),
           address: Yup.string().required('campo obrigatório não preenchido'),
+          complement: Yup.string(),
 
           reference_points: Yup.string(),
           nearest_subway_station: Yup.string(),
@@ -203,6 +204,11 @@ const CreateClient: React.FC = () => {
             />
             <Input name="address" icon={RiRoadMapLine} placeholder="Endereço" />
             <Input name="number" icon={RiRoadMapLine} placeholder="Número" />
+            <Input
+              name="complement"
+              icon={RiRoadMapLine}
+              placeholder="complemento"
+            />
 
             <Input
               name="reference_points"

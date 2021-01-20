@@ -2,6 +2,7 @@ import React, { useCallback, useState, FormEvent, useMemo } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
+// import 'react-autocomplete';
 
 import { format, getDate, getMonth, getYear, isToday } from 'date-fns';
 import DayPicker, { DayModifiers } from 'react-day-picker';
@@ -21,11 +22,32 @@ import HeaderComponent from '../../components/Header';
 import {
   Container,
   Content,
+  Autocomplete,
   AnimationContainer,
   Dates,
   Calendar,
 } from './styles';
 import api from '../../services/api';
+
+interface Address {
+  neighborhood: string;
+  number: string;
+  address: string;
+  complement: string;
+  reference_points: string;
+  nearest_subway_station: string;
+}
+
+interface Client {
+  id: string;
+  user: {
+    addresses: Address[];
+    user_profile: {
+      firstname: string;
+      lastname: string;
+    };
+  };
+}
 
 const CreateAppointments: React.FC = () => {
   const { addToast } = useToast();
@@ -35,8 +57,8 @@ const CreateAppointments: React.FC = () => {
   const [frequency, setFrequency] = useState('');
   const [provider, setProvider] = useState('');
   const [providers, setProviders] = useState([]);
-  const [client, setClient] = useState('');
-  const [clients, setClients] = useState([]);
+  const [client, setClient] = useState<Client>({});
+  const [clients, setClients] = useState<Clients[]>([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [daySelected, setDaySelected] = useState(getDate(new Date()));
   const [monthSelected, setMonthSelected] = useState(getMonth(new Date()));
@@ -54,6 +76,7 @@ const CreateAppointments: React.FC = () => {
   useGetClients({
     setClients,
   });
+
   const selectedDateAsText = useMemo(() => {
     return format(selectedDate, "'Dia' dd 'de' MMMM", {
       locale: ptBR,
@@ -69,13 +92,17 @@ const CreateAppointments: React.FC = () => {
       e.preventDefault();
 
       const data = {
-        client_id: client,
-        period,
-        frequency,
+        client_id: client.id,
         provider_id: provider,
         day: daySelected,
         month: monthSelected + 1,
         year: yearSelected,
+        neighborhood: client.user.addresses[0].neighborhood,
+        number: client.user.addresses[0].number,
+        address: client.user.addresses[0].address,
+        complement: client.user.addresses[0].complement,
+        reference_points: client.user.addresses[0].reference_points,
+        nearest_subway_station: client.user.addresses[0].nearest_subway_station,
       };
 
       const schema = Yup.object().shape({
@@ -143,7 +170,26 @@ const CreateAppointments: React.FC = () => {
           <form onSubmit={handleSubmit}>
             <h1>Criar agendamento</h1>
 
-            <Select
+            <Autocomplete
+              getItemValue={(item) => item.label}
+              items={[
+                { label: 'apple' },
+                { label: 'banana' },
+                { label: 'pear' },
+              ]}
+              renderItem={(item, isHighlighted) => (
+                <div
+                  style={{ background: isHighlighted ? 'lightgray' : 'white' }}
+                >
+                  {item.label}
+                </div>
+              )}
+              value={value}
+              onChange={(e) => (value = e.target.value)}
+              onSelect={(val) => (value = val)}
+            />
+
+            {/* <Select
               name="clients"
               label="Cliente"
               value={client}
@@ -151,7 +197,7 @@ const CreateAppointments: React.FC = () => {
                 setClient(e.target.value);
               }}
               options={clients}
-            />
+            /> */}
 
             <Select
               name="period"

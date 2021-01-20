@@ -74,6 +74,7 @@ const CreateProvider: React.FC = () => {
           ),
           number: Yup.string().required('campo obrigatório não preenchido'),
           address: Yup.string().required('campo obrigatório não preenchido'),
+          complement: Yup.string(),
 
           begin_date: Yup.string().required('campo obrigatório não preenchido'),
           uniform_size: Yup.string()
@@ -220,6 +221,11 @@ const CreateProvider: React.FC = () => {
             />
             <Input name="address" icon={RiRoadMapLine} placeholder="Endereço" />
             <Input name="number" icon={RiRoadMapLine} placeholder="Número" />
+            <Input
+              name="complement"
+              icon={RiRoadMapLine}
+              placeholder="complemento"
+            />
 
             <h3>Dados da diarista</h3>
             <InputMask
