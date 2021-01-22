@@ -11,8 +11,8 @@ class ListProvidersService {
     private clientRepository: IClientRepository,
   ) {}
 
-  public async execute(): Promise<Client[]> {
-    const clients = await this.clientRepository.findAllClients();
+  public async execute(nameFilter: string): Promise<Client[]> {
+    const clients = await this.clientRepository.findAllClients(nameFilter);
 
     return clients;
   }

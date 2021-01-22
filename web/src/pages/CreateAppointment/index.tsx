@@ -2,7 +2,7 @@ import React, { useCallback, useState, FormEvent, useMemo } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
-// import 'react-autocomplete';
+import Autocomplete from 'react-autocomplete';
 
 import { format, getDate, getMonth, getYear, isToday } from 'date-fns';
 import DayPicker, { DayModifiers } from 'react-day-picker';
@@ -22,8 +22,10 @@ import HeaderComponent from '../../components/Header';
 import {
   Container,
   Content,
-  Autocomplete,
+  AutoCompleteStyle,
   AnimationContainer,
+  DivSearch,
+  DivSelect,
   Dates,
   Calendar,
 } from './styles';
@@ -57,8 +59,8 @@ const CreateAppointments: React.FC = () => {
   const [frequency, setFrequency] = useState('');
   const [provider, setProvider] = useState('');
   const [providers, setProviders] = useState([]);
-  const [client, setClient] = useState<Client>({});
-  const [clients, setClients] = useState<Clients[]>([]);
+  const [client, setClient] = useState<Client>('');
+  const [clients, setClients] = useState<Client[]>([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [daySelected, setDaySelected] = useState(getDate(new Date()));
   const [monthSelected, setMonthSelected] = useState(getMonth(new Date()));
@@ -170,78 +172,76 @@ const CreateAppointments: React.FC = () => {
           <form onSubmit={handleSubmit}>
             <h1>Criar agendamento</h1>
 
-            <Autocomplete
-              getItemValue={(item) => item.label}
-              items={[
-                { label: 'apple' },
-                { label: 'banana' },
-                { label: 'pear' },
-              ]}
-              renderItem={(item, isHighlighted) => (
-                <div
-                  style={{ background: isHighlighted ? 'lightgray' : 'white' }}
-                >
-                  {item.label}
-                </div>
-              )}
-              value={value}
-              onChange={(e) => (value = e.target.value)}
-              onSelect={(val) => (value = val)}
-            />
+            <DivSearch>
+              <h3>Cliente</h3>
+              <Autocomplete
+                shouldItemRender={(item, value) =>
+                  item.user.user_profile.firstname
+                    .toLowerCase()
+                    .indexOf(value.toLowerCase()) > -1}
+                menuStyle={{ background: '#b28d9f' }}
+                getItemValue={(item) => item.user.user_profile.firstname}
+                items={clients}
+                value={client}
+                onSelect={(value, item) => {
+                  setClient(value);
+                }}
+                onChange={(event, value) => {
+                  setClient(event.target.value);
+                }}
+                renderItem={(item, isHighlighted) => (
+                  <AutoCompleteStyle>
+                    {item.user.user_profile.firstname}
+                  </AutoCompleteStyle>
+                )}
+              />
+            </DivSearch>
 
-            {/* <Select
-              name="clients"
-              label="Cliente"
-              value={client}
-              onChange={(e) => {
-                setClient(e.target.value);
-              }}
-              options={clients}
-            /> */}
+            <DivSelect>
+              <Select
+                name="period"
+                label="Tipo de diária"
+                value={period}
+                onChange={(e) => {
+                  setPeriod(e.target.value);
+                }}
+                options={[
+                  {
+                    value: 'part_time_morning',
+                    label: 'Manhã - 4h (meio periodo)',
+                  },
+                  {
+                    value: 'part_time_afternoon',
+                    label: 'Tarde - 4h (meio periodo)',
+                  },
+                  { value: 'integral', label: 'Integral - 8h' },
+                ]}
+              />
 
-            <Select
-              name="period"
-              label="Tipo de diária"
-              value={period}
-              onChange={(e) => {
-                setPeriod(e.target.value);
-              }}
-              options={[
-                {
-                  value: 'part_time_morning',
-                  label: 'Manhã - 4h (meio periodo)',
-                },
-                {
-                  value: 'part_time_afternoon',
-                  label: 'Tarde - 4h (meio periodo)',
-                },
-                { value: 'integral', label: 'Integral - 8h' },
-              ]}
-            />
-
-            <Select
-              name="frequency"
-              label="Frequência do serviço"
-              value={frequency}
-              onChange={(e) => {
-                setFrequency(e.target.value);
-              }}
-              options={[
-                { value: 'first_contact', label: 'Primeira diária' },
-                { value: 'monthly', label: 'Avulso' },
-                { value: 'weekly', label: 'Semanal' },
-                { value: 'biweekly', label: 'Quinzenal' },
-              ]}
-            />
-            <Select
-              name="providers"
-              label="Diaristas"
-              value={provider}
-              onChange={(e) => {
-                setProvider(e.target.value);
-              }}
-              options={providers}
-            />
+              <Select
+                name="frequency"
+                label="Frequência do serviço"
+                value={frequency}
+                onChange={(e) => {
+                  setFrequency(e.target.value);
+                }}
+                options={[
+                  { value: 'first_contact', label: 'Primeira diária' },
+                  { value: 'monthly', label: 'Avulso' },
+                  { value: 'weekly', label: 'Semanal' },
+                  { value: 'biweekly', label: 'Quinzenal' },
+                ]}
+              />
+              <Select
+                name="providers"
+                label="Diaristas"
+                value={provider}
+                onChange={(e) => {
+                  setProvider(e.target.value);
+                }}
+                options={providers}
+              />
+            </DivSelect>
 
             <Button type="submit">Cadastrar</Button>
           </form>

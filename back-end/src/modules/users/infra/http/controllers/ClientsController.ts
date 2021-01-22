@@ -10,11 +10,13 @@ import CreateClientService from 'modules/users/services/CreateClientService';
 
 export default class ClientsController {
   public async index(request: Request, response: Response): Promise<Response> {
+    const { nameFilter } = request.query;
+
     const listClients = container.resolve(ListClientsService);
 
-    const user = await listClients.execute();
+    const clients = await listClients.execute(nameFilter);
 
-    return response.json(classToClass(user));
+    return response.json(classToClass(clients));
   }
 
   public async create(request: Request, response: Response): Promise<Response> {

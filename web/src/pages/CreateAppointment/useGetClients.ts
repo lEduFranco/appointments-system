@@ -34,12 +34,7 @@ const useGetClients = ({ setClients }: GetClients): void => {
   async function getClients(): Promise<void> {
     const { data }: Response = await api.get('/clients');
 
-    const mapClients = data.map((client) => ({
-      value: client,
-      label: `${client.user.user_profile.firstname} ${client.user.user_profile.lastname}`,
-    }));
-
-    setClients(mapClients);
+    setClients(data);
   }
 
   useEffect(() => {

@@ -133,22 +133,59 @@ export const AnimationContainer = styled.div`
   }
 `;
 
-export const Autocomplete = styled.input`
-  border-radius: 3px;
+export const DivSearch = styled.div`
+  padding-bottom: 10%;
+  position: relative;
+  width: 100%;
+  height: 100px;
+  z-index: 2;
+
+  h3 {
+    font-size: 1.4rem;
+    font-weight: 400;
+    padding-bottom: 10px;
+  }
+
+  input {
+    width: 550px;
+    height: 3.8rem;
+
+    background: #b28d9f;
+    border-radius: 10px;
+    border: 1px solid #3f1229;
+
+    padding: 0 10px;
+    text-transform: uppercase;
+  }
+`;
+
+export const DivSelect = styled.div`
+  display: block;
+  justify-content: center;
+  padding-top: 5%;
+  position: relative;
+  z-index: 1;
+`;
+
+export const AutoCompleteStyle = styled.div`
+  display: flex;
+
+  border-radius: 10px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-  background: rgba(255, 255, 255, 0.9);
-  padding: 2px 0;
-  font-size: 90%;
-  position: fixed;
+  padding: 8px 4px;
+  font-size: 1rem;
+  position: relative;
   overflow: auto;
   max-height: 50%;
+  text-transform: uppercase;
+  cursor: pointer;
 `;
 
 export const Dates = styled.div`
   display: flex;
   flex-direction: column;
 
-  padding-bottom: 10%;
+  padding-bottom: 5%;
   padding-left: 2%;
   h1 {
     font-size: 36px;

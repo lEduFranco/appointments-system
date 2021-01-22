@@ -8,7 +8,7 @@
 }
 
 .select-block label {
-  font-family: 'Roboto Slab';
+  font-family: 'Montserrat', sans-serif;
   font-size: 1.4rem;
 }
 
@@ -21,7 +21,7 @@
   border: 1px solid #3f1229;
   outline: 0;
   padding: 0 1.6rem;
-  font: 1.3rem 'Roboto Slab';
+  font: 1.3rem 'Montserrat';
 }
 
 
