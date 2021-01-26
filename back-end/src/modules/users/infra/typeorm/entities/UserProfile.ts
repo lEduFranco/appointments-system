@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   OneToOne,
   JoinColumn,
+  AfterLoad,
 } from 'typeorm';
 
 import User from './User';
@@ -49,8 +50,11 @@ class UserProfile {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  public get fullName(): string {
-    return `${this.firstname} ${this.lastname}`;
+  fullname: string;
+
+  @AfterLoad()
+  afterLoad(): void {
+    this.fullname = `${this.firstname} ${this.lastname}`;
   }
 }
 

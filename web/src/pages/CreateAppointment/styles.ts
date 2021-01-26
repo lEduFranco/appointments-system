@@ -151,7 +151,7 @@ export const DivSearch = styled.div`
     height: 3.8rem;
 
     background: #b28d9f;
-    border-radius: 10px;
+    border-radius: 12.8px;
     border: 1px solid #3f1229;
 
     padding: 0 10px;

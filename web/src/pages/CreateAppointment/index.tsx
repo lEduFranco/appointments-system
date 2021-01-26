@@ -58,8 +58,11 @@ const CreateAppointments: React.FC = () => {
   const [period, setPeriod] = useState('');
   const [frequency, setFrequency] = useState('');
   const [provider, setProvider] = useState('');
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
   const [providers, setProviders] = useState([]);
   const [client, setClient] = useState<Client>('');
+  const [autoCompleteValue, setAutoCompleteValue] = useState('');
   const [clients, setClients] = useState<Client[]>([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [daySelected, setDaySelected] = useState(getDate(new Date()));
@@ -77,6 +80,7 @@ const CreateAppointments: React.FC = () => {
 
   useGetClients({
     setClients,
+    autoCompleteValue,
   });
 
   const selectedDateAsText = useMemo(() => {
@@ -123,7 +127,7 @@ const CreateAppointments: React.FC = () => {
 
       api
         .post('/appointments', {
-          client_id: client,
+          client_id: client.id,
           period,
           frequency,
           provider_id: provider,
@@ -152,6 +156,7 @@ const CreateAppointments: React.FC = () => {
         title: 'Erro nos dados',
         description: 'Ocorreu um erro ao fazer cadastro, tente novamente',
       });
+      console.log(err);
     }
   }
 
@@ -176,22 +181,28 @@ const CreateAppointments: React.FC = () => {
               <h3>Cliente</h3>
               <Autocomplete
                 shouldItemRender={(item, value) =>
-                  item.user.user_profile.firstname
+                  `${item.user.user_profile.firstname} ${item.user.user_profile.lastname}`
                     .toLowerCase()
                     .indexOf(value.toLowerCase()) > -1}
                 menuStyle={{ background: '#b28d9f' }}
-                getItemValue={(item) => item.user.user_profile.firstname}
+                getItemValue={(item) =>
+                  `${item.user.user_profile.firstname} ${item.user.user_profile.lastname}`
+                }
                 items={clients}
-                value={client}
+                value={autoCompleteValue}
                 onSelect={(value, item) => {
-                  setClient(value);
+                  setAutoCompleteValue(value);
+
+                  setClient(item);
+                  console.log(item);
                 }}
                 onChange={(event, value) => {
-                  setClient(event.target.value);
+                  setAutoCompleteValue(event.target.value);
                 }}
                 renderItem={(item, isHighlighted) => (
-                  <AutoCompleteStyle>
-                    {item.user.user_profile.firstname}
+                  <AutoCompleteStyle key={item.id}>
+                    {item.user.user_profile.firstname}{' '}
+                    {item.user.user_profile.lastname}
                   </AutoCompleteStyle>
                 )}
               />

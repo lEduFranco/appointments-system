@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import api from '../../services/api';
 
 interface GetClients {
+  autoCompleteValue: string;
   setClients: Function;
 }
 
@@ -30,16 +31,22 @@ interface Data {
   };
 }
 
-const useGetClients = ({ setClients }: GetClients): void => {
+const useGetClients = ({ setClients, autoCompleteValue }: GetClients): void => {
   async function getClients(): Promise<void> {
-    const { data }: Response = await api.get('/clients');
+    const { data }: Response = await api.get(
+      `/clients?nameFilter=${autoCompleteValue}`,
+    );
 
     setClients(data);
   }
 
   useEffect(() => {
-    getClients();
-  }, []);
+    if (autoCompleteValue.length >= 3) {
+      getClients();
+    } else {
+      setClients([]);
+    }
+  }, [autoCompleteValue]);
 };
 
 export default useGetClients;
