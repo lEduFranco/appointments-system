@@ -27,16 +27,6 @@ appointmentsRouter.post(
       frequency: Joi.string().required(),
       observation: Joi.string().allow(null, ''),
 
-      uf: Joi.string().required(),
-      city: Joi.string().required(),
-      zip_code: Joi.string().required(),
-      neighborhood: Joi.string().required(),
-      number: Joi.string().required(),
-      address: Joi.string().required(),
-      reference_points: Joi.string().required(),
-      nearest_subway_station: Joi.string().required(),
-      complement: Joi.string().allow(null, ''),
-
       status: Joi.string().default('created'),
     },
   }),

@@ -155,104 +155,93 @@ const ListAppointments: React.FC = () => {
       <Content>
         <Appointments>
           <Schedule>
-            <div className="scroll">
-              <thead>
+            <thead>
+              <tr>
+                <th />
+                <th>
+                  <span>Manhã</span>
+                </th>
+                <th>
+                  <span>Tarde</span>
+                </th>
+                <th>
+                  <span>Integral</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {appointments.length > 0 ? (
+                map(appointments, (appointmentsProvider) => (
+                  <tr key={appointmentsProvider.provider.id}>
+                    <th>{appointmentsProvider.provider.name}</th>
+                    <td>
+                      <AppointmentComponent
+                        appointment={
+                          appointmentsProvider.appointments.part_time_morning
+                        }
+                        isUnavailability={
+                          has(appointmentsProvider.appointments, 'integral') ||
+                          isLongerThanMorningTimeLimit({
+                            daySelected: new Date(
+                              yearSelected,
+                              monthSelected,
+                              daySelected,
+                            ),
+                            appointments: appointmentsProvider.appointments,
+                          })
+                        }
+                        setAppointments={setAppointments}
+                      />
+                    </td>
+
+                    <td>
+                      <AppointmentComponent
+                        appointment={
+                          appointmentsProvider.appointments.part_time_afternoon
+                        }
+                        isUnavailability={
+                          has(appointmentsProvider.appointments, 'integral') ||
+                          isLongerThanAfternoonTimeLimit(
+                            appointmentsProvider.appointments,
+                          )
+                        }
+                        setAppointments={setAppointments}
+                      />
+                    </td>
+                    <td>
+                      <AppointmentComponent
+                        appointment={appointmentsProvider.appointments.integral}
+                        isUnavailability={
+                          has(
+                            appointmentsProvider.appointments,
+                            'part_time_morning',
+                          ) ||
+                          has(
+                            appointmentsProvider.appointments,
+                            'part_time_afternoon',
+                          ) ||
+                          isLongerThanIntegralTimeLimit({
+                            daySelected: new Date(
+                              yearSelected,
+                              monthSelected,
+                              daySelected,
+                            ),
+                            appointments: appointmentsProvider.appointments,
+                          })
+                        }
+                        setAppointments={setAppointments}
+                      />
+                    </td>
+                  </tr>
+                ))
+              ) : (
                 <tr>
-                  <th />
-                  <th>
-                    <span>Manhã</span>
-                  </th>
-                  <th>
-                    <span>Tarde</span>
-                  </th>
-                  <th>
-                    <span>Integral</span>
+                  <th className="empty" colSpan="4">
+                    Não tem agendamento hoje.
                   </th>
                 </tr>
-              </thead>
-              <tbody>
-                {appointments.length > 0 ? (
-                  map(appointments, (appointmentsProvider) => (
-                    <tr key={appointmentsProvider.provider.id}>
-                      <th>{appointmentsProvider.provider.name}</th>
-                      <td>
-                        <AppointmentComponent
-                          appointment={
-                            appointmentsProvider.appointments.part_time_morning
-                          }
-                          isUnavailability={
-                            has(
-                              appointmentsProvider.appointments,
-                              'integral',
-                            ) ||
-                            isLongerThanMorningTimeLimit({
-                              daySelected: new Date(
-                                yearSelected,
-                                monthSelected,
-                                daySelected,
-                              ),
-                              appointments: appointmentsProvider.appointments,
-                            })
-                          }
-                          setAppointments={setAppointments}
-                        />
-                      </td>
-
-                      <td>
-                        <AppointmentComponent
-                          appointment={
-                            appointmentsProvider.appointments
-                              .part_time_afternoon
-                          }
-                          isUnavailability={
-                            has(
-                              appointmentsProvider.appointments,
-                              'integral',
-                            ) ||
-                            isLongerThanAfternoonTimeLimit(
-                              appointmentsProvider.appointments,
-                            )
-                          }
-                          setAppointments={setAppointments}
-                        />
-                      </td>
-                      <td>
-                        <AppointmentComponent
-                          appointment={
-                            appointmentsProvider.appointments.integral
-                          }
-                          isUnavailability={
-                            has(
-                              appointmentsProvider.appointments,
-                              'part_time_morning',
-                            ) ||
-                            has(
-                              appointmentsProvider.appointments,
-                              'part_time_afternoon',
-                            ) ||
-                            isLongerThanIntegralTimeLimit({
-                              daySelected: new Date(
-                                yearSelected,
-                                monthSelected,
-                                daySelected,
-                              ),
-                              appointments: appointmentsProvider.appointments,
-                            })
-                          }
-                          setAppointments={setAppointments}
-                        />
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <th className="empty" colSpan="4">
-                      Não tem agendamento hoje.
-                    </th>
-                  </tr>
-                )}
-              </tbody>
-            </div>
+              )}
+            </tbody>
           </Schedule>
         </Appointments>
 

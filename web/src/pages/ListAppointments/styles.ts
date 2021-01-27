@@ -109,6 +109,9 @@ export const Appointments = styled.div`
   width: 75%;
   max-width: 75%;
   min-height: 100%;
+  overflow: auto;
+  height: 75vh;
+  scrollbar-face-color: #000;
 
   display: flex;
   flex-direction: column;
@@ -234,12 +237,6 @@ export const Schedule = styled.table`
     background: #e8e8ea;
     border-radius: 15px;
     height: 15vh;
-  }
-  .scroll {
-    overflow: auto;
-    width: 100%;
-    height: 75vh;
-    scrollbar-face-color: #000;
   }
 `;
 

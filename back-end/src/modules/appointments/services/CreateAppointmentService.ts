@@ -46,6 +46,9 @@ class CreateAppointmentService {
   constructor(
     @inject('AppointmentsRepository')
     private appointmentsRepository: IAppointmentsRepository,
+
+    @inject('ClientsRepository')
+    private clientsRepository: IClientRepository,
   ) {}
 
   public async execute({
@@ -57,15 +60,6 @@ class CreateAppointmentService {
     frequency,
     client_id,
     observation,
-    uf,
-    city,
-    zip_code,
-    neighborhood,
-    number,
-    address,
-    complement,
-    reference_points,
-    nearest_subway_station,
     status,
   }: IRequest): Promise<IResponse> {
     const parsedMonth = month - 1;
@@ -144,6 +138,8 @@ class CreateAppointmentService {
       throw new AppError('This appointment is already booked');
     }
 
+    const client = await this.clientsRepository.findClient(client_id);
+
     const datesToCreate = dates.map(dateToCreate => ({
       date: dateToCreate,
       provider_id,
@@ -151,15 +147,15 @@ class CreateAppointmentService {
       frequency,
       client_id,
       observation,
-      uf,
-      city,
-      zip_code,
-      neighborhood,
-      number,
-      address,
-      complement,
-      reference_points,
-      nearest_subway_station,
+      uf: client.user.addresses[0].uf,
+      city: client.user.addresses[0].city,
+      zip_code: client.user.addresses[0].zip_code,
+      neighborhood: client.user.addresses[0].neighborhood,
+      number: client.user.addresses[0].number,
+      address: client.user.addresses[0].address,
+      complement: client.user.addresses[0].complement,
+      reference_points: client.user.addresses[0].reference_points,
+      nearest_subway_station: client.user.addresses[0].nearest_subway_station,
       status,
     }));
 

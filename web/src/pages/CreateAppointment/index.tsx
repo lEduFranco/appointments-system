@@ -31,19 +31,9 @@ import {
 } from './styles';
 import api from '../../services/api';
 
-interface Address {
-  neighborhood: string;
-  number: string;
-  address: string;
-  complement: string;
-  reference_points: string;
-  nearest_subway_station: string;
-}
-
 interface Client {
   id: string;
   user: {
-    addresses: Address[];
     user_profile: {
       firstname: string;
       lastname: string;
@@ -100,15 +90,11 @@ const CreateAppointments: React.FC = () => {
       const data = {
         client_id: client.id,
         provider_id: provider,
+        frequency,
+        period,
         day: daySelected,
         month: monthSelected + 1,
         year: yearSelected,
-        neighborhood: client.user.addresses[0].neighborhood,
-        number: client.user.addresses[0].number,
-        address: client.user.addresses[0].address,
-        complement: client.user.addresses[0].complement,
-        reference_points: client.user.addresses[0].reference_points,
-        nearest_subway_station: client.user.addresses[0].nearest_subway_station,
       };
 
       const schema = Yup.object().shape({
@@ -156,7 +142,6 @@ const CreateAppointments: React.FC = () => {
         title: 'Erro nos dados',
         description: 'Ocorreu um erro ao fazer cadastro, tente novamente',
       });
-      console.log(err);
     }
   }
 

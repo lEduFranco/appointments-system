@@ -12,14 +12,15 @@ class ClientsRepository implements IClientRepository {
     this.ormRepository = getRepository(Client);
   }
 
-  public async find(id: string): Promise<Client> {
-    const clients = await this.ormRepository.findOne({
+  public async findClient(id: string): Promise<Client> {
+    const client = await this.ormRepository.findOne({
       where: {
-        id: client.id,
+        id,
       },
+      relations: ['user', 'user.addresses'],
     });
 
-    return clients;
+    return client;
   }
 
   public async findAllClients(nameFilter: string): Promise<Client[]> {
