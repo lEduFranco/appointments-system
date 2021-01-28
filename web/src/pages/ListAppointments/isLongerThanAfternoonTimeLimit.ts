@@ -21,7 +21,7 @@ interface Appointment {
   number: string;
   provider: {
     user: {
-      user_profiles: {
+      user_profile: {
         cel: string;
         tel: string;
         firstname: string;
@@ -31,7 +31,7 @@ interface Appointment {
   };
   client: {
     user: {
-      user_profiles: {
+      user_profile: {
         cel: string;
         tel: string;
         firstname: string;

@@ -5,13 +5,9 @@ import checkRole from '@modules/users/infra/http/middlewares/checkRole';
 
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import ProvidersController from '../controllers/ProvidersController';
-import ProviderMonthAvailabilityController from '../controllers/ProviderMonthAvailabilityController';
-import ProviderDayAvailabilityController from '../controllers/ProviderDayAvailabilityController';
 
 const providersRouter = Router();
 const providersController = new ProvidersController();
-const providerMonthAvailabilityController = new ProviderMonthAvailabilityController();
-const providerDayAvailabilityController = new ProviderDayAvailabilityController();
 
 providersRouter.use(ensureAuthenticated);
 
@@ -19,26 +15,6 @@ providersRouter.get(
   '/',
   checkRole(['admin', 'secretary']),
   providersController.index,
-);
-providersRouter.get(
-  '/:provider_id/month-availability',
-  checkRole(['admin', 'secretary', 'provider']),
-  celebrate({
-    [Segments.PARAMS]: {
-      provider_id: Joi.string().uuid().required(),
-    },
-  }),
-  providerMonthAvailabilityController.index,
-);
-providersRouter.get(
-  '/:provider_id/day-availability',
-  checkRole(['admin', 'secretary', 'provider']),
-  celebrate({
-    [Segments.PARAMS]: {
-      provider_id: Joi.string().uuid().required(),
-    },
-  }),
-  providerDayAvailabilityController.index,
 );
 
 providersRouter.post(

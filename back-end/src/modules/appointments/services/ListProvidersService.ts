@@ -27,7 +27,8 @@ class ListProvidersService {
     month,
     year,
   }: IRequest): Promise<Provider[]> {
-    const date = new Date(year, month, day);
+    const parsedMonth = month - 1;
+    const date = new Date(year, parsedMonth, day);
 
     let dates = [];
 

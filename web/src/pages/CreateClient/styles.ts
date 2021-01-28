@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { shade } from 'polished';
+import { shade, lighten } from 'polished';
 
 export const Container = styled.div`
   height: 100vh;
@@ -54,6 +54,11 @@ export const AnimationContainer = styled.div`
       margin-top: 20px;
       margin-bottom: 10px;
     }
+    h5 {
+      display: flex;
+      color: #c0c0c0;
+      padding-top: 4px;
+    }
 
     a {
       color: #f4ede8;
@@ -86,5 +91,42 @@ export const AnimationContainer = styled.div`
     &:hover {
       color: #3f1229;
     }
+  }
+`;
+
+export const ButtonsDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const ButtonNextStep = styled.button`
+  background: #3f1229;
+  height: 40px;
+  border-radius: 10px;
+  border: 0;
+  color: #f5f5f5;
+  width: 25%;
+  font-weight: 500;
+  margin-top: 16px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background: ${lighten(0.05, '#3f1229')};
+  }
+`;
+export const ButtonBackStep = styled.button`
+  background: #b28d9f;
+  height: 40px;
+  border-radius: 10px;
+  border: 0;
+  color: #f5f5f5;
+  width: 25%;
+  font-weight: 500;
+  margin-top: 16px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background: ${shade(0.2, '#b28d9f')};
   }
 `;

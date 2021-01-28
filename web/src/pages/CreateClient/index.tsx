@@ -1,4 +1,6 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
+import Stepper from 'react-stepper-horizontal';
+
 import {
   FiArrowLeft,
   FiMail,
@@ -27,14 +29,19 @@ import { useToast } from '../../hooks/toast';
 
 import getValidationErrors from '../../utils/getValidationErrors';
 
-// import logoImg from '../../assets/Logo 15@2x.png';
-
 import Input from '../../components/Input';
 import InputMask from '../../components/InputMask';
 
 import Button from '../../components/Button';
 
-import { Container, Content, AnimationContainer } from './styles';
+import {
+  Container,
+  Content,
+  AnimationContainer,
+  ButtonsDiv,
+  ButtonNextStep,
+  ButtonBackStep,
+} from './styles';
 
 interface SignUpFormData {
   name: string;
@@ -43,6 +50,8 @@ interface SignUpFormData {
 }
 
 const CreateClient: React.FC = () => {
+  const [currentStep, setCurrentStep] = useState(0);
+
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
   const history = useHistory();
@@ -137,105 +146,183 @@ const CreateClient: React.FC = () => {
     <Container>
       <Content>
         <AnimationContainer>
+          <Stepper
+            steps={[
+              { title: 'Dados da conta' },
+              { title: 'Dados pessoais' },
+              { title: 'Endereço' },
+              { title: 'Dados da empressa (opcional)' },
+            ]}
+            activeStep={currentStep}
+          />
           <Form ref={formRef} onSubmit={handleSubmit}>
             <h1>Cadastro Cliente</h1>
-            <h3>Dados da conta</h3>
 
-            <Input name="email" icon={FiMail} placeholder="E-mail" />
-            <Input
-              name="password"
-              icon={FiLock}
-              type="password"
-              placeholder="Senha"
-            />
-            <h3>Dados pessoais</h3>
-            <Input name="firstname" icon={FiUser} placeholder="Primeiro nome" />
-            <Input name="lastname" icon={FiUser} placeholder="Sobrenome" />
-            <InputMask
-              name="rg"
-              icon={RiProfileLine}
-              placeholder="RG"
-              mask="9.999.999"
-            />
-            <InputMask
-              name="cpf"
-              icon={RiProfileLine}
-              placeholder="CPF"
-              mask="999.999.999-99"
-            />
-            <InputMask
-              name="tel"
-              icon={FiPhone}
-              placeholder="Telefone"
-              mask="(99) 9999-9999"
-            />
-            <InputMask
-              name="cel"
-              icon={FiSmartphone}
-              placeholder="Celular"
-              mask="(99) 9 9999-9999"
-            />
+            {currentStep === 0 && (
+              <>
+                <Input
+                  onChange={(event) => {
+                    formRef?.current.setFieldValue('email', event.target.value);
+                    console.log(event.target.value);
+                  }}
+                  name="email"
+                  icon={FiMail}
+                  placeholder="E-mail"
+                />
+                <Input
+                  name="password"
+                  icon={FiLock}
+                  type="password"
+                  placeholder="Senha"
+                />
+              </>
+            )}
 
-            <Input
-              name="occuppation"
-              icon={FiBriefcase}
-              placeholder="Profissão"
-            />
+            {currentStep === 1 && (
+              <>
+                <Input
+                  name="firstname"
+                  icon={FiUser}
+                  placeholder="Primeiro nome"
+                />
+                <Input name="lastname" icon={FiUser} placeholder="Sobrenome" />
+                <h5>*opcional*</h5>
+                <InputMask
+                  name="rg"
+                  icon={RiProfileLine}
+                  placeholder="RG"
+                  mask="9.999.999"
+                />
+                <InputMask
+                  name="cpf"
+                  icon={RiProfileLine}
+                  placeholder="CPF"
+                  mask="999.999.999-99"
+                />
+                <h5>*opcional*</h5>
+                <InputMask
+                  name="tel"
+                  icon={FiPhone}
+                  placeholder="Telefone"
+                  mask="(99) 9999-9999"
+                />
+                <InputMask
+                  name="cel"
+                  icon={FiSmartphone}
+                  placeholder="Celular"
+                  mask="(99) 9 9999-9999"
+                />
 
-            <h3>Endereço</h3>
-            <InputMask
-              name="zip_code"
-              icon={FiMap}
-              placeholder="CEP"
-              mask="99.999-999"
-            />
-            <InputMask
-              name="uf"
-              icon={RiRoadMapLine}
-              placeholder="UF"
-              mask="aa"
-            />
-            <Input name="city" icon={RiCommunityLine} placeholder="Cidade" />
+                <Input
+                  name="occuppation"
+                  icon={FiBriefcase}
+                  placeholder="Profissão"
+                />
+              </>
+            )}
 
-            <Input
-              name="neighborhood"
-              icon={RiRoadMapLine}
-              placeholder="Bairro"
-            />
-            <Input name="address" icon={RiRoadMapLine} placeholder="Endereço" />
-            <Input name="number" icon={RiRoadMapLine} placeholder="Número" />
-            <Input
-              name="complement"
-              icon={RiRoadMapLine}
-              placeholder="complemento"
-            />
+            {currentStep === 2 && (
+              <>
+                <InputMask
+                  name="zip_code"
+                  icon={FiMap}
+                  placeholder="CEP"
+                  mask="99.999-999"
+                />
+                <InputMask
+                  name="uf"
+                  icon={RiRoadMapLine}
+                  placeholder="UF"
+                  mask="aa"
+                />
+                <Input
+                  name="city"
+                  icon={RiCommunityLine}
+                  placeholder="Cidade"
+                />
 
-            <Input
-              name="reference_points"
-              icon={FiMapPin}
-              placeholder="Pontos de referência"
-            />
-            <Input
-              name="nearest_subway_station"
-              icon={RiSubwayLine}
-              placeholder="Estação de metro mais próxima"
-            />
+                <Input
+                  name="neighborhood"
+                  icon={RiRoadMapLine}
+                  placeholder="Bairro"
+                />
+                <Input
+                  name="address"
+                  icon={RiRoadMapLine}
+                  placeholder="Endereço"
+                />
+                <h5>*opcional*</h5>
+                <Input
+                  name="number"
+                  icon={RiRoadMapLine}
+                  placeholder="Número"
+                />
+                <h5>*opcional*</h5>
+                <Input
+                  name="complement"
+                  icon={RiRoadMapLine}
+                  placeholder="complemento"
+                />
+                <h5>*opcional*</h5>
+                <Input
+                  name="reference_points"
+                  icon={FiMapPin}
+                  placeholder="Pontos de referência"
+                />
+                <h5>*opcional*</h5>
+                <Input
+                  name="nearest_subway_station"
+                  icon={RiSubwayLine}
+                  placeholder="Estação de metro mais próxima"
+                />
+              </>
+            )}
 
-            <h3>Dados da empressa</h3>
-            <InputMask
-              name="cnpj"
-              icon={RiProfileLine}
-              placeholder="CNPJ"
-              mask="99.999.999/9999-99"
-            />
-            <Input name="cf_df" icon={RiProfileLine} placeholder="CF DF" />
-            <Input
-              name="company_responsible"
-              icon={FiUser}
-              placeholder="Responsavel"
-            />
+            {currentStep === 3 && (
+              <>
+                <h5>*opcional*</h5>
+                <InputMask
+                  name="cnpj"
+                  icon={RiProfileLine}
+                  placeholder="CNPJ"
+                  mask="99.999.999/9999-99"
+                />
+                <h5>*opcional*</h5>
+                <Input name="cf_df" icon={RiProfileLine} placeholder="CF DF" />
+                <h5>*opcional*</h5>
+                <Input
+                  name="company_responsible"
+                  icon={FiUser}
+                  placeholder="Responsavel"
+                />
 
-            <Button type="submit">Cadastrar</Button>
+                <Button type="submit">Cadastrar</Button>
+              </>
+            )}
+
+            <ButtonsDiv>
+              {currentStep !== 0 && (
+                <ButtonBackStep
+                  onClick={() => {
+                    setCurrentStep(currentStep - 1);
+                  }}
+                  type="button"
+                >
+                  Voltar
+                </ButtonBackStep>
+              )}
+
+              {currentStep !== 3 && (
+                <ButtonNextStep
+                  onClick={() => {
+                    setCurrentStep(currentStep + 1);
+                  }}
+                  type="button"
+                >
+                  Próximo
+                </ButtonNextStep>
+              )}
+            </ButtonsDiv>
           </Form>
 
           <Link to="/list-appointments">

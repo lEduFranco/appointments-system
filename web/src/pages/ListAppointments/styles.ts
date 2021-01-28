@@ -111,7 +111,6 @@ export const Appointments = styled.div`
   min-height: 100%;
   overflow: auto;
   height: 75vh;
-  scrollbar-face-color: #000;
 
   display: flex;
   flex-direction: column;

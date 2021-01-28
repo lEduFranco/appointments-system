@@ -1,8 +1,7 @@
 import Appointment from '../infra/typeorm/entities/Appointment';
 import ICreateAppointmentDTO from '../dtos/ICreateAppointmentDTO';
-import IFindAllInMonthFromProviderDTO from '../dtos/IFindAllInMonthFromProviderDTO';
+
 import IFindAllAppointmentsFromProvidersByDateDTO from '../dtos/IFindAllAppointmentsFromProvidersByDateDTO';
-import IFindAllInDayFromProvidersDTO from '../dtos/IFindAllInDayFromProvidersDTO';
 
 export interface IAppointmentsProvider {
   provider: {
@@ -23,8 +22,6 @@ export default interface IAppointmentsRepository {
   findById(id: string): Promise<Appointment | undefined>;
   create(data: ICreateAppointmentDTO): Promise<Appointment>;
   createMany(data: Array<ICreateAppointmentDTO>): Promise<boolean>;
-  // findByClient(user_id: string): Promise<Appointment | undefined>;
-  // save(appointment: Appointment): Promise<Appointment>;
 
   findByDate(
     date: Date,
@@ -33,17 +30,9 @@ export default interface IAppointmentsRepository {
     dates: Array<string>,
   ): Promise<Appointment | undefined>;
 
-  findAllInMonthFromProvider(
-    data: IFindAllInMonthFromProviderDTO,
-  ): Promise<Appointment[]>;
-
   findAllAppointmentsFromProvidersByDate(
     data: IFindAllAppointmentsFromProvidersByDateDTO,
   ): Promise<IAppointmentsProvider[]>;
-
-  findAllInDayFromProviders(
-    data: IFindAllInDayFromProvidersDTO,
-  ): Promise<Appointment[]>;
 
   delete(params: string | object): Promise<void>;
 }

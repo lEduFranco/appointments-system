@@ -168,18 +168,17 @@ const CreateAppointments: React.FC = () => {
                 shouldItemRender={(item, value) =>
                   `${item.user.user_profile.firstname} ${item.user.user_profile.lastname}`
                     .toLowerCase()
-                    .indexOf(value.toLowerCase()) > -1}
+                    .indexOf(value.toLowerCase()) > -1
+                }
                 menuStyle={{ background: '#b28d9f' }}
                 getItemValue={(item) =>
-                  `${item.user.user_profile.firstname} ${item.user.user_profile.lastname}`
-                }
+                  `${item.user.user_profile.firstname} ${item.user.user_profile.lastname}`}
                 items={clients}
                 value={autoCompleteValue}
                 onSelect={(value, item) => {
                   setAutoCompleteValue(value);
 
                   setClient(item);
-                  console.log(item);
                 }}
                 onChange={(event, value) => {
                   setAutoCompleteValue(event.target.value);

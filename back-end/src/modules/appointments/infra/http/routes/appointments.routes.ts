@@ -5,11 +5,9 @@ import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAut
 import checkRole from '@modules/users/infra/http/middlewares/checkRole';
 
 import AppointmentsController from '../controllers/AppointmentsController';
-import ProviderAppointmentsController from '../controllers/ProviderAppointmentsController';
 
 const appointmentsRouter = Router();
 const appointmentsController = new AppointmentsController();
-const providerAppointmentsController = new ProviderAppointmentsController();
 
 appointmentsRouter.use(ensureAuthenticated);
 
@@ -35,7 +33,7 @@ appointmentsRouter.post(
 appointmentsRouter.get(
   '/',
   checkRole(['admin', 'provider', 'secretary']),
-  providerAppointmentsController.index,
+  appointmentsController.index,
 );
 
 appointmentsRouter.delete(
