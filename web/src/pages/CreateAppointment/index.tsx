@@ -170,7 +170,6 @@ const CreateAppointments: React.FC = () => {
                     .toLowerCase()
                     .indexOf(value.toLowerCase()) > -1
                 }
-                menuStyle={{ background: '#b28d9f' }}
                 getItemValue={(item) =>
                   `${item.user.user_profile.firstname} ${item.user.user_profile.lastname}`}
                 items={clients}
@@ -183,8 +182,16 @@ const CreateAppointments: React.FC = () => {
                 onChange={(event, value) => {
                   setAutoCompleteValue(event.target.value);
                 }}
+                renderMenu={(children) => (
+                  <div className="menu">{children}</div>
+                )}
                 renderItem={(item, isHighlighted) => (
-                  <AutoCompleteStyle key={item.id}>
+                  <AutoCompleteStyle
+                    className={`item ${
+                      isHighlighted ? 'item-highlighted' : ''
+                    }`}
+                    key={item.id}
+                  >
                     {item.user.user_profile.firstname}{' '}
                     {item.user.user_profile.lastname}
                   </AutoCompleteStyle>

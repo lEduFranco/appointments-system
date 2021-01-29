@@ -157,6 +157,16 @@ export const DivSearch = styled.div`
     padding: 0 10px;
     text-transform: uppercase;
   }
+
+  .menu {
+    background: #b28d9f;
+    border-radius: 10px;
+  }
+
+  .item-highlighted {
+    color: #b28d9f;
+    background-color: #3f1229;
+  }
 `;
 
 export const DivSelect = styled.div`
@@ -171,7 +181,7 @@ export const AutoCompleteStyle = styled.div`
   display: flex;
 
   border-radius: 10px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
   padding: 8px 4px;
   font-size: 1rem;
   position: relative;
@@ -185,7 +195,7 @@ export const Dates = styled.div`
   display: flex;
   flex-direction: column;
 
-  padding-bottom: 5%;
+  padding-bottom: 7%;
   padding-left: 2%;
   h1 {
     font-size: 36px;

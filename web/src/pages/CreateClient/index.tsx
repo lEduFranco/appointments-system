@@ -33,6 +33,7 @@ import Input from '../../components/Input';
 import InputMask from '../../components/InputMask';
 
 import Button from '../../components/Button';
+import MultiStep from '../../components/MultiStep';
 
 import {
   Container,
@@ -53,11 +54,13 @@ const CreateClient: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
 
   const formRef = useRef<FormHandles>(null);
+
   const { addToast } = useToast();
   const history = useHistory();
 
   const handleSubmit = useCallback(
     async (data: SignUpFormData) => {
+      console.log(data);
       try {
         formRef.current?.setErrors({});
 
@@ -146,20 +149,11 @@ const CreateClient: React.FC = () => {
     <Container>
       <Content>
         <AnimationContainer>
-          <Stepper
-            steps={[
-              { title: 'Dados da conta' },
-              { title: 'Dados pessoais' },
-              { title: 'Endereço' },
-              { title: 'Dados da empressa (opcional)' },
-            ]}
-            activeStep={currentStep}
-          />
           <Form ref={formRef} onSubmit={handleSubmit}>
             <h1>Cadastro Cliente</h1>
 
-            {currentStep === 0 && (
-              <>
+            <MultiStep>
+              <div>
                 <Input
                   onChange={(event) => {
                     formRef?.current.setFieldValue('email', event.target.value);
@@ -175,11 +169,9 @@ const CreateClient: React.FC = () => {
                   type="password"
                   placeholder="Senha"
                 />
-              </>
-            )}
+              </div>
 
-            {currentStep === 1 && (
-              <>
+              <div>
                 <Input
                   name="firstname"
                   icon={FiUser}
@@ -218,11 +210,9 @@ const CreateClient: React.FC = () => {
                   icon={FiBriefcase}
                   placeholder="Profissão"
                 />
-              </>
-            )}
+              </div>
 
-            {currentStep === 2 && (
-              <>
+              <div>
                 <InputMask
                   name="zip_code"
                   icon={FiMap}
@@ -275,11 +265,9 @@ const CreateClient: React.FC = () => {
                   icon={RiSubwayLine}
                   placeholder="Estação de metro mais próxima"
                 />
-              </>
-            )}
+              </div>
 
-            {currentStep === 3 && (
-              <>
+              <div>
                 <h5>*opcional*</h5>
                 <InputMask
                   name="cnpj"
@@ -297,32 +285,8 @@ const CreateClient: React.FC = () => {
                 />
 
                 <Button type="submit">Cadastrar</Button>
-              </>
-            )}
-
-            <ButtonsDiv>
-              {currentStep !== 0 && (
-                <ButtonBackStep
-                  onClick={() => {
-                    setCurrentStep(currentStep - 1);
-                  }}
-                  type="button"
-                >
-                  Voltar
-                </ButtonBackStep>
-              )}
-
-              {currentStep !== 3 && (
-                <ButtonNextStep
-                  onClick={() => {
-                    setCurrentStep(currentStep + 1);
-                  }}
-                  type="button"
-                >
-                  Próximo
-                </ButtonNextStep>
-              )}
-            </ButtonsDiv>
+              </div>
+            </MultiStep>
           </Form>
 
           <Link to="/list-appointments">

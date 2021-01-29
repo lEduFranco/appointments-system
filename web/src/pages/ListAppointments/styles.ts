@@ -17,6 +17,7 @@ export const Dates = styled.div`
 
   padding-top: 1%;
   padding-left: 2%;
+
   h1 {
     font-size: 36px;
   }
@@ -26,7 +27,8 @@ export const Dates = styled.div`
     color: #3f1227;
     display: flex;
     align-items: center;
-    font-weight: 500;
+    font-weight: 700;
+    font-size: 22px;
 
     span {
       display: flex;
