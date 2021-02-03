@@ -2,6 +2,7 @@ import Appointment from '../infra/typeorm/entities/Appointment';
 import ICreateAppointmentDTO from '../dtos/ICreateAppointmentDTO';
 
 import IFindAllAppointmentsFromProvidersByDateDTO from '../dtos/IFindAllAppointmentsFromProvidersByDateDTO';
+import IDeleteAllFutureAppointmentsDTO from '../dtos/IDeleteAllFutureAppointmentsDTO';
 
 export interface IAppointmentsProvider {
   provider: {
@@ -34,5 +35,12 @@ export default interface IAppointmentsRepository {
     data: IFindAllAppointmentsFromProvidersByDateDTO,
   ): Promise<IAppointmentsProvider[]>;
 
-  delete(params: string | object): Promise<void>;
+  deleteById(id: string): Promise<void>;
+  deleteAllAppointments(
+    appointmentId: string,
+    initialAppointmentId: string,
+  ): Promise<void>;
+  deleteAllFutureAppointments(
+    data: IDeleteAllFutureAppointmentsDTO,
+  ): Promise<void>;
 }

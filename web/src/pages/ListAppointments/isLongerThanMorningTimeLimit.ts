@@ -1,5 +1,5 @@
 import has from 'lodash/has';
-import { isAfter, setHours, startOfDay, isToday } from 'date-fns';
+import { isAfter, setHours, startOfDay, isToday, parseISO } from 'date-fns';
 
 interface Props {
   daySelected: Date;
@@ -46,7 +46,7 @@ const isLongerThanMorningTimeLimit = ({
   appointments,
 }: Props): boolean => {
   const dateNow = new Date(Date.now());
-  const timeLimitPartTimeMorning = setHours(startOfDay(dateNow), 10);
+  const timeLimitPartTimeMorning = setHours(startOfDay(dateNow), 6);
 
   return (
     isToday(new Date(daySelected)) &&

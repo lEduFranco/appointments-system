@@ -45,14 +45,14 @@ export default function MultiStep({ children }: MultiStepProps) {
           type="button"
           onClick={handlePreviousStep}
         >
-          Previous
+          Voltar
         </ButtonBackStep>
         <ButtonNextStep
           disabled={currentStep === numberOfSteps - 1}
           type="button"
           onClick={handleNextStep}
         >
-          Next
+          Próximo
         </ButtonNextStep>
       </ButtonsDiv>
     </div>

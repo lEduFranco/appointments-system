@@ -195,7 +195,7 @@ export const Dates = styled.div`
   display: flex;
   flex-direction: column;
 
-  padding-bottom: 7%;
+  padding-bottom: 9%;
   padding-left: 2%;
   h1 {
     font-size: 36px;

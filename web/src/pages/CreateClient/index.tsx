@@ -1,5 +1,5 @@
-import React, { useCallback, useRef, useState } from 'react';
-import Stepper from 'react-stepper-horizontal';
+import React, { useCallback, useRef } from 'react';
+import cep from 'cep-promise';
 
 import {
   FiArrowLeft,
@@ -35,14 +35,7 @@ import InputMask from '../../components/InputMask';
 import Button from '../../components/Button';
 import MultiStep from '../../components/MultiStep';
 
-import {
-  Container,
-  Content,
-  AnimationContainer,
-  ButtonsDiv,
-  ButtonNextStep,
-  ButtonBackStep,
-} from './styles';
+import { Container, Content, AnimationContainer } from './styles';
 
 interface SignUpFormData {
   name: string;
@@ -50,9 +43,15 @@ interface SignUpFormData {
   email: string;
 }
 
-const CreateClient: React.FC = () => {
-  const [currentStep, setCurrentStep] = useState(0);
+interface CepPromise {
+  cep: string;
+  state: string;
+  city: string;
+  street: string;
+  neighborhood: string;
+}
 
+const CreateClient: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const { addToast } = useToast();
@@ -60,7 +59,6 @@ const CreateClient: React.FC = () => {
 
   const handleSubmit = useCallback(
     async (data: SignUpFormData) => {
-      console.log(data);
       try {
         formRef.current?.setErrors({});
 
@@ -71,25 +69,31 @@ const CreateClient: React.FC = () => {
           email: Yup.string()
             .required('campo obrigatório não preenchido')
             .email('Digite um e-mail válido'),
-          password: Yup.string().min(6, 'No mínimo 6 dígitos'),
+          password: Yup.string()
+            .min(6, 'No mínimo 6 dígitos')
+            .required('campo obrigatório não preenchido'),
           rg: Yup.string(),
-          cpf: Yup.string().min(11, 'No mínimo 11 dígitos'),
+          cpf: Yup.string()
+            .min(11, 'No mínimo 11 dígitos')
+            .required('campo obrigatório não preenchido'),
 
           tel: Yup.string(),
-          cel: Yup.string().min(11, 'No mínimo 11 dígitos'),
+          cel: Yup.string()
+            .min(11, 'No mínimo 11 dígitos')
+            .required('campo obrigatório não preenchido'),
           occuppation: Yup.string().when('cpf', {
             is: (val) => !!val.length,
             then: Yup.string().required('campo obrigatório não preenchido'),
             otherwise: Yup.string(),
           }),
-
+          zip_code: Yup.string()
+            .min(8, 'No mínimo 8 dígitos')
+            .required('campo obrigatório não preenchido'),
           uf: Yup.string()
             .max(2, 'No máximo 2 dígitos')
-            .min(1, 'No mínimo 2 dígitos'),
+            .min(1, 'No mínimo 2 dígitos')
+            .required('campo obrigatório não preenchido'),
           city: Yup.string().required('campo obrigatório não preenchido'),
-          zip_code: Yup.string()
-            .required('campo obrigatório não preenchido')
-            .min(8, 'No mínimo 8 dígitos'),
           neighborhood: Yup.string().required(
             'campo obrigatório não preenchido',
           ),
@@ -145,6 +149,26 @@ const CreateClient: React.FC = () => {
     [addToast, history],
   );
 
+  const searchAddress = useCallback(
+    async (zipcode: string) => {
+      try {
+        cep(zipcode).then((data: CepPromise) => {
+          formRef?.current.setFieldValue('uf', data.state);
+          formRef?.current.setFieldValue('city', data.city);
+          formRef?.current.setFieldValue('neighborhood', data.neighborhood);
+          formRef?.current.setFieldValue('address', data.street);
+        });
+      } catch {
+        addToast({
+          type: 'error',
+          title: 'Erro no CEP!',
+          description: 'CEP não encontrado',
+        });
+      }
+    },
+    [addToast],
+  );
+
   return (
     <Container>
       <Content>
@@ -154,15 +178,8 @@ const CreateClient: React.FC = () => {
 
             <MultiStep>
               <div>
-                <Input
-                  onChange={(event) => {
-                    formRef?.current.setFieldValue('email', event.target.value);
-                    console.log(event.target.value);
-                  }}
-                  name="email"
-                  icon={FiMail}
-                  placeholder="E-mail"
-                />
+                <h3>Dados da conta</h3>
+                <Input name="email" icon={FiMail} placeholder="E-mail" />
                 <Input
                   name="password"
                   icon={FiLock}
@@ -172,6 +189,7 @@ const CreateClient: React.FC = () => {
               </div>
 
               <div>
+                <h3>Dados da pessoais</h3>
                 <Input
                   name="firstname"
                   icon={FiUser}
@@ -213,24 +231,23 @@ const CreateClient: React.FC = () => {
               </div>
 
               <div>
-                <InputMask
+                <h3>Endereço</h3>
+                <Input
                   name="zip_code"
                   icon={FiMap}
                   placeholder="CEP"
-                  mask="99.999-999"
+                  onChange={(event) => {
+                    if (event.target.value.length === 8) {
+                      searchAddress(event.target.value);
+                    }
+                  }}
                 />
-                <InputMask
-                  name="uf"
-                  icon={RiRoadMapLine}
-                  placeholder="UF"
-                  mask="aa"
-                />
+                <Input name="uf" icon={RiRoadMapLine} placeholder="UF" />
                 <Input
                   name="city"
                   icon={RiCommunityLine}
                   placeholder="Cidade"
                 />
-
                 <Input
                   name="neighborhood"
                   icon={RiRoadMapLine}
@@ -243,15 +260,14 @@ const CreateClient: React.FC = () => {
                 />
                 <h5>*opcional*</h5>
                 <Input
-                  name="number"
-                  icon={RiRoadMapLine}
-                  placeholder="Número"
-                />
-                <h5>*opcional*</h5>
-                <Input
                   name="complement"
                   icon={RiRoadMapLine}
                   placeholder="complemento"
+                />
+                <Input
+                  name="number"
+                  icon={RiRoadMapLine}
+                  placeholder="Número"
                 />
                 <h5>*opcional*</h5>
                 <Input
@@ -268,6 +284,7 @@ const CreateClient: React.FC = () => {
               </div>
 
               <div>
+                <h3>Dados da empresa (Opcional)</h3>
                 <h5>*opcional*</h5>
                 <InputMask
                   name="cnpj"

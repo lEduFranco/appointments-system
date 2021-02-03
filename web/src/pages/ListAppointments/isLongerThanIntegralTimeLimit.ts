@@ -46,7 +46,7 @@ const isLongerThanIntegralTimeLimit = ({
   appointments,
 }: Props): boolean => {
   const dateNow = new Date(Date.now());
-  const timeLimitPartTimeintegral = setHours(startOfDay(dateNow), 10);
+  const timeLimitPartTimeintegral = setHours(startOfDay(dateNow), 6);
 
   return (
     isToday(new Date(daySelected)) &&

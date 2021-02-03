@@ -54,6 +54,11 @@ export const AnimationContainer = styled.div`
       margin-top: 20px;
       margin-bottom: 10px;
     }
+    h5 {
+      display: flex;
+      color: #c0c0c0;
+      padding-top: 4px;
+    }
 
     a {
       color: #f4ede8;

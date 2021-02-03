@@ -1,4 +1,4 @@
-import { getRepository, Repository, Raw, In, Equal } from 'typeorm';
+import { getRepository, Repository, In, Equal } from 'typeorm';
 
 import groupBy from 'lodash/groupBy';
 import map from 'lodash/map';
@@ -8,9 +8,8 @@ import IAppointmentsRepository, {
   IAppointmentsProvider,
 } from '@modules/appointments/repositories/IAppointmentsRepository';
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
-import IFindAllInMonthFromProviderDTO from '@modules/appointments/dtos/IFindAllInMonthFromProviderDTO';
-import IFindAllInDayFromProvidersDTO from '@modules/appointments/dtos/IFindAllInDayFromProvidersDTO';
 import IFindAllAppointmentsFromProvidersByDateDTO from '@modules/appointments/dtos/IFindAllAppointmentsFromProvidersByDateDTO';
+import IDeleteAllFutureAppointmentsDTO from '@modules/appointments/dtos/IDeleteAllFutureAppointmentsDTO';
 
 import Appointment from '../entities/Appointment';
 
@@ -179,8 +178,46 @@ class AppointmentsRepository implements IAppointmentsRepository {
     return true;
   }
 
-  public async delete(params: string | object): Promise<void> {
-    return this.ormRepository.delete(params);
+  public async deleteById(id: string): Promise<void> {
+    this.ormRepository.delete(id);
+  }
+
+  public async deleteAllAppointments(
+    appointmentId: string,
+    initialAppointmentId: string,
+  ): Promise<void> {
+    this.ormRepository
+      .createQueryBuilder()
+      .delete()
+      .where('initial_appointment_id = :initialAppointmentId', {
+        initialAppointmentId,
+      })
+      .orWhere('id = :initialAppointmentId', {
+        initialAppointmentId,
+      })
+      .orWhere('initial_appointment_id = :appointmentId', {
+        appointmentId,
+      })
+      .orWhere('id = :appointmentId', {
+        appointmentId,
+      })
+      .execute();
+  }
+
+  public async deleteAllFutureAppointments({
+    initialAppointmentId,
+    date,
+  }: IDeleteAllFutureAppointmentsDTO): Promise<void> {
+    this.ormRepository
+      .createQueryBuilder()
+      .delete()
+      .where('initial_appointment_id = :initialAppointmentId', {
+        initialAppointmentId,
+      })
+      .andWhere('date >= :date', {
+        date,
+      })
+      .execute();
   }
 }
 
