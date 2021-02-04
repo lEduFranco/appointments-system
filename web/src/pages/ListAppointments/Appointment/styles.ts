@@ -196,3 +196,23 @@ export const StyledModal = Modal.styled`
     margin-left: 10px;
   }
 `;
+
+export const StyleModalDelete = Modal.styled`
+  width: 28rem;
+  height: 10rem;
+  display: colunm;
+  align-items: center;
+  justify-content: space-beetwen;
+  background-color: white;
+  border-radius: 15px;
+
+  animation: ${appearFromStart} 0.8s;
+
+
+  .div-delete {
+    height: 2;
+    display: collunm;
+    justify-content: space-between;
+  }
+
+`;

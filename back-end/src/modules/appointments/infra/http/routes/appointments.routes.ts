@@ -5,9 +5,13 @@ import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAut
 import checkRole from '@modules/users/infra/http/middlewares/checkRole';
 
 import AppointmentsController from '../controllers/AppointmentsController';
+import DeleteAllAppointmentsController from '../controllers/DeleteAllAppointmentsController';
+import DeleteAllFutureAppointmentsController from '../controllers/DeleteAllFutureAppointmentsController';
 
 const appointmentsRouter = Router();
 const appointmentsController = new AppointmentsController();
+const deleteAllAppointmentsController = new DeleteAllAppointmentsController();
+const deleteAllFutureAppointmentsController = new DeleteAllFutureAppointmentsController();
 
 appointmentsRouter.use(ensureAuthenticated);
 
@@ -40,6 +44,18 @@ appointmentsRouter.delete(
   '/',
   checkRole(['admin', 'secretary']),
   appointmentsController.delete,
+);
+
+appointmentsRouter.delete(
+  '/all-appointments',
+  checkRole(['admin', 'secretary']),
+  deleteAllAppointmentsController.delete,
+);
+
+appointmentsRouter.delete(
+  '/allfuture-appointments',
+  checkRole(['admin', 'secretary']),
+  deleteAllFutureAppointmentsController.delete,
 );
 
 export default appointmentsRouter;

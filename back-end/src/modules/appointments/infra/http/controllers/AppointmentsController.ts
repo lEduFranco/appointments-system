@@ -71,13 +71,12 @@ export default class AppointmentsController {
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
-    const { id, allAppointments } = request.body;
+    const { id } = request.body;
 
     const deleteAppointment = container.resolve(DeleteAppointmentService);
 
     const appointment = await deleteAppointment.execute({
       id,
-      allAppointments,
     });
 
     return response.json(appointment);

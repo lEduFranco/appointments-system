@@ -13,6 +13,7 @@ import {
   AppointmentAvailability,
   AppointmentUnavailable,
   StyledModal,
+  StyleModalDelete,
 } from './styles';
 
 interface AppointmentsProvider {
@@ -68,6 +69,7 @@ const Appointment: React.FC<Props> = ({
 }) => {
   const { addToast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
 
   function getFrequencyName(frequency?: string): string {
     if (frequency === 'weekly') {
@@ -104,10 +106,51 @@ const Appointment: React.FC<Props> = ({
   function toggleModal(): void {
     setIsOpen(!isOpen);
   }
+  function toggleModalDelete(): void {
+    setIsOpenDelete(!isOpenDelete);
+  }
 
   function deleteAppointment(): void {
     api
       .delete('/appointments', {
+        data: {
+          id: appointment?.id,
+        },
+      })
+      .then((response) => {
+        toggleModal();
+
+        setAppointments((prevState: AppointmentsProvider[]) => {
+          const result = prevState.filter(
+            (item) =>
+              item.appointments.integral?.id !== appointment?.id &&
+              item.appointments.part_time_morning?.id !== appointment?.id &&
+              item.appointments.part_time_afternoon?.id !== appointment?.id,
+          );
+
+          return result;
+        });
+
+        addToast({
+          type: 'success',
+          title: 'Agendamento Deletado com Sucesso!',
+          description: response.data.message,
+        });
+      })
+      .catch((error) => {
+        toggleModal();
+        addToast({
+          type: 'error',
+          title: 'Erro ao deletar !',
+          description:
+            'Ocorreu um erro ao deletar o agendamento, tente novamente',
+        });
+      });
+  }
+
+  function deleteAllAppointments(): void {
+    api
+      .delete('/appointments/all-appointments', {
         data: {
           id: appointment?.id,
         },
@@ -186,9 +229,27 @@ const Appointment: React.FC<Props> = ({
               <textarea />
             </div>
             <div className="container-buttons">
-              <button type="button" onClick={toggleModal} className="close">
-                Fechar
+              <button
+                type="button"
+                onClick={toggleModalDelete}
+                className="close"
+              >
+                Deletar
               </button>
+              <StyleModalDelete
+                isOpen={isOpenDelete}
+                onBackgroundClick={toggleModalDelete}
+                onEscapeKeydown={toggleModalDelete}
+              >
+                <div className="div-delete">
+                  <input type="radio" name="Delete" value="sim" /> Deletar
+                  apenas este agendamento.
+                  <br />
+                  <input type="radio" name="Delete" value="nao" /> Deletar este
+                  agendamento e os futuros.
+                  <br />
+                </div>
+              </StyleModalDelete>
               <div>
                 <button type="button" className="edit">
                   <Link to="edit-appointments">Editar</Link>

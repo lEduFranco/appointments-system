@@ -12,7 +12,7 @@ interface IResponse {
 }
 
 @injectable()
-class DeleteAppointmentService {
+class DeleteAllAppointmentsService {
   constructor(
     @inject('AppointmentsRepository')
     private appointmentsRepository: IAppointmentsRepository,
@@ -25,7 +25,10 @@ class DeleteAppointmentService {
       throw new AppError('Appointment not found');
     }
 
-    await this.appointmentsRepository.deleteById(appointment.id);
+    await this.appointmentsRepository.deleteAllAppointments(
+      appointment.id,
+      appointment.initial_appointment_id,
+    );
 
     return {
       message: 'Your appointment have been successfully deleted.',
@@ -33,4 +36,4 @@ class DeleteAppointmentService {
   }
 }
 
-export default DeleteAppointmentService;
+export default DeleteAllAppointmentsService;
