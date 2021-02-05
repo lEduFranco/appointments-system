@@ -70,6 +70,7 @@ const Appointment: React.FC<Props> = ({
   const { addToast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
+  const [typeDeleteAppointment, setTypeDeleteAppointment] = useState();
 
   function getFrequencyName(frequency?: string): string {
     if (frequency === 'weekly') {
@@ -133,7 +134,7 @@ const Appointment: React.FC<Props> = ({
 
         addToast({
           type: 'success',
-          title: 'Agendamento Deletado com Sucesso!',
+          title: 'Agendamento deletado com Sucesso!',
           description: response.data.message,
         });
       })
@@ -148,9 +149,9 @@ const Appointment: React.FC<Props> = ({
       });
   }
 
-  function deleteAllAppointments(): void {
+  function deleteAllFutureAppointments(): void {
     api
-      .delete('/appointments/all-appointments', {
+      .delete('/appointments/allfuture-appointments', {
         data: {
           id: appointment?.id,
         },
@@ -171,7 +172,7 @@ const Appointment: React.FC<Props> = ({
 
         addToast({
           type: 'success',
-          title: 'Agendamento Deletado com Sucesso!',
+          title: 'Agendamentos deletados com Sucesso!',
           description: response.data.message,
         });
       })
@@ -184,6 +185,16 @@ const Appointment: React.FC<Props> = ({
             'Ocorreu um erro ao deletar o agendamento, tente novamente',
         });
       });
+  }
+
+  function checkDelete(): void {
+    if (typeDeleteAppointment === 'onlyAppointment') {
+      deleteAppointment();
+    }
+
+    if (typeDeleteAppointment === 'futureAppointments') {
+      deleteAllFutureAppointments();
+    }
   }
 
   return (
@@ -232,7 +243,7 @@ const Appointment: React.FC<Props> = ({
               <button
                 type="button"
                 onClick={toggleModalDelete}
-                className="close"
+                className="delete"
               >
                 Deletar
               </button>
@@ -241,19 +252,45 @@ const Appointment: React.FC<Props> = ({
                 onBackgroundClick={toggleModalDelete}
                 onEscapeKeydown={toggleModalDelete}
               >
-                <div className="div-delete">
-                  <input type="radio" name="Delete" value="sim" /> Deletar
-                  apenas este agendamento.
+                <div
+                  className="div-delete"
+                  onChange={(event) => {
+                    setTypeDeleteAppointment(event.target.value);
+                  }}
+                >
+                  <input
+                    type="radio"
+                    name="radio-delete"
+                    value="onlyAppointment"
+                  />{' '}
+                  Deletar apenas este agendamento.
                   <br />
-                  <input type="radio" name="Delete" value="nao" /> Deletar este
-                  agendamento e os futuros.
+                  <input
+                    type="radio"
+                    name="radio-delete"
+                    value="futureAppointments"
+                  />{' '}
+                  Deletar este agendamento e os futuros.
                   <br />
+                </div>
+                <div className="container-buttons">
+                  <button
+                    type="button"
+                    onClick={toggleModalDelete}
+                    className="close"
+                  >
+                    Fechar
+                  </button>
+                  <button
+                    type="button"
+                    onClick={checkDelete}
+                    className="confirmed"
+                  >
+                    Confirmar
+                  </button>
                 </div>
               </StyleModalDelete>
               <div>
-                <button type="button" className="edit">
-                  <Link to="edit-appointments">Editar</Link>
-                </button>
                 <button type="button" onClick={toggleModal} className="save">
                   Salvar
                 </button>

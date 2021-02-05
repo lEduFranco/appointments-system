@@ -161,7 +161,7 @@ export const StyledModal = Modal.styled`
     align-items: flex-end;
   }
 
-  .close {
+  .delete {
     width: 5rem;
     height: 3rem;
     background: #fddede;
@@ -210,9 +210,43 @@ export const StyleModalDelete = Modal.styled`
 
 
   .div-delete {
-    height: 2;
+    height: 3rem;
+    padding: 2% 4%;
     display: collunm;
+    font-size: 18px;
+
+    input {
+
+      cursor: pointer;
+      width: 25px;
+    }
+  }
+
+  .container-buttons {
+    height: 6rem;
+    padding: 0 5%;
+    display: flex;
     justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .close {
+    width: 5rem;
+    height: 3rem;
+    background: #fddede;
+    color: #c53030;
+    border: 0;
+    border-radius: 15px;
+  }
+
+  .confirmed {
+    width: 7rem;
+    height: 3rem;
+    background: #d6f9fa;
+    color: #2e656a;
+    border: 0;
+    border-radius: 15px;
+    margin-left: 10px;
   }
 
 `;
