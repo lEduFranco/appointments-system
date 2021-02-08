@@ -86,14 +86,24 @@ export const StyledModal = Modal.styled`
 
   animation: ${appearFromStart} 0.8s;
 
-
-
-
   h1 {
+    width: 98%;
     color: #3172b7;
     font-size: 20px;
+    text-transform: capitalize;
+
   }
 
+  .h1 {
+    display: flex;
+    justify-items: space-beetwen;
+
+    svg {
+      color: #3172b7;
+      font-size: 30px;
+      cursor: pointer;
+    }
+  }
 
     p {
       color: #3172b7;
@@ -198,8 +208,8 @@ export const StyledModal = Modal.styled`
 `;
 
 export const StyleModalDelete = Modal.styled`
-  width: 28rem;
-  height: 10rem;
+  width: 29rem;
+  height: 24rem;
   display: colunm;
   align-items: center;
   justify-content: space-beetwen;
@@ -209,8 +219,87 @@ export const StyleModalDelete = Modal.styled`
   animation: ${appearFromStart} 0.8s;
 
 
+  .div-h1{
+    font-size: 20px
+  }
+
+  h1 {
+    align-items: center;
+    text-align: center;
+
+    svg {
+      color: #c53030;
+      padding-top: 15px;
+    }
+  }
+
   .div-delete {
+    height: 14rem;
+    padding: 2% 4%;
+    display: collunm;
+    font-size: 22px;
+
+
+    input {
+
+      cursor: pointer;
+      width: 25px;
+
+    }
+
+    .input-future {
+      display: flex;
+      align-items: center;
+
+      h5 {
+        padding-left: 1.5%;
+      }
+    }
+  }
+
+  .container-buttons {
+    height: 5rem;
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .close {
+    width: 5rem;
     height: 3rem;
+    background: #fddede;
+    color: #c53030;
+    border: 0;
+    border-radius: 15px;
+  }
+
+  .confirmed {
+    width: 7rem;
+    height: 3rem;
+    background: #d6f9fa;
+    color: #2e656a;
+    border: 0;
+    border-radius: 15px;
+    margin-left: 10px;
+  }
+
+`;
+
+export const StyleModalConfirmedDelete = Modal.styled`
+  width: 28rem;
+  height: 18rem;
+  display: colunm;
+  align-items: center;
+  justify-content: space-beetwen;
+  background-color: white;
+  border-radius: 15px;
+
+  animation: ${appearFromStart} 0.8s;
+
+
+  .text-confirmed {
+    height: 14rem;
     padding: 2% 4%;
     display: collunm;
     font-size: 18px;
@@ -220,10 +309,20 @@ export const StyleModalDelete = Modal.styled`
       cursor: pointer;
       width: 25px;
     }
+
+    h1 {
+      align-items: center;
+      text-align: center;
+
+      svg {
+        color: #c53030;
+        padding-top: 15px;
+      }
+    }
   }
 
   .container-buttons {
-    height: 6rem;
+    height: 3rem;
     padding: 0 5%;
     display: flex;
     justify-content: space-between;

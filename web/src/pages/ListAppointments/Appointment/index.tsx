@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import has from 'lodash/has';
-import { FiMoreHorizontal } from 'react-icons/fi';
-
-import { Link } from 'react-router-dom';
+import { FiAlertTriangle, FiMoreHorizontal, FiXCircle } from 'react-icons/fi';
 
 import { useToast } from '../../../hooks/toast';
 
@@ -14,6 +12,7 @@ import {
   AppointmentUnavailable,
   StyledModal,
   StyleModalDelete,
+  StyleModalConfirmedDelete,
 } from './styles';
 
 interface AppointmentsProvider {
@@ -70,6 +69,7 @@ const Appointment: React.FC<Props> = ({
   const { addToast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
+  const [isOpenConfirmedDelete, setIsOpenConfirmedDelete] = useState(false);
   const [typeDeleteAppointment, setTypeDeleteAppointment] = useState();
 
   function getFrequencyName(frequency?: string): string {
@@ -109,6 +109,9 @@ const Appointment: React.FC<Props> = ({
   }
   function toggleModalDelete(): void {
     setIsOpenDelete(!isOpenDelete);
+  }
+  function toggleModalConfirmedDelete(): void {
+    setIsOpenConfirmedDelete(!isOpenConfirmedDelete);
   }
 
   function deleteAppointment(): void {
@@ -222,10 +225,14 @@ const Appointment: React.FC<Props> = ({
         >
           <div className="modal">
             <div className="dados">
-              <h1>
-                {appointment?.client.user.user_profile.firstname}{' '}
-                {appointment?.client.user.user_profile.lastname}
-              </h1>
+              <div className="h1">
+                <h1>
+                  {appointment?.client.user.user_profile.firstname}{' '}
+                  {appointment?.client.user.user_profile.lastname}
+                </h1>
+                <FiXCircle onClick={toggleModal} />
+              </div>
+
               <p className="address">
                 {appointment?.address} {appointment?.number}
               </p>
@@ -252,42 +259,93 @@ const Appointment: React.FC<Props> = ({
                 onBackgroundClick={toggleModalDelete}
                 onEscapeKeydown={toggleModalDelete}
               >
+                <div className="div-h1">
+                  <h1>
+                    <FiAlertTriangle /> Atenção! <FiAlertTriangle />
+                  </h1>
+                </div>
+                <br />
                 <div
                   className="div-delete"
                   onChange={(event) => {
                     setTypeDeleteAppointment(event.target.value);
                   }}
                 >
+                  <br />
                   <input
                     type="radio"
                     name="radio-delete"
                     value="onlyAppointment"
                   />{' '}
-                  Deletar apenas este agendamento.
+                  Deletar apenas <b>este</b> agendamento.
                   <br />
-                  <input
-                    type="radio"
-                    name="radio-delete"
-                    value="futureAppointments"
-                  />{' '}
-                  Deletar este agendamento e os futuros.
                   <br />
+                  <div className="input-future">
+                    <input
+                      type="radio"
+                      name="radio-delete"
+                      value="futureAppointments"
+                    />
+                    <h5>
+                      Deletar <b>este</b> agendamento e <b>futuros</b>.
+                    </h5>
+                  </div>
                 </div>
+
                 <div className="container-buttons">
                   <button
                     type="button"
-                    onClick={toggleModalDelete}
+                    onClick={() => {
+                      setTypeDeleteAppointment('');
+                      toggleModalDelete();
+                    }}
                     className="close"
                   >
                     Fechar
                   </button>
                   <button
                     type="button"
-                    onClick={checkDelete}
+                    onClick={() => {
+                      if (typeDeleteAppointment) {
+                        toggleModalConfirmedDelete();
+                      }
+                    }}
                     className="confirmed"
                   >
                     Confirmar
                   </button>
+                  <StyleModalConfirmedDelete
+                    isOpen={isOpenConfirmedDelete}
+                    onBackgroundClick={toggleModalConfirmedDelete}
+                    onEscapeKeydown={toggleModalConfirmedDelete}
+                  >
+                    <div className="text-confirmed">
+                      <h1>
+                        <FiAlertTriangle /> Atenção! <FiAlertTriangle />
+                      </h1>
+                      <br />
+                      <br />
+                      <h2>
+                        Tem certeza que deseja deletar o(s) agendamento(s)?
+                      </h2>
+                    </div>
+                    <div className="container-buttons">
+                      <button
+                        type="button"
+                        onClick={toggleModalConfirmedDelete}
+                        className="close"
+                      >
+                        Fechar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={checkDelete}
+                        className="confirmed"
+                      >
+                        Confirmar
+                      </button>
+                    </div>
+                  </StyleModalConfirmedDelete>
                 </div>
               </StyleModalDelete>
               <div>
