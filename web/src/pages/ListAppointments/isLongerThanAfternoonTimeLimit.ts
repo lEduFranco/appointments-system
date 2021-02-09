@@ -46,7 +46,7 @@ const isLongerThanAfternoonTimeLimit = (
 ): boolean => {
   const dateNow = new Date(Date.now());
 
-  const timeLimitPartTimeAfternoon = setHours(startOfDay(dateNow), 12);
+  const timeLimitPartTimeAfternoon = setHours(startOfDay(dateNow), 11);
 
   return (
     isToday(new Date(Date.now())) &&

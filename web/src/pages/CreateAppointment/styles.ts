@@ -211,6 +211,9 @@ export const Dates = styled.div`
     span {
       display: flex;
       align-items: center;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 20px;
     }
 
     span + span::before {

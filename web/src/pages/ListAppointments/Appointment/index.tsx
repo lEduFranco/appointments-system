@@ -287,7 +287,7 @@ const Appointment: React.FC<Props> = ({
                       value="futureAppointments"
                     />
                     <h5>
-                      Deletar <b>este</b> agendamento e <b>futuros</b>.
+                      Deletar <b>este</b> agendamento e os <b>futuros</b>.
                     </h5>
                   </div>
                 </div>
