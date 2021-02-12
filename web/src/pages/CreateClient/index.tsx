@@ -81,11 +81,8 @@ const CreateClient: React.FC = () => {
           cel: Yup.string()
             .min(11, 'No mínimo 11 dígitos')
             .required('campo obrigatório não preenchido'),
-          occuppation: Yup.string().when('cpf', {
-            is: (val) => !!val.length,
-            then: Yup.string().required('campo obrigatório não preenchido'),
-            otherwise: Yup.string(),
-          }),
+          occuppation: Yup.string(),
+
           zip_code: Yup.string()
             .min(8, 'No mínimo 8 dígitos')
             .required('campo obrigatório não preenchido'),
@@ -223,6 +220,7 @@ const CreateClient: React.FC = () => {
                   mask="(99) 9 9999-9999"
                 />
 
+                <h5>*opcional*</h5>
                 <Input
                   name="occuppation"
                   icon={FiBriefcase}
@@ -262,7 +260,7 @@ const CreateClient: React.FC = () => {
                 <Input
                   name="complement"
                   icon={RiRoadMapLine}
-                  placeholder="complemento"
+                  placeholder="complemento (do endereço)"
                 />
                 <Input
                   name="number"

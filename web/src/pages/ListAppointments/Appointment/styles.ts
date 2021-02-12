@@ -203,7 +203,7 @@ export const StyledModal = Modal.styled`
     color: #2e656a;
     border: 0;
     border-radius: 15px;
-    margin-left: 10px;
+
   }
 `;
 
@@ -281,7 +281,6 @@ export const StyleModalDelete = Modal.styled`
     color: #2e656a;
     border: 0;
     border-radius: 15px;
-    margin-left: 10px;
   }
 
 `;
@@ -345,7 +344,6 @@ export const StyleModalConfirmedDelete = Modal.styled`
     color: #2e656a;
     border: 0;
     border-radius: 15px;
-    margin-left: 10px;
   }
 
 `;

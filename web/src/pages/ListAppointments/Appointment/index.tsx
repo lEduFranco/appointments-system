@@ -32,6 +32,7 @@ interface AppointmentProps {
   frequency: string;
   neighborhood: string;
   address: string;
+  complement: string;
   number: string;
   provider: {
     user: {
@@ -209,7 +210,7 @@ const Appointment: React.FC<Props> = ({
         </h1>
         <h3>{appointment?.neighborhood}</h3>
         <p className="address">
-          {appointment?.address} {appointment?.number}
+          {appointment?.address} {appointment?.complement} {appointment?.number}
         </p>
         <p>{appointment?.client.user.user_profile.cel}</p>
         <p>{getFrequencyName(appointment?.frequency)}</p>
@@ -234,7 +235,8 @@ const Appointment: React.FC<Props> = ({
               </div>
 
               <p className="address">
-                {appointment?.address} {appointment?.number}
+                {appointment?.address} {appointment?.complement}{' '}
+                {appointment?.number}
               </p>
               <p className="contact">
                 {appointment?.client.user.user_profile.cel}{' '}
@@ -247,12 +249,8 @@ const Appointment: React.FC<Props> = ({
               <textarea />
             </div>
             <div className="container-buttons">
-              <button
-                type="button"
-                onClick={toggleModalDelete}
-                className="delete"
-              >
-                Deletar
+              <button type="button" onClick={toggleModal} className="save">
+                Salvar
               </button>
               <StyleModalDelete
                 isOpen={isOpenDelete}
@@ -296,16 +294,6 @@ const Appointment: React.FC<Props> = ({
                   <button
                     type="button"
                     onClick={() => {
-                      setTypeDeleteAppointment('');
-                      toggleModalDelete();
-                    }}
-                    className="close"
-                  >
-                    Fechar
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
                       if (typeDeleteAppointment) {
                         toggleModalConfirmedDelete();
                       }
@@ -313,6 +301,16 @@ const Appointment: React.FC<Props> = ({
                     className="confirmed"
                   >
                     Confirmar
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setTypeDeleteAppointment('');
+                      toggleModalDelete();
+                    }}
+                    className="close"
+                  >
+                    Fechar
                   </button>
                   <StyleModalConfirmedDelete
                     isOpen={isOpenConfirmedDelete}
@@ -332,25 +330,29 @@ const Appointment: React.FC<Props> = ({
                     <div className="container-buttons">
                       <button
                         type="button"
-                        onClick={toggleModalConfirmedDelete}
-                        className="close"
-                      >
-                        Fechar
-                      </button>
-                      <button
-                        type="button"
                         onClick={checkDelete}
                         className="confirmed"
                       >
                         Confirmar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={toggleModalConfirmedDelete}
+                        className="close"
+                      >
+                        Fechar
                       </button>
                     </div>
                   </StyleModalConfirmedDelete>
                 </div>
               </StyleModalDelete>
               <div>
-                <button type="button" onClick={toggleModal} className="save">
-                  Salvar
+                <button
+                  type="button"
+                  onClick={toggleModalDelete}
+                  className="delete"
+                >
+                  Deletar
                 </button>
               </div>
             </div>

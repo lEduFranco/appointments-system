@@ -28,7 +28,7 @@ clientsRouter.post(
       cpf: Joi.string().required(),
       tel: Joi.string().allow(null, ''),
       cel: Joi.string().required(),
-      occuppation: Joi.string(),
+      occuppation: Joi.string().allow(null, ''),
 
       uf: Joi.string().allow(null, ''),
       city: Joi.string().allow(null, ''),

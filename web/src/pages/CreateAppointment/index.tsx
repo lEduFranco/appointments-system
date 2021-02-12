@@ -168,10 +168,10 @@ const CreateAppointments: React.FC = () => {
                 shouldItemRender={(item, value) =>
                   `${item.user.user_profile.firstname} ${item.user.user_profile.lastname}`
                     .toLowerCase()
-                    .indexOf(value.toLowerCase()) > -1
-                }
+                    .indexOf(value.toLowerCase()) > -1}
                 getItemValue={(item) =>
-                  `${item.user.user_profile.firstname} ${item.user.user_profile.lastname}`}
+                  `${item.user.user_profile.firstname} ${item.user.user_profile.lastname}`
+                }
                 items={clients}
                 value={autoCompleteValue}
                 onSelect={(value, item) => {
