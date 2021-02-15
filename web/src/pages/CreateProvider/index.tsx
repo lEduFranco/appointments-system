@@ -142,13 +142,19 @@ const CreateProvider: React.FC = () => {
 
           formRef.current?.setErrors(errors);
 
-          return;
+          return addToast({
+            type: 'error',
+            title: 'Erro no cadastro!',
+            description:
+              'Ocorreu um erro ao fazer cadastro, cheque as informações!',
+          });
         }
 
         addToast({
           type: 'error',
           title: 'Erro no cadastro!',
-          description: 'Ocorreu um erro ao fazer cadastro, tente novamente',
+          description:
+            'Ocorreu um erro ao fazer cadastro, cheque as informações!',
         });
       }
     },

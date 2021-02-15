@@ -11,9 +11,9 @@ import { getDate, getMonth, getYear } from 'date-fns';
 import DayPicker, { DayModifiers } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
-import { FiPlus } from 'react-icons/fi';
+import { FiPlus, FiUser } from 'react-icons/fi';
 import api from '../../services/api';
-import HeaderComponent from '../../components/Header';
+import HeaderHorizontal from '../../components/Header';
 
 import AppointmentComponent from './Appointment';
 
@@ -125,7 +125,7 @@ const ListAppointments: React.FC = () => {
 
   return (
     <Container>
-      <HeaderComponent />
+      <HeaderHorizontal />
 
       <Div>
         <Dates>
@@ -140,14 +140,14 @@ const ListAppointments: React.FC = () => {
         <CreateAppointment>
           <Link to="/create-appointments">
             <FiPlus />
-            Criar agendamento
+            Criar Agendamento
           </Link>
         </CreateAppointment>
 
         <CreateClient>
           <Link to="/create-clients">
-            <FiPlus />
-            Cadastrar cliente
+            <FiUser />
+            Cadastrar Cliente
           </Link>
         </CreateClient>
       </Div>

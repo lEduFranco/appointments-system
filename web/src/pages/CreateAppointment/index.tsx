@@ -17,7 +17,7 @@ import Select from '../../components/Select';
 
 import useGetProviders from './useGetProviders';
 import useGetClients from './useGetClients';
-import HeaderComponent from '../../components/Header';
+import HeaderHorizontal from '../../components/Header';
 
 import {
   Container,
@@ -134,13 +134,21 @@ const CreateAppointments: React.FC = () => {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
 
-        return;
+        // formRef.current?.setErrors(errors);
+
+        return addToast({
+          type: 'error',
+          title: 'Erro nos Dados!',
+          description:
+            'Ocorreu um erro ao fazer cadastro do agendamento, tente novamente!',
+        });
       }
 
       addToast({
         type: 'error',
-        title: 'Erro nos dados',
-        description: 'Ocorreu um erro ao fazer cadastro, tente novamente',
+        title: 'Erro no cadastro!',
+        description:
+          'Ocorreu um erro ao fazer cadastro do agendamento, tente novamente!',
       });
     }
   }
@@ -156,7 +164,7 @@ const CreateAppointments: React.FC = () => {
 
   return (
     <Container>
-      <HeaderComponent />
+      <HeaderHorizontal />
       <Content>
         <AnimationContainer>
           <form onSubmit={handleSubmit}>
@@ -168,10 +176,10 @@ const CreateAppointments: React.FC = () => {
                 shouldItemRender={(item, value) =>
                   `${item.user.user_profile.firstname} ${item.user.user_profile.lastname}`
                     .toLowerCase()
-                    .indexOf(value.toLowerCase()) > -1}
-                getItemValue={(item) =>
-                  `${item.user.user_profile.firstname} ${item.user.user_profile.lastname}`
+                    .indexOf(value.toLowerCase()) > -1
                 }
+                getItemValue={(item) =>
+                  `${item.user.user_profile.firstname} ${item.user.user_profile.lastname}`}
                 items={clients}
                 value={autoCompleteValue}
                 onSelect={(value, item) => {

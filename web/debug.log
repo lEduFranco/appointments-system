@@ -4,3 +4,5 @@
 [1203/091357.051:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não pode encontrar o caminho especificado. (0x3)
 [0211/093046.944:ERROR:registration_protocol_win.cc(102)] CreateFile: O sistema não pode encontrar o arquivo especificado. (0x2)
 [0212/100604.801:ERROR:registration_protocol_win.cc(102)] CreateFile: O sistema não pode encontrar o arquivo especificado. (0x2)
+[0212/172853.962:ERROR:registration_protocol_win.cc(102)] CreateFile: O sistema não pode encontrar o arquivo especificado. (0x2)
+[0215/174622.560:ERROR:registration_protocol_win.cc(102)] CreateFile: O sistema não pode encontrar o arquivo especificado. (0x2)
