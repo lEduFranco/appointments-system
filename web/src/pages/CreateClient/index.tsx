@@ -31,6 +31,7 @@ import getValidationErrors from '../../utils/getValidationErrors';
 
 import Input from '../../components/Input';
 import InputMask from '../../components/InputMask';
+import HeaderVertical from '../../components/HeaderVertical';
 
 import Button from '../../components/Button';
 import MultiStep from '../../components/MultiStep';
@@ -174,6 +175,7 @@ const CreateClient: React.FC = () => {
 
   return (
     <Container>
+      <HeaderVertical />
       <Content>
         <AnimationContainer>
           <Form ref={formRef} onSubmit={handleSubmit}>
@@ -309,11 +311,6 @@ const CreateClient: React.FC = () => {
               </div>
             </MultiStep>
           </Form>
-
-          <Link to="/list-appointments">
-            <FiArrowLeft />
-            Voltar para Lista
-          </Link>
         </AnimationContainer>
       </Content>
     </Container>

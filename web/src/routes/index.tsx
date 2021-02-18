@@ -7,7 +7,9 @@ import SignIn from '../pages/SignIn';
 import Dashboard from '../pages/Dashboard';
 import CreateAppointment from '../pages/CreateAppointment';
 import CreateProvider from '../pages/CreateProvider';
+import ListProviders from '../pages/ListProviders';
 import CreateClient from '../pages/CreateClient';
+import ListClient from '../pages/ListClient';
 
 import ListAppointments from '../pages/ListAppointments';
 
@@ -28,8 +30,20 @@ const Routes: React.FC = () => (
     />
 
     <PrivateRoute
+      path="/list-clients"
+      component={ListClient}
+      roles={['admin', 'secretary']}
+    />
+
+    <PrivateRoute
       path="/create-providers"
       component={CreateProvider}
+      roles={['admin', 'rh']}
+    />
+
+    <PrivateRoute
+      path="/list-providers"
+      component={ListProviders}
       roles={['admin', 'rh']}
     />
 

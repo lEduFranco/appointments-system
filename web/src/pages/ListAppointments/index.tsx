@@ -11,7 +11,7 @@ import { getDate, getMonth, getYear } from 'date-fns';
 import DayPicker, { DayModifiers } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
-import { FiPlus, FiUser } from 'react-icons/fi';
+import { FiArrowLeft, FiPlus, FiUser } from 'react-icons/fi';
 import api from '../../services/api';
 import HeaderHorizontal from '../../components/Header';
 
@@ -24,6 +24,7 @@ import isLongerThanIntegralTimeLimit from './isLongerThanIntegralTimeLimit';
 import {
   Container,
   Div,
+  Header,
   Content,
   Appointments,
   Dates,
@@ -125,7 +126,9 @@ const ListAppointments: React.FC = () => {
 
   return (
     <Container>
-      <HeaderHorizontal />
+      <Header>
+        <HeaderHorizontal />
+      </Header>
 
       <Div>
         <Dates>

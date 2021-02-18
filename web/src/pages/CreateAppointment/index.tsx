@@ -17,7 +17,7 @@ import Select from '../../components/Select';
 
 import useGetProviders from './useGetProviders';
 import useGetClients from './useGetClients';
-import HeaderHorizontal from '../../components/Header';
+import HeaderVertical from '../../components/HeaderVertical';
 
 import {
   Container,
@@ -136,7 +136,7 @@ const CreateAppointments: React.FC = () => {
 
         // formRef.current?.setErrors(errors);
 
-        return addToast({
+        addToast({
           type: 'error',
           title: 'Erro nos Dados!',
           description:
@@ -164,7 +164,7 @@ const CreateAppointments: React.FC = () => {
 
   return (
     <Container>
-      <HeaderHorizontal />
+      <HeaderVertical />
       <Content>
         <AnimationContainer>
           <form onSubmit={handleSubmit}>
@@ -255,11 +255,6 @@ const CreateAppointments: React.FC = () => {
 
             <Button type="submit">Cadastrar</Button>
           </form>
-
-          <Link to="/list-appointments">
-            <FiArrowLeft />
-            Voltar para Lista
-          </Link>
         </AnimationContainer>
 
         <Dates>

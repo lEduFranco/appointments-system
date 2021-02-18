@@ -1,74 +1,17 @@
 import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
-export const Container = styled.div``;
-
-export const Header = styled.header`
-  padding: 32px 0;
-  background: #b28d9f;
-`;
-
-export const HeaderContent = styled.div`
-  max-width: 1120px;
-  margin: 0 auto;
+export const Container = styled.div`
   display: flex;
-  align-items: center;
-
-  > img {
-    height: 80px;
-  }
-
-  button {
-    margin-left: auto;
-    background: transparent;
-    border: 0;
-
-    svg {
-      color: #3f1227;
-      width: 20px;
-      height: 20px;
-    }
-  }
-`;
-
-export const Profile = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: 80px;
-
-  img {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-  }
-
-  div {
-    display: flex;
-    flex-direction: column;
-    margin-left: 16px;
-    line-height: 24px;
-
-    span {
-      color: #f5f5f5;
-    }
-
-    a {
-      text-decoration: none;
-      color: #3f1227;
-
-      &:hover {
-        opacity: 0.8;
-      }
-    }
-  }
 `;
 
 export const Content = styled.div`
   display: flex;
+  margin-top: -10%;
   align-items: center;
   justify-content: space-evenly;
 
-  width: 100%;
+  width: 80%;
 `;
 
 const appearFromStart = keyframes`
@@ -92,7 +35,6 @@ export const AnimationContainer = styled.div`
   animation: ${appearFromStart} 1s;
 
   form {
-    margin: 80px 0;
     min-width: 100%;
     text-align: center;
 
@@ -111,12 +53,16 @@ export const AnimationContainer = styled.div`
         color: ${shade(0.2, '#f4ede8')};
       }
     }
+
+    button {
+      margin-top: 10%;
+    }
   }
 
   > a {
     color: #b28d9f;
     display: block;
-    margin-top: 24px;
+    margin-top: 15%;
     text-decoration: none;
     transition: color 0.2s;
 
@@ -155,6 +101,7 @@ export const DivSearch = styled.div`
     border: 1px solid #3f1229;
 
     padding: 0 10px;
+
     text-transform: uppercase;
   }
 
@@ -203,6 +150,7 @@ export const Dates = styled.div`
 
   p {
     margin-top: 8px;
+    margin-bottom: 8px;
     color: #3f1227;
     display: flex;
     align-items: center;
@@ -228,7 +176,6 @@ export const Dates = styled.div`
 
 export const Calendar = styled.aside`
   width: 150%;
-  padding-top: 10%;
 
   .DayPicker {
     background: #3f1229;

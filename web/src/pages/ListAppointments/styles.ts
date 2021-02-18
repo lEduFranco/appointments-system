@@ -4,6 +4,12 @@ import { shade } from 'polished';
 export const Container = styled.div`
   height: 75vh;
 `;
+
+export const Header = styled.header`
+  padding: 8px 0;
+  background: #b28d9f;
+`;
+
 export const Div = styled.div`
   display: flex;
   align-items: flex-end;
@@ -127,6 +133,26 @@ export const Filter = styled.div`
   flex-direction: column;
 
   align-items: center;
+
+  > a {
+    color: #b28d9f;
+    margin-top: 85%;
+    margin-left: 38%;
+    text-decoration: none;
+    transition: color 0.2s;
+    font-size: 20px;
+
+    display: flex;
+    align-items: center;
+
+    svg {
+      margin-right: 16px;
+    }
+
+    &:hover {
+      color: #3f1229;
+    }
+  }
 `;
 
 const appearFromStart = keyframes`

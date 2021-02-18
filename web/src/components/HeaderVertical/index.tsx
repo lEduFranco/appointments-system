@@ -1,24 +1,26 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FiCalendar, FiPlus, FiPower, FiUser } from 'react-icons/fi';
+import React, { useState } from 'react';
+
+import { FiPower } from 'react-icons/fi';
 import logoImg from '../../assets/logo_top.svg';
 import { useAuth } from '../../hooks/auth';
 
-import { Header, HeaderTop, HeaderRoutes } from './styles';
+import { Header, HeaderTop, HeaderRoutesStyle } from './styles';
+
+import AdminMenu from './AdminMenu';
+import SecretaryMenu from './SecretaryMenu';
+import RhMenu from './RhMenu';
 
 const HeaderVertival: React.FC = () => {
   const { signOut, user } = useAuth();
 
-  function HeaderRoute() {
-    try {
-      if (user.role === 'secretary') {
-        return HeaderRoutes;
-      }
-    } catch {}
+  const [isOpen, setIsOpen] = useState(false);
+
+  function toggleSidebar(): void {
+    setIsOpen(!isOpen);
   }
 
   return (
-    <Header>
+    <Header onMouseOver={toggleSidebar}>
       <HeaderTop>
         <img src={logoImg} alt="ToMaisVip" />
 
@@ -26,24 +28,11 @@ const HeaderVertival: React.FC = () => {
           <FiPower />
         </button>
       </HeaderTop>
-      <HeaderRoutes onChange={HeaderRoute}>
-        <Link to="/list-appointments">
-          <FiCalendar />
-          Agenda
-        </Link>
-        <Link to="/create-client">
-          <FiUser />
-          Cadastrar Cliente
-        </Link>
-        <Link to="/create-appointments">
-          <FiPlus />
-          Cadastrar Agendamento
-        </Link>
-        <Link to="/create-providers">
-          <FiUser />
-          Cadastrar Diarista
-        </Link>
-      </HeaderRoutes>
+      <HeaderRoutesStyle>
+        {user.role === 'admin' && <AdminMenu />}
+        {user.role === 'secretary' && <SecretaryMenu />}
+        {user.role === 'rh' && <RhMenu />}
+      </HeaderRoutesStyle>
     </Header>
   );
 };

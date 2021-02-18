@@ -8,12 +8,13 @@ import {
   FiSmartphone,
   FiMap,
   FiCalendar,
+  FiArrowLeft,
 } from 'react-icons/fi';
 import { RiCommunityLine, RiProfileLine, RiRoadMapLine } from 'react-icons/ri';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { format } from 'date-fns';
 import api from '../../services/api';
@@ -24,6 +25,8 @@ import getValidationErrors from '../../utils/getValidationErrors';
 
 import Input from '../../components/Input';
 import InputMask from '../../components/InputMask';
+import HeaderVertical from '../../components/HeaderVertical';
+
 import InputDatePicker from '../../components/InputDatePicker';
 import Button from '../../components/Button';
 import MultiStep from '../../components/MultiStep';
@@ -129,7 +132,7 @@ const CreateProvider: React.FC = () => {
 
         await api.post('/providers', dataProviders);
 
-        history.push('/list-appointments');
+        history.push('/dashoboard');
 
         addToast({
           type: 'success',
@@ -174,6 +177,8 @@ const CreateProvider: React.FC = () => {
 
   return (
     <Container>
+      <HeaderVertical />
+
       <Content>
         <AnimationContainer>
           <Form
@@ -315,6 +320,10 @@ const CreateProvider: React.FC = () => {
               </div>
             </MultiStep>
           </Form>
+          <Link to="/dashboard">
+            <FiArrowLeft />
+            Voltar para Dashboard
+          </Link>
         </AnimationContainer>
       </Content>
     </Container>

@@ -1,14 +1,22 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const Header = styled.header`
-  background: #e8e8ea;
-  width: 16%;
+  background-color: #e8e8ea;
+  width: 17%;
   height: 100vh;
+
+  /* position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  transition: 0.5s;
+  overflow-x: hidden;
+  white-space: nowrap; */
 `;
 
 export const HeaderTop = styled.div`
   width: 100%;
-  height: 8%;
+  height: 9%;
   display: flex;
   align-items: center;
   background: #b28d9f;
@@ -32,14 +40,23 @@ export const HeaderTop = styled.div`
   }
 `;
 
-export const HeaderRoutes = styled.div`
+const appearFromStart = keyframes`
+  from {
+    transform: translateX(15px);
+  }
+  to {
+    transform: translateX(15px);
+  }
+`;
+
+export const HeaderRoutesStyle = styled.div`
   a {
     color: #b28d9f;
     margin-top: 24px;
     margin-left: 5%;
+    margin-right: 5%;
     text-decoration: none;
     transition: color 0.2s;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
     padding: 5% 0;
 
     font-size: 25px;
@@ -53,6 +70,7 @@ export const HeaderRoutes = styled.div`
 
     &:hover {
       color: #3f1229;
+      animation: ${appearFromStart} 120s;
     }
   }
 `;

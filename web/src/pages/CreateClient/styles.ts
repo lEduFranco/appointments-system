@@ -2,10 +2,7 @@ import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
 export const Container = styled.div`
-  height: 100vh;
-
   display: flex;
-  align-items: stretch;
 `;
 
 export const Content = styled.div`
@@ -13,7 +10,7 @@ export const Content = styled.div`
   flex-direction: column;
   align-items: center;
 
-  width: 100%;
+  width: 80%;
 `;
 
 const appearFromRight = keyframes`
