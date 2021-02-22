@@ -59,4 +59,11 @@ providersRouter.post(
   providersController.create,
 );
 
+providersRouter.get(
+  '/show-providers',
+  checkRole(['admin', 'rh']),
+  ensureAuthenticated,
+  providersController.show,
+);
+
 export default providersRouter;

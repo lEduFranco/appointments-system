@@ -179,23 +179,4 @@ export const ProvidersList01 = styled.div`
   }
 `;
 
-export const CreateAccont = styled.div`
-  > a {
-    color: #b28d9f;
-
-    text-decoration: none;
-    transition: color 0.2s;
-
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    svg {
-      margin-right: 16px;
-    }
-
-    &:hover {
-      color: #3f1227;
-    }
-  }
-`;
+export const ListProvider = styled.div``;

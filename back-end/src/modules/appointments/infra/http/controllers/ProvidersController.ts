@@ -8,6 +8,7 @@ import CreateUserService from 'modules/users/services/CreateUserService';
 import CreateUserProfileService from 'modules/users/services/CreateUserProfileService';
 import CreateAddressService from 'modules/users/services/CreateAddressService';
 import CreateProviderService from 'modules/users/services/CreateProviderService';
+import ShowProvidersService from 'modules/appointments/services/ShowProvidersService';
 
 export default class ProvidersController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -26,6 +27,12 @@ export default class ProvidersController {
     });
 
     return response.json(classToClass(providers));
+  }
+
+  public async show(request: Request, response: Response): Promise<Response> {
+    const showProviders = container.resolve(ShowProvidersService);
+
+    return response.json(classToClass(showProviders));
   }
 
   public async create(request: Request, response: Response): Promise<Response> {

@@ -1,36 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import { FiUser } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
 import ProviderItem, { Provider } from '../../components/ProviderItem';
 
 import HeaderVertical from '../../components/HeaderVertical';
+
+import useGetProviders from './useGetProviders';
 
 import {
   Container,
   Content,
   Schedule,
   ProvidersList01,
-  CreateAccont,
+  ListProvider,
 } from './styles';
 
-import { useAuth } from '../../hooks/auth';
-import api from '../../services/api';
-
-interface RouteParams {
-  providerId: string;
+interface Data {
+  id: string;
+  user: {
+    user_profile: {
+      firstname: string;
+      lastname: string;
+    };
+  };
 }
 
-const ListProviders: React.FC = () => {
-  const [providers, setProviders] = useState([]);
+const ListProviders: React.FC = (Data) => {
+  const [providers, setProviders] = useState<Data[]>([]);
 
-  const { user, signOut } = useAuth();
-
-  useEffect(() => {
-    api.get('providers').then((response) => {
-      setProviders(response.data);
-    });
-  }, []);
+  useGetProviders({
+    setProviders,
+  });
 
   return (
     <Container>
@@ -42,17 +41,10 @@ const ListProviders: React.FC = () => {
         </Schedule>
 
         <ProvidersList01>
-          {providers.map((provider: Provider) => {
-            return <ProviderItem key={provider.id} provider={provider} />;
+          {providers.map((provider) => {
+            return <p>{provider.user.user_profile.firstname}</p>;
           })}
         </ProvidersList01>
-
-        <CreateAccont>
-          <Link to="/create-providers">
-            <FiUser />
-            Cadastrar diarista
-          </Link>
-        </CreateAccont>
       </Content>
     </Container>
   );

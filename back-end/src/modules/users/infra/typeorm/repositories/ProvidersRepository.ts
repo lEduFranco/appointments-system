@@ -52,6 +52,13 @@ class ProvidersRepository implements IProviderRepository {
     return providers;
   }
 
+  public async findAllShowProviders(): Promise<Provider[]> {
+    const providers = await this.ormRepository.find();
+
+    console.log(providers, 'chegou aqui');
+    return providers;
+  }
+
   public async create(userData: ICreateProviderDTO): Promise<Provider> {
     const provider = this.ormRepository.create(userData);
 

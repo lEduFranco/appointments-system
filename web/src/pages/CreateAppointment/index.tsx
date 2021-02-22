@@ -1,7 +1,6 @@
 import React, { useCallback, useState, FormEvent, useMemo } from 'react';
-import { FiArrowLeft } from 'react-icons/fi';
 import * as Yup from 'yup';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Autocomplete from 'react-autocomplete';
 
 import { format, getDate, getMonth, getYear, isToday } from 'date-fns';

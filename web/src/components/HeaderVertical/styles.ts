@@ -42,10 +42,10 @@ export const HeaderTop = styled.div`
 
 const appearFromStart = keyframes`
   from {
-    transform: translateX(15px);
+    transform: translateX(5px);
   }
   to {
-    transform: translateX(15px);
+    transform: translateX(5px);
   }
 `;
 
