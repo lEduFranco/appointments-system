@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-curly-newline */
 import React, { useCallback, useState, FormEvent, useMemo } from 'react';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
@@ -141,8 +142,9 @@ const CreateAppointments: React.FC = () => {
           description:
             'Ocorreu um erro ao fazer cadastro do agendamento, tente novamente!',
         });
-      }
 
+        return;
+      }
       addToast({
         type: 'error',
         title: 'Erro no cadastro!',
@@ -178,7 +180,8 @@ const CreateAppointments: React.FC = () => {
                     .indexOf(value.toLowerCase()) > -1
                 }
                 getItemValue={(item) =>
-                  `${item.user.user_profile.firstname} ${item.user.user_profile.lastname}`}
+                  `${item.user.user_profile.firstname} ${item.user.user_profile.lastname}`
+                }
                 items={clients}
                 value={autoCompleteValue}
                 onSelect={(value, item) => {

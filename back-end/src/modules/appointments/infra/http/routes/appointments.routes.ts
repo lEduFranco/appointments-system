@@ -7,9 +7,11 @@ import checkRole from '@modules/users/infra/http/middlewares/checkRole';
 import AppointmentsController from '../controllers/AppointmentsController';
 import DeleteAllAppointmentsController from '../controllers/DeleteAllAppointmentsController';
 import DeleteAllFutureAppointmentsController from '../controllers/DeleteAllFutureAppointmentsController';
+import ReportsAppointmentsController from '../controllers/ReportsAppointmentsController';
 
 const appointmentsRouter = Router();
 const appointmentsController = new AppointmentsController();
+const reportsAppointmentsController = new ReportsAppointmentsController();
 const deleteAllAppointmentsController = new DeleteAllAppointmentsController();
 const deleteAllFutureAppointmentsController = new DeleteAllFutureAppointmentsController();
 
@@ -38,6 +40,12 @@ appointmentsRouter.get(
   '/',
   checkRole(['admin', 'provider', 'secretary']),
   appointmentsController.index,
+);
+
+appointmentsRouter.get(
+  '/reports',
+  checkRole(['admin', 'secretary']),
+  reportsAppointmentsController.index,
 );
 
 appointmentsRouter.delete(

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import api from '../../services/api';
 
 interface GetProviders {
-  setProviders: Function;
+  setClients: Function;
 }
 
 interface Response {
@@ -20,16 +20,16 @@ interface Data {
   };
 }
 
-const useGetProviders = ({ setProviders }: GetProviders): void => {
-  async function getProviders(): Promise<void> {
-    const { data }: Response = await api.get('/providers/show-providers');
+const useGetClients = ({ setClients }: GetProviders): void => {
+  async function getClients(): Promise<void> {
+    const { data }: Response = await api.get('/clients/show-clients');
 
-    setProviders(data);
+    setClients(data);
   }
 
   useEffect(() => {
-    getProviders();
+    getClients();
   }, []);
 };
 
-export default useGetProviders;
+export default useGetClients;

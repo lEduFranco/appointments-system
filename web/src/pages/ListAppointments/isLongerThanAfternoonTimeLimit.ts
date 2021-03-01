@@ -41,15 +41,16 @@ interface Appointment {
   };
 }
 
-const isLongerThanAfternoonTimeLimit = (
-  appointments: Appointments,
-): boolean => {
+const isLongerThanAfternoonTimeLimit = ({
+  appointments,
+  daySelected,
+}: Props): boolean => {
   const dateNow = new Date(Date.now());
 
   const timeLimitPartTimeAfternoon = setHours(startOfDay(dateNow), 11);
 
   return (
-    isToday(new Date(Date.now())) &&
+    isToday(new Date(daySelected)) &&
     isAfter(new Date(Date.now()), timeLimitPartTimeAfternoon) &&
     !has(appointments, 'part_time_afternoon')
   );

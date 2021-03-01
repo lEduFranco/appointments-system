@@ -4,5 +4,6 @@ import ICreateClientDTO from '../dtos/ICreateClientDTO';
 export default interface IClientRepository {
   create(data: ICreateClientDTO): Promise<Client>;
   findAllClients(nameFilter: string): Promise<Client[]>;
+  findAllShowClients(): Promise<Client[]>;
   findClient(id: string): Promise<Client>;
 }

@@ -57,4 +57,11 @@ clientsRouter.get(
   clientsController.index,
 );
 
+clientsRouter.get(
+  '/show-clients',
+  checkRole(['admin', 'secreatary']),
+  ensureAuthenticated,
+  clientsController.show,
+);
+
 export default clientsRouter;

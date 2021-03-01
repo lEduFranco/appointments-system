@@ -10,6 +10,7 @@ import CreateProvider from '../pages/CreateProvider';
 import ListProviders from '../pages/ListProviders';
 import CreateClient from '../pages/CreateClient';
 import ListClient from '../pages/ListClient';
+import Reports from '../pages/Reports';
 
 import ListAppointments from '../pages/ListAppointments';
 
@@ -56,6 +57,12 @@ const Routes: React.FC = () => (
     <PrivateRoute
       path="/list-appointments"
       component={ListAppointments}
+      roles={['admin', 'secretary']}
+    />
+
+    <PrivateRoute
+      path="/reports"
+      component={Reports}
       roles={['admin', 'secretary']}
     />
   </Switch>

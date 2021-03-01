@@ -1,4 +1,4 @@
-import { getRepository, Repository, In, Equal } from 'typeorm';
+import { getRepository, Repository, In, Equal, Between, Raw } from 'typeorm';
 
 import groupBy from 'lodash/groupBy';
 import map from 'lodash/map';
@@ -9,6 +9,7 @@ import IAppointmentsRepository, {
 } from '@modules/appointments/repositories/IAppointmentsRepository';
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
 import IFindAllAppointmentsFromProvidersByDateDTO from '@modules/appointments/dtos/IFindAllAppointmentsFromProvidersByDateDTO';
+import IFindAllAppointmentsByFrequencyAndDateDTO from '@modules/appointments/dtos/IFindAllAppointmentsByFrequencyAndDateDTO';
 import IDeleteAllFutureAppointmentsDTO from '@modules/appointments/dtos/IDeleteAllFutureAppointmentsDTO';
 
 import Appointment from '../entities/Appointment';
@@ -105,6 +106,41 @@ class AppointmentsRepository implements IAppointmentsRepository {
     );
 
     return mapAppointments;
+  }
+
+  public async findAllAppointmentsByFrequencyAndDate(
+    frequency: 'detached' | 'fixed',
+    startDate: Date,
+    endDate: Date,
+  ): Promise<Appointment[]> {
+    let whereAppointment = [
+      {
+        frequency: 'first_contact',
+        date: Between(startDate, endDate),
+      },
+      {
+        frequency: 'monthly',
+        date: Between(startDate, endDate),
+      },
+    ];
+
+    if (frequency === 'fixed') {
+      whereAppointment = [
+        {
+          frequency: 'weekly',
+          date: Between(startDate, endDate),
+        },
+        {
+          frequency: 'biweekly',
+          date: Between(startDate, endDate),
+        },
+      ];
+    }
+    const appointments = await this.ormRepository.find({
+      where: whereAppointment,
+    });
+
+    return appointments;
   }
 
   public async create({

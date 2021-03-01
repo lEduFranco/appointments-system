@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiCalendar, FiPlus, FiList, FiUser } from 'react-icons/fi';
+import { FiCalendar, FiPlus, FiList, FiUser, FiFileText } from 'react-icons/fi';
 
 const AdminHeaderRoutes: React.FC = () => {
   return (
@@ -28,6 +28,10 @@ const AdminHeaderRoutes: React.FC = () => {
       <Link to="/create-appointments">
         <FiPlus />
         Cadastrar Agendamento
+      </Link>
+      <Link to="/reports">
+        <FiFileText />
+        Relatórios
       </Link>
     </>
   );

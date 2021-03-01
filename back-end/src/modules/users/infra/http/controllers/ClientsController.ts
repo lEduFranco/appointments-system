@@ -7,6 +7,7 @@ import CreateUserService from 'modules/users/services/CreateUserService';
 import CreateUserProfileService from 'modules/users/services/CreateUserProfileService';
 import CreateAddressService from 'modules/users/services/CreateAddressService';
 import CreateClientService from 'modules/users/services/CreateClientService';
+import ShowClientsService from 'modules/users/services/ShowClientsService';
 
 export default class ClientsController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -15,6 +16,14 @@ export default class ClientsController {
     const listClients = container.resolve(ListClientsService);
 
     const clients = await listClients.execute(nameFilter);
+
+    return response.json(classToClass(clients));
+  }
+
+  public async show(request: Request, response: Response): Promise<Response> {
+    const ShowClients = container.resolve(ShowClientsService);
+
+    const clients = await ShowClients.execute();
 
     return response.json(classToClass(clients));
   }

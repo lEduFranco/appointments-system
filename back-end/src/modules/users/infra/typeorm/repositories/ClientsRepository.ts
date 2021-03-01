@@ -23,6 +23,14 @@ class ClientsRepository implements IClientRepository {
     return client;
   }
 
+  public async findAllShowClients(): Promise<Client[]> {
+    const client = await this.ormRepository.find({
+      relations: ['user', 'user.user_profile'],
+    });
+
+    return client;
+  }
+
   public async findAllClients(nameFilter: string): Promise<Client[]> {
     const clients = await this.ormRepository
       .createQueryBuilder('clients')

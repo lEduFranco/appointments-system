@@ -1,5 +1,5 @@
 import has from 'lodash/has';
-import { isAfter, setHours, startOfDay, isToday, parseISO } from 'date-fns';
+import { isAfter, setHours, startOfDay, isToday } from 'date-fns';
 
 interface Props {
   daySelected: Date;

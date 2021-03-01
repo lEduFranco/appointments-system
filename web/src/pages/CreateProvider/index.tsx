@@ -320,10 +320,6 @@ const CreateProvider: React.FC = () => {
               </div>
             </MultiStep>
           </Form>
-          <Link to="/dashboard">
-            <FiArrowLeft />
-            Voltar para Dashboard
-          </Link>
         </AnimationContainer>
       </Content>
     </Container>

@@ -1,57 +1,50 @@
-import React, { useState, useEffect } from 'react';
-
-import { FiUser } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
-import ProviderItem, { Provider } from '../../components/ClientItem';
+import React, { useState } from 'react';
 
 import HeaderVertical from '../../components/HeaderVertical';
 
-import {
-  Container,
-  Content,
-  Schedule,
-  CreateAccont,
-  ProvidersList01,
-} from './styles';
+import useGetClients from './useGetClients';
 
-import { useAuth } from '../../hooks/auth';
-import api from '../../services/api';
+import { Container, Content, Schedule, CLientsList, Client } from './styles';
 
-interface RouteParams {
-  providerId: string;
+interface Data {
+  id: string;
+  user: {
+    user_profile: {
+      firstname: string;
+      lastname: string;
+    };
+  };
 }
 
-const ListClient: React.FC = () => {
-  const [providers, setProviders] = useState([]);
-  const { user, signOut } = useAuth();
+const ListClients: React.FC = (Data) => {
+  const [clients, setClients] = useState<Data[]>([]);
 
-  useEffect(() => {
-    api.get('providers').then((response) => {
-      setProviders(response.data);
-    });
-  }, []);
+  useGetClients({
+    setClients,
+  });
 
   return (
     <Container>
       <HeaderVertical />
+
       <Content>
         <Schedule>
           <h1>Clientes</h1>
         </Schedule>
-        <ProvidersList01>
-          {providers.map((provider: Provider) => {
-            return <ProviderItem key={provider.id} provider={provider} />;
+
+        <CLientsList>
+          {clients.map((client) => {
+            return (
+              <Client>
+                <h1>{client.user.user_profile.firstname}</h1>
+                <h2>{client.user.user_profile.lastname}</h2>
+              </Client>
+            );
           })}
-        </ProvidersList01>
-        <CreateAccont>
-          <Link to="/create-providers">
-            <FiUser />
-            Cadastrar cliente
-          </Link>
-        </CreateAccont>
+        </CLientsList>
       </Content>
     </Container>
   );
 };
 
-export default ListClient;
+export default ListClients;

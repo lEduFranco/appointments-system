@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-import ProviderItem, { Provider } from '../../components/ProviderItem';
-
 import HeaderVertical from '../../components/HeaderVertical';
 
 import useGetProviders from './useGetProviders';
@@ -10,8 +8,8 @@ import {
   Container,
   Content,
   Schedule,
-  ProvidersList01,
-  ListProvider,
+  ProvidersList,
+  Provider,
 } from './styles';
 
 interface Data {
@@ -40,11 +38,16 @@ const ListProviders: React.FC = (Data) => {
           <h1>Diaristas</h1>
         </Schedule>
 
-        <ProvidersList01>
+        <ProvidersList>
           {providers.map((provider) => {
-            return <p>{provider.user.user_profile.firstname}</p>;
+            return (
+              <Provider>
+                <h1>{provider.user.user_profile.firstname}</h1>
+                <h2>{provider.user.user_profile.lastname}</h2>
+              </Provider>
+            );
           })}
-        </ProvidersList01>
+        </ProvidersList>
       </Content>
     </Container>
   );
