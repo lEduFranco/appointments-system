@@ -21,14 +21,7 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
-// import logoImg from '../../assets/Logo 15@2x.png';
-
-import {
-  Container,
-  Title,
-  RestrictedAcess,
-  RestrictedAcessText,
-} from './styles';
+import { Container, Title } from './styles';
 
 interface SignInFormData {
   email: string;
@@ -38,7 +31,6 @@ interface SignInFormData {
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
-  const navigation = useNavigation();
   const { signIn } = useAuth();
 
   const handleSignIn = useCallback(
@@ -93,8 +85,6 @@ const SignIn: React.FC = () => {
           contentContainerStyle={{ flex: 1 }}
         >
           <Container>
-            {/* <Image source={logoImg} /> */}
-
             <View>
               <Title>Faça seu login</Title>
             </View>
@@ -135,11 +125,6 @@ const SignIn: React.FC = () => {
                 Entrar
               </Button>
             </Form>
-
-            <RestrictedAcess onPress={() => navigation.navigate('Restricted')}>
-              <Icon name="slash" size={20} color="#b28d9f" />
-              <RestrictedAcessText>Acesso restrito</RestrictedAcessText>
-            </RestrictedAcess>
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>

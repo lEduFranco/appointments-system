@@ -19,6 +19,8 @@ import useGetProviders from './useGetProviders';
 import useGetClients from './useGetClients';
 import HeaderVertical from '../../components/HeaderVertical';
 
+import api from '../../services/api';
+
 import {
   Container,
   Content,
@@ -29,7 +31,6 @@ import {
   Dates,
   Calendar,
 } from './styles';
-import api from '../../services/api';
 
 interface Client {
   id: string;
@@ -48,8 +49,6 @@ const CreateAppointments: React.FC = () => {
   const [period, setPeriod] = useState('');
   const [frequency, setFrequency] = useState('');
   const [provider, setProvider] = useState('');
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
   const [providers, setProviders] = useState([]);
   const [client, setClient] = useState<Client>('');
   const [autoCompleteValue, setAutoCompleteValue] = useState('');

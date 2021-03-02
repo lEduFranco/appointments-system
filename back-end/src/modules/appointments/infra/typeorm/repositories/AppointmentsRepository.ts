@@ -1,4 +1,4 @@
-import { getRepository, Repository, In, Equal, Between, Raw } from 'typeorm';
+import { getRepository, Repository, In, Equal, Between } from 'typeorm';
 
 import groupBy from 'lodash/groupBy';
 import map from 'lodash/map';
@@ -9,7 +9,6 @@ import IAppointmentsRepository, {
 } from '@modules/appointments/repositories/IAppointmentsRepository';
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
 import IFindAllAppointmentsFromProvidersByDateDTO from '@modules/appointments/dtos/IFindAllAppointmentsFromProvidersByDateDTO';
-import IFindAllAppointmentsByFrequencyAndDateDTO from '@modules/appointments/dtos/IFindAllAppointmentsByFrequencyAndDateDTO';
 import IDeleteAllFutureAppointmentsDTO from '@modules/appointments/dtos/IDeleteAllFutureAppointmentsDTO';
 
 import Appointment from '../entities/Appointment';
@@ -138,6 +137,14 @@ class AppointmentsRepository implements IAppointmentsRepository {
     }
     const appointments = await this.ormRepository.find({
       where: whereAppointment,
+      relations: [
+        'provider',
+        'provider.user',
+        'provider.user.user_profile',
+        'client',
+        'client.user',
+        'client.user.user_profile',
+      ],
     });
 
     return appointments;

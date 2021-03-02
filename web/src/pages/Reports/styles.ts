@@ -1,3 +1,4 @@
+import { shade } from 'polished';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -33,10 +34,30 @@ export const Search = styled.div`
 
 export const Select = styled.div``;
 
-export const Date = styled.div`
+export const DateSearch = styled.div`
   h2 {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.4rem;
     padding-bottom: 0.6rem;
+  }
+`;
+
+export const ReportsData = styled.div``;
+
+export const Appointments = styled.div``;
+
+export const ButtonSearch = styled.button`
+  background: #b28d9f;
+  height: 40px;
+  border-radius: 10px;
+  border: 0;
+  color: #f5f5f5;
+  width: 25%;
+  font-weight: 500;
+  margin-top: 16px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background: ${shade(0.1, '#b28d9f')};
   }
 `;

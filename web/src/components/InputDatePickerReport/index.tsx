@@ -11,15 +11,20 @@ import { Container } from './styles';
 interface InputProps extends Omit<ReactDatePickerProps, 'onChange'> {
   containerStyle?: object;
   icon?: React.ComponentType<IconBaseProps>;
-  // startDate: ;
-  // setStartDate: ;
-  // endDate: ;
-  // setEndDate: ;
+  startDate: Date;
+  setStartDate: Function;
+  endDate: Date;
+  setEndDate: Function;
 }
 
-function setStartDate() {}
-
-const Input: React.FC<InputProps> = ({ containerStyle = {}, icon: Icon }) => {
+const Input: React.FC<InputProps> = ({
+  containerStyle = {},
+  icon: Icon,
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate,
+}) => {
   return (
     <Container style={containerStyle}>
       {Icon && <Icon size={20} />}
