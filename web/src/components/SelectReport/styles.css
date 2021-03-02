@@ -1,24 +1,22 @@
 .select-block-report {
   position: relative;
-  padding-bottom: 0.6rem;
-
 }
 
 .select-block-report label {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.4rem;
+  font-size: 1.4rem ;
 }
 
 .select-block-report select {
-  width: 70%;
+  width: 90%;
   height: 3rem;
-  margin-top: 0.8rem;
+  margin-top: 0.4rem;
   border-radius: 0.8rem;
   background: #b28d9f;
-  border: 1px solid #3f1229;
+  border: 0;
   outline: 0;
-  padding: 0 1.6rem;
   font: 1.3rem 'Montserrat';
+  padding-left: 5%;
 }
 
 

@@ -10,7 +10,7 @@ export const Content = styled.div`
   flex-direction: column;
   align-items: center;
 
-  width: 80%;
+  width: 83%;
 `;
 
 const appearFromRight = keyframes`

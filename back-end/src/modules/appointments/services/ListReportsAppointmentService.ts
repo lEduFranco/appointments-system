@@ -1,6 +1,7 @@
 import { parseISO } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 import groupBy from 'lodash/groupBy';
+import orderBy from 'lodash/orderBy';
 
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 
@@ -46,13 +47,13 @@ class ListReportsAppointmentsService {
     const groupAppointments = groupBy(appointments, 'client.id');
     const mapAppointments = map(
       groupAppointments,
-      (appointmentsProvider, index) => {
+      (appointmentsClient, index) => {
         return {
           client: {
             id: index,
-            name: `${appointmentsProvider[0].client.user.user_profile.firstname} ${appointmentsProvider[0].client.user.user_profile.lastname}`,
+            name: `${appointmentsClient[0].client.user.user_profile.firstname} ${appointmentsClient[0].client.user.user_profile.lastname}`,
           },
-          appointments: appointmentsProvider,
+          appointments: orderBy(appointmentsClient, 'provider_id'),
         };
       },
     );

@@ -11,7 +11,7 @@ export const Content = styled.div`
   align-items: center;
   justify-content: space-evenly;
 
-  width: 80%;
+  width: 83%;
 `;
 
 const appearFromStart = keyframes`

@@ -11,7 +11,7 @@ import { getDate, getMonth, getYear } from 'date-fns';
 import DayPicker, { DayModifiers } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
-import { FiArrowLeft, FiPlus, FiUser } from 'react-icons/fi';
+import { FiPlus, FiUser } from 'react-icons/fi';
 import api from '../../services/api';
 import HeaderHorizontal from '../../components/Header';
 
@@ -83,9 +83,8 @@ interface Appointment {
 }
 
 const ListAppointments: React.FC = () => {
-  const [period, setPeriod] = useState('');
   const [appointments, setAppointments] = useState<AppointmentsProvider[]>([]);
-  const [frequency, setFrequency] = useState('');
+
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [daySelected, setDaySelected] = useState(getDate(new Date()));
   const [monthSelected, setMonthSelected] = useState(getMonth(new Date()));

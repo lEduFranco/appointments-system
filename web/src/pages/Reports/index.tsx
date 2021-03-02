@@ -1,6 +1,7 @@
 import React, { useState, FormEvent } from 'react';
 
 import * as Yup from 'yup';
+import Collapse from '@kunukn/react-collapse';
 import { FiCalendar } from 'react-icons/fi';
 import api from '../../services/api';
 
@@ -20,6 +21,12 @@ import {
   Select,
   DateSearch,
   ReportsData,
+  DivClients,
+  Client,
+  DivAppointments,
+  AppoitmentDiv,
+  Providers,
+  DivButton,
   ButtonSearch,
 } from './styles';
 
@@ -35,6 +42,8 @@ export interface AppointmentsClient {
 interface Appointment {
   id: string;
   period: string;
+  frequency: string;
+  date: string;
   client: {
     user: {
       user_profile: {
@@ -61,6 +70,23 @@ const Reports: React.FC = () => {
   const [frequency, setFrequency] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [collapseClientId, setCollapseClientId] = useState('');
+
+  function getFrequencyName(frequency?: string): string {
+    if (frequency === 'weekly') {
+      return 'Semanal';
+    }
+
+    if (frequency === 'biweekly') {
+      return 'Quinzenal';
+    }
+
+    if (frequency === 'monthly') {
+      return 'Avulso';
+    }
+
+    return 'Primeira Diária';
+  }
 
   async function handleSubmit(e: FormEvent): Promise<void> {
     try {
@@ -94,8 +120,8 @@ const Reports: React.FC = () => {
           setAppointments(response.data);
           addToast({
             type: 'success',
-            title: 'Relatório',
-            description: 'O Relatório foi buscado com sucesso!',
+            title: 'Sucesso',
+            description: 'O relatório foi buscado com sucesso!',
           });
         });
     } catch (err) {
@@ -107,8 +133,7 @@ const Reports: React.FC = () => {
         addToast({
           type: 'error',
           title: 'Erro nos Dados!',
-          description:
-            'Ocorreu um erro ao fazer cadastro do agendamento, tente novamente!',
+          description: 'Ocorreu um erro ao buscar relatórios, tente novamente!',
         });
 
         return;
@@ -116,8 +141,7 @@ const Reports: React.FC = () => {
       addToast({
         type: 'error',
         title: 'Erro no cadastro!',
-        description:
-          'Ocorreu um erro ao fazer cadastro do agendamento, tente novamente!',
+        description: 'Ocorreu um erro ao buscar relatórios, tente novamente!',
       });
     }
   }
@@ -131,12 +155,12 @@ const Reports: React.FC = () => {
           <h1>Relatórios</h1>
         </Title>
         <Report>
-          <Search>
-            <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
+            <Search>
               <Select>
+                <h3>Tipo de diária</h3>
                 <SelectReport
                   name="freaquncy"
-                  label="Tipo de diária"
                   value={frequency}
                   onChange={(e) => {
                     setFrequency(e.target.value);
@@ -155,7 +179,7 @@ const Reports: React.FC = () => {
               </Select>
 
               <DateSearch>
-                <h2>Datas</h2>
+                <h3>Datas</h3>
                 <InputDatePickerReport
                   startDate={startDate}
                   setStartDate={setStartDate}
@@ -164,23 +188,41 @@ const Reports: React.FC = () => {
                   icon={FiCalendar}
                 />
               </DateSearch>
+              <DivButton>
+                <ButtonSearch type="submit">Pesquisar</ButtonSearch>
+              </DivButton>
+            </Search>
 
-              <ReportsData>
-                {appointments.map((appointment) => (
-                  <div>
-                    <div>{appointment.client.name}</div>
-                    <ul>
+            <ReportsData>
+              {appointments.map((appointment) => (
+                <>
+                  <DivClients
+                    type="button"
+                    onClick={() => setCollapseClientId(appointment.client.id)}
+                  >
+                    <Client>{appointment.client.name}</Client>
+                  </DivClients>
+                  <Collapse isOpen={appointment.client.id === collapseClientId}>
+                    <DivAppointments>
                       {appointment.appointments.map((appointmentClient) => (
-                        <li>{`${appointmentClient.provider.user.user_profile.firstname} ${appointmentClient.provider.user.user_profile.lastname}`}</li>
+                        <>
+                          <Providers>
+                            {`${appointmentClient.provider.user.user_profile.firstname}
+                              ${appointmentClient.provider.user.user_profile.lastname}`}
+                          </Providers>
+                          <AppoitmentDiv>
+                            {` ${appointmentClient.date} ${getFrequencyName(
+                              appointmentClient.frequency,
+                            )} ${appointmentClient.period} `}
+                          </AppoitmentDiv>
+                        </>
                       ))}
-                    </ul>
-                  </div>
-                ))}
-              </ReportsData>
-
-              <ButtonSearch type="submit">Pesquisar</ButtonSearch>
-            </form>
-          </Search>
+                    </DivAppointments>
+                  </Collapse>
+                </>
+              ))}
+            </ReportsData>
+          </form>
         </Report>
       </Content>
     </Container>
