@@ -7,7 +7,7 @@ export const Container = styled.div`
 
 export const Content = styled.main`
   max-width: 1120px;
-  margin: 64px auto;
+  margin: 2% auto;
   display: block;
 `;
 
@@ -16,7 +16,7 @@ export const Schedule = styled.div`
   display: flex;
   justify-content: space-between;
   margin-right: 120px;
-  margin-bottom: 50px;
+  margin-bottom: 2.5%;
 
   h1 {
     font-size: 36px;
@@ -30,7 +30,7 @@ export const ProvidersList = styled.div`
   height: 80vh;
 
   div + div {
-    margin-top: 16px;
+    margin-top: 1.5%;
   }
 
   span {
@@ -52,8 +52,8 @@ export const Provider = styled.div`
   display: flex;
   background-color: #e8e8ea;
   align-items: center;
-  padding: 16px 24px;
-  border-radius: 10px;
+  padding: 1.5% 2%;
+  border-radius: 15px;
   margin-left: 24px;
 
   &:hover {

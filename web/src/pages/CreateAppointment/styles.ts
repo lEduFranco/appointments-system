@@ -7,7 +7,8 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   display: flex;
-  margin-top: -10%;
+  margin-bottom: 5%;
+  padding-right: 4%;
   align-items: center;
   justify-content: space-evenly;
 
@@ -27,6 +28,7 @@ const appearFromStart = keyframes`
 
 export const AnimationContainer = styled.div`
   display: flex;
+  width: 30%;
 
   flex-direction: column;
   align-items: center;
@@ -39,75 +41,43 @@ export const AnimationContainer = styled.div`
     text-align: center;
 
     h1 {
-      margin-bottom: 24px;
-    }
-
-    a {
-      color: #f4ede8;
-      display: block;
-      margin-top: 24px;
-      text-decoration: none;
-      transition: color 0.2s;
-
-      &:hover {
-        color: ${shade(0.2, '#f4ede8')};
-      }
+      margin-bottom: 6%;
     }
 
     button {
-      margin-top: 10%;
-    }
-  }
-
-  > a {
-    color: #b28d9f;
-    display: block;
-    margin-top: 15%;
-    text-decoration: none;
-    transition: color 0.2s;
-
-    display: flex;
-    align-items: center;
-
-    svg {
-      margin-right: 16px;
-    }
-
-    &:hover {
-      color: #3f1229;
+      margin-top: 8%;
     }
   }
 `;
 
 export const DivSearch = styled.div`
-  padding-bottom: 10%;
   position: relative;
   width: 100%;
-  height: 100px;
+  height: 6.8rem;
   z-index: 2;
 
   h3 {
     font-size: 1.4rem;
     font-weight: 400;
-    padding-bottom: 10px;
+    padding-bottom: 2%;
   }
 
   input {
-    width: 550px;
+    width: 25vw;
     height: 3.8rem;
 
     background: #b28d9f;
-    border-radius: 12.8px;
+    border-radius: 15px;
     border: 1px solid #3f1229;
 
-    padding: 0 10px;
+    padding: 0 2%;
 
     text-transform: uppercase;
   }
 
   .menu {
     background: #b28d9f;
-    border-radius: 10px;
+    border-radius: 15px;
   }
 
   .item-highlighted {
@@ -127,9 +97,9 @@ export const DivSelect = styled.div`
 export const AutoCompleteStyle = styled.div`
   display: flex;
 
-  border-radius: 10px;
+  border-radius: 15px;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-  padding: 8px 4px;
+  padding: 2% 2%;
   font-size: 1rem;
   position: relative;
   overflow: auto;
@@ -142,15 +112,15 @@ export const Dates = styled.div`
   display: flex;
   flex-direction: column;
 
-  padding-bottom: 9%;
-  padding-left: 2%;
+  padding-bottom: 13%;
+
   h1 {
     font-size: 36px;
   }
 
   p {
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin-top: 2%;
+    margin-bottom: 2%;
     color: #3f1227;
     display: flex;
     align-items: center;
@@ -179,7 +149,7 @@ export const Calendar = styled.aside`
 
   .DayPicker {
     background: #3f1229;
-    border-radius: 10px;
+    border-radius: 15px;
   }
 
   .DayPicker-wrapper {
@@ -205,7 +175,7 @@ export const Calendar = styled.aside`
 
   .DayPicker-Day--available:not(.DayPicker-Day--outside) {
     background: #b28d9f;
-    border-radius: 10px;
+    border-radius: 15px;
     color: #f5f5f5;
   }
 
@@ -225,7 +195,7 @@ export const Calendar = styled.aside`
 
   .DayPicker-Day--selected {
     background: #f29fc9 !important;
-    border-radius: 10px;
+    border-radius: 15px;
     color: #3f1229 !important;
   }
 `;

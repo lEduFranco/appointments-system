@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import ReactDatePicker, { ReactDatePickerProps } from 'react-datepicker';
 import { IconBaseProps } from 'react-icons';
 
@@ -25,9 +25,16 @@ const Input: React.FC<InputProps> = ({
   endDate,
   setEndDate,
 }) => {
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleInputFocus = useCallback(() => {
+    setIsFocused(true);
+  }, []);
+
   return (
-    <Container style={containerStyle}>
+    <Container style={containerStyle} isFocused={isFocused}>
       {Icon && <Icon size={20} />}
+
       <ReactDatePicker
         selected={startDate}
         onChange={(date) => setStartDate(date)}
@@ -36,6 +43,7 @@ const Input: React.FC<InputProps> = ({
         locale={ptBR}
         startDate={startDate}
         endDate={endDate}
+        onFocus={handleInputFocus}
       />
       <ReactDatePicker
         selected={endDate}

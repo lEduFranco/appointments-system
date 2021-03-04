@@ -10,7 +10,7 @@ export const ButtonsDiv = styled.div`
 export const ButtonNextStep = styled.button`
   background: #3f1229;
   height: 40px;
-  border-radius: 10px;
+  border-radius: 15px;
   border: 0;
   color: #f5f5f5;
   width: 25%;
@@ -25,7 +25,7 @@ export const ButtonNextStep = styled.button`
 export const ButtonBackStep = styled.button`
   background: #b28d9f;
   height: 40px;
-  border-radius: 10px;
+  border-radius: 15px;
   border: 0;
   color: #f5f5f5;
   width: 25%;

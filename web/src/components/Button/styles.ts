@@ -4,13 +4,13 @@ import { lighten } from 'polished';
 export const Container = styled.button`
   background: #3f1227;
   height: 56px;
-  border-radius: 10px;
+  border-radius: 15px;
   border: 0;
-  padding: 0 16px;
+  padding: 0 8%;
   color: #f5f5f5;
   width: 100%;
   font-weight: 500;
-  margin-top: 16px;
+  margin-top: 2%;
   transition: background-color 0.2s;
 
   &:hover {

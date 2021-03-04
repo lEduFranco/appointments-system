@@ -59,7 +59,7 @@ clientsRouter.get(
 
 clientsRouter.get(
   '/show-clients',
-  checkRole(['admin', 'secreatary']),
+  checkRole(['admin', 'secretary']),
   ensureAuthenticated,
   clientsController.show,
 );

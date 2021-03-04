@@ -23,7 +23,7 @@ export const HeaderTop = styled.div`
   justify-content: space-between;
 
   > img {
-    height: 80px;
+    height: 75%;
     margin-left: 6%;
   }
 
@@ -52,7 +52,7 @@ const appearFromStart = keyframes`
 export const HeaderRoutesStyle = styled.div`
   a {
     color: #b28d9f;
-    margin-top: 24px;
+    margin-top: 6%;
     margin-left: 5%;
     margin-right: 5%;
     text-decoration: none;
@@ -65,7 +65,7 @@ export const HeaderRoutesStyle = styled.div`
     align-items: center;
 
     svg {
-      margin-right: 16px;
+      margin-right: 8%;
     }
 
     &:hover {

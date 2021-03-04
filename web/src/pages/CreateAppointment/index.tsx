@@ -168,7 +168,7 @@ const CreateAppointments: React.FC = () => {
       <Content>
         <AnimationContainer>
           <form onSubmit={handleSubmit}>
-            <h1>Criar agendamento</h1>
+            <h1>Cadastrar agendamento</h1>
 
             <DivSearch>
               <h3>Cliente</h3>

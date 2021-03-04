@@ -179,7 +179,7 @@ const CreateClient: React.FC = () => {
       <Content>
         <AnimationContainer>
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <h1>Cadastro Cliente</h1>
+            <h1>Cadastrar Cliente</h1>
 
             <MultiStep>
               <div>

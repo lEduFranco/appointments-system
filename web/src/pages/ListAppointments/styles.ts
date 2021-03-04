@@ -272,7 +272,7 @@ export const Calendar = styled.aside`
 
   .DayPicker {
     background: #3f1229;
-    border-radius: 10px;
+    border-radius: 15px;
   }
 
   .DayPicker-wrapper {
@@ -298,7 +298,7 @@ export const Calendar = styled.aside`
 
   .DayPicker-Day--available:not(.DayPicker-Day--outside) {
     background: #b28d9f;
-    border-radius: 10px;
+    border-radius: 15px;
     color: #f5f5f5;
   }
 
@@ -318,7 +318,7 @@ export const Calendar = styled.aside`
 
   .DayPicker-Day--selected {
     background: #f29fc9 !important;
-    border-radius: 10px;
+    border-radius: 15px;
     color: #3f1229 !important;
   }
 `;

@@ -1,18 +1,19 @@
 import styled from 'styled-components';
 
 export const Header = styled.header`
-  padding: 6px 0;
   background: #b28d9f;
+  height: 5vh;
 `;
 
 export const HeaderContent = styled.div`
   width: 95%;
+  height: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
 
   > img {
-    height: 80px;
+    height: 100%;
   }
 
   button {

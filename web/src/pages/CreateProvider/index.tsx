@@ -186,7 +186,7 @@ const CreateProvider: React.FC = () => {
             onSubmit={handleSubmit}
             initialData={{ begin_date: new Date() }}
           >
-            <h1>Cadastro Diarista</h1>
+            <h1>Cadastrar Diarista</h1>
 
             <MultiStep>
               <div>

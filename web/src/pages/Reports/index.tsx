@@ -1,8 +1,11 @@
+/* eslint-disable react/jsx-curly-newline */
 import React, { useState, FormEvent } from 'react';
 
 import * as Yup from 'yup';
 import Collapse from '@kunukn/react-collapse';
 import { FiCalendar } from 'react-icons/fi';
+import { format, parseISO, getDate } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 import api from '../../services/api';
 
 import { useToast } from '../../hooks/toast';
@@ -23,15 +26,30 @@ import {
   ReportsData,
   DivClients,
   Client,
+  Name,
+  Cpf,
   DivAppointments,
   AppoitmentDiv,
   Providers,
+  DivDate,
+  Frequency,
+  Period,
   DivButton,
   ButtonSearch,
 } from './styles';
 
 export interface AppointmentsClient {
   client: {
+    id: string;
+    name: string;
+    cpf: string;
+  };
+
+  appointmentsProvider: AppointmentsProvider[];
+}
+
+interface AppointmentsProvider {
+  provider: {
     id: string;
     name: string;
   };
@@ -49,7 +67,6 @@ interface Appointment {
       user_profile: {
         firstname: string;
         lastname: string;
-        cpf: string;
       };
     };
   };
@@ -71,21 +88,34 @@ const Reports: React.FC = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [collapseClientId, setCollapseClientId] = useState('');
+  const [collapseProviderId, setCollapseProviderId] = useState('');
 
-  function getFrequencyName(frequency?: string): string {
-    if (frequency === 'weekly') {
+  function getFrequencyName(frequencyParam?: string): string {
+    if (frequencyParam === 'weekly') {
       return 'Semanal';
     }
 
-    if (frequency === 'biweekly') {
+    if (frequencyParam === 'biweekly') {
       return 'Quinzenal';
     }
 
-    if (frequency === 'monthly') {
+    if (frequencyParam === 'monthly') {
       return 'Avulso';
     }
 
     return 'Primeira Diária';
+  }
+
+  function getPeriodName(period?: string): string {
+    if (period === 'integral') {
+      return 'Integral';
+    }
+
+    if (period === 'part_time_morning') {
+      return 'Meio periodo manhã';
+    }
+
+    return 'Meio periodo tarde';
   }
 
   async function handleSubmit(e: FormEvent): Promise<void> {
@@ -133,7 +163,8 @@ const Reports: React.FC = () => {
         addToast({
           type: 'error',
           title: 'Erro nos Dados!',
-          description: 'Ocorreu um erro ao buscar relatórios, tente novamente!',
+          description:
+            'Ocorreu um erro ao buscar relatórios, verifique os campos!',
         });
 
         return;
@@ -141,7 +172,8 @@ const Reports: React.FC = () => {
       addToast({
         type: 'error',
         title: 'Erro no cadastro!',
-        description: 'Ocorreu um erro ao buscar relatórios, tente novamente!',
+        description:
+          'Ocorreu um erro ao buscar relatórios, verifique os campos!',
       });
     }
   }
@@ -197,26 +229,91 @@ const Reports: React.FC = () => {
               {appointments.map((appointment) => (
                 <>
                   <DivClients
-                    type="button"
                     onClick={() => setCollapseClientId(appointment.client.id)}
                   >
-                    <Client>{appointment.client.name}</Client>
+                    <Client>
+                      <Name> {appointment.client.name} </Name>
+                      <Cpf>
+                        <h3>CPF :</h3> {appointment.client.cpf}
+                      </Cpf>
+                    </Client>
                   </DivClients>
                   <Collapse isOpen={appointment.client.id === collapseClientId}>
                     <DivAppointments>
-                      {appointment.appointments.map((appointmentClient) => (
-                        <>
-                          <Providers>
-                            {`${appointmentClient.provider.user.user_profile.firstname}
-                              ${appointmentClient.provider.user.user_profile.lastname}`}
-                          </Providers>
-                          <AppoitmentDiv>
-                            {` ${appointmentClient.date} ${getFrequencyName(
-                              appointmentClient.frequency,
-                            )} ${appointmentClient.period} `}
-                          </AppoitmentDiv>
-                        </>
-                      ))}
+                      {appointment.appointmentsProvider.map(
+                        (appointmentProvider) => (
+                          <>
+                            <Providers
+                              onClick={() =>
+                                setCollapseProviderId(
+                                  appointmentProvider.provider.id,
+                                )
+                              }
+                            >
+                              {appointmentProvider.provider.name}
+
+                              {appointmentProvider.appointments.map(
+                                (appointmentsMonth) => {
+                                  return format(
+                                    parseISO(appointmentsMonth.date),
+                                    ' MMMM : ',
+                                    {
+                                      locale: ptBR,
+                                    },
+                                  );
+                                },
+                              )}
+
+                              {appointmentProvider.appointments.map(
+                                (appointmentDay) => {
+                                  return format(
+                                    parseISO(appointmentDay.date),
+                                    ' dd |',
+                                    {
+                                      locale: ptBR,
+                                    },
+                                  );
+                                },
+                              )}
+                            </Providers>
+                            <Collapse
+                              isOpen={
+                                appointmentProvider.provider.id ===
+                                collapseProviderId
+                              }
+                            >
+                              <AppoitmentDiv>
+                                {appointmentProvider.appointments.map(
+                                  (appointmentsProviders) => (
+                                    <>
+                                      <DivDate>
+                                        <h4>Data:</h4>
+                                        {` ${format(
+                                          parseISO(appointmentsProviders.date),
+                                          "'Dia' dd 'de' MMMM 'de' yyyy",
+                                          {
+                                            locale: ptBR,
+                                          },
+                                        )} `}
+                                      </DivDate>
+                                      <Frequency>
+                                        {`${getFrequencyName(
+                                          appointmentsProviders.frequency,
+                                        )}`}
+                                      </Frequency>
+                                      <Period>
+                                        {`${getPeriodName(
+                                          appointmentsProviders.period,
+                                        )}`}
+                                      </Period>
+                                    </>
+                                  ),
+                                )}
+                              </AppoitmentDiv>
+                            </Collapse>
+                          </>
+                        ),
+                      )}
                     </DivAppointments>
                   </Collapse>
                 </>

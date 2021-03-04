@@ -1,6 +1,17 @@
 import { shade } from 'polished';
 import styled, { keyframes } from 'styled-components';
 
+const appearFromStart = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 export const Container = styled.div`
   display: flex;
 `;
@@ -11,7 +22,7 @@ export const Content = styled.main`
 
 export const Title = styled.div`
   padding-left: 5%;
-  margin-top: 4%;
+  margin-top: 2%;
   font-size: 18px;
 `;
 
@@ -22,6 +33,8 @@ export const Report = styled.div`
   border-radius: 15px;
   margin-left: 10%;
   margin-top: 2%;
+
+  animation: ${appearFromStart} 0.8s;
 `;
 
 export const Search = styled.div`
@@ -53,20 +66,13 @@ export const DateSearch = styled.div`
   }
 `;
 
-export const ReportsData = styled.div``;
-
-const appearFromStart = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+export const ReportsData = styled.div`
+  height: 65vh;
+  margin-top: 2%;
+  overflow: auto;
 `;
 
-export const DivClients = styled.button`
+export const DivClients = styled.div`
   background: #b28d9f;
   display: flex;
   padding: 1% 2%;
@@ -74,37 +80,94 @@ export const DivClients = styled.button`
   margin-left: 10%;
   width: 80%;
   height: 5vh;
-  border-radius: 10px;
+  border-radius: 15px;
   border: 0;
+  cursor: pointer;
 
   animation: ${appearFromStart} 0.5s;
 `;
 
 export const Client = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const Name = styled.div`
+  display: flex;
+  width: 50%;
   text-transform: uppercase;
   font-size: 22px;
   font-weight: 700;
   color: #f5f5f5;
+  cursor: text;
+`;
+
+export const Cpf = styled.div`
+  display: flex;
+  width: 50%;
+  justify-content: flex-end;
+  align-items: center;
+  text-transform: uppercase;
+  font-size: 22px;
+  font-weight: 700;
+  color: #f5f5f5;
+  cursor: text;
+
+  h3 {
+    margin-right: 2%;
+  }
 `;
 
 export const DivAppointments = styled.div`
-  background: #f5f5f5;
-  border-radius: 5px;
+  background: #ebf8ff;
+  border-radius: 15px;
   width: 80%;
   margin: 0.5% auto;
 `;
 
 export const AppoitmentDiv = styled.div`
-  background: #f5f5f5;
+  background: #ebf8ff;
   color: #3172b7;
   width: 80%;
-  margin: 0.5% auto;
+  margin: 0.5% 5%;
 `;
 
 export const Providers = styled.div`
+  display: flex;
   font-size: 20px;
   font-weight: 500;
   text-transform: capitalize;
+  padding-top: 2%;
+  margin-left: 2%;
+`;
+
+export const DivDate = styled.div`
+  display: flex;
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: capitalize;
+  margin-top: 2%;
+
+  h4 {
+    margin-right: 1%;
+  }
+`;
+export const Frequency = styled.div`
+  display: flex;
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: capitalize;
+  margin-top: 2%;
+`;
+export const Period = styled.div`
+  display: flex;
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: capitalize;
+  margin-top: 2%;
+  padding-bottom: 2%;
 `;
 
 export const DivButton = styled.div`
@@ -113,8 +176,8 @@ export const DivButton = styled.div`
 
 export const ButtonSearch = styled.button`
   background: #b28d9f;
-  height: 40px;
-  border-radius: 10px;
+  height: 3.1rem;
+  border-radius: 15px;
   border: 0;
   color: #f5f5f5;
   width: 100%;

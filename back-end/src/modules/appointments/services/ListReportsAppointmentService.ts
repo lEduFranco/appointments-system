@@ -1,7 +1,6 @@
 import { parseISO } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 import groupBy from 'lodash/groupBy';
-import orderBy from 'lodash/orderBy';
 
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 
@@ -14,8 +13,18 @@ interface IRequest {
   endDate: string;
 }
 
-export interface IAppointmentsClient {
+interface IAppointmentsClient {
   client: {
+    id: string;
+    name: string;
+    cpf: string;
+  };
+
+  appointmentsProvider: IAppointmentsProvider[];
+}
+
+interface IAppointmentsProvider {
+  provider: {
     id: string;
     name: string;
   };
@@ -48,12 +57,29 @@ class ListReportsAppointmentsService {
     const mapAppointments = map(
       groupAppointments,
       (appointmentsClient, index) => {
+        const groupedAppointmentsProvider = groupBy(
+          appointmentsClient,
+          'provider_id',
+        );
+
         return {
           client: {
             id: index,
             name: `${appointmentsClient[0].client.user.user_profile.firstname} ${appointmentsClient[0].client.user.user_profile.lastname}`,
+            cpf: appointmentsClient[0].client.user.user_profile.cpf,
           },
-          appointments: orderBy(appointmentsClient, 'provider_id'),
+          appointmentsProvider: map(
+            groupedAppointmentsProvider,
+            (appointmentsProvider, indexProvider) => {
+              return {
+                provider: {
+                  id: indexProvider,
+                  name: `${appointmentsProvider[0].provider.user.user_profile.firstname} ${appointmentsProvider[0].provider.user.user_profile.lastname}`,
+                },
+                appointments: appointmentsProvider,
+              };
+            },
+          ),
         };
       },
     );

@@ -144,7 +144,7 @@ export const StyledModal = Modal.styled`
     min-height: 8rem;
     max-height: 16rem;
     margin-top: 0.8rem;
-    border-radius: 0.8rem;
+    border-radius: 15px;
     background: #F8F8FC;
     border: 1px solid #3172b7;
     outline: 0;
