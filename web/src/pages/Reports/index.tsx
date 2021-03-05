@@ -4,7 +4,7 @@ import React, { useState, FormEvent } from 'react';
 import * as Yup from 'yup';
 import Collapse from '@kunukn/react-collapse';
 import { FiCalendar } from 'react-icons/fi';
-import { format, parseISO, getDate } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import api from '../../services/api';
 
@@ -28,9 +28,11 @@ import {
   Client,
   Name,
   Cpf,
+  DivProviders,
+  Providers,
+  Provider,
   DivAppointments,
   AppoitmentDiv,
-  Providers,
   DivDate,
   Frequency,
   Period,
@@ -227,7 +229,7 @@ const Reports: React.FC = () => {
 
             <ReportsData>
               {appointments.map((appointment) => (
-                <>
+                <div key={appointment.client.id}>
                   <DivClients
                     onClick={() => setCollapseClientId(appointment.client.id)}
                   >
@@ -242,7 +244,7 @@ const Reports: React.FC = () => {
                     <DivAppointments>
                       {appointment.appointmentsProvider.map(
                         (appointmentProvider) => (
-                          <>
+                          <DivProviders key={appointmentProvider.provider.id}>
                             <Providers
                               onClick={() =>
                                 setCollapseProviderId(
@@ -250,9 +252,11 @@ const Reports: React.FC = () => {
                                 )
                               }
                             >
-                              {appointmentProvider.provider.name}
+                              <Provider>
+                                {appointmentProvider.provider.name}
+                              </Provider>
 
-                              {appointmentProvider.appointments.map(
+                              {/* {appointmentProvider.appointments.map(
                                 (appointmentsMonth) => {
                                   return format(
                                     parseISO(appointmentsMonth.date),
@@ -262,8 +266,8 @@ const Reports: React.FC = () => {
                                     },
                                   );
                                 },
-                              )}
-
+                              )} */}
+                              {/*
                               {appointmentProvider.appointments.map(
                                 (appointmentDay) => {
                                   return format(
@@ -274,49 +278,52 @@ const Reports: React.FC = () => {
                                     },
                                   );
                                 },
-                              )}
+                              )} */}
                             </Providers>
-                            <Collapse
-                              isOpen={
-                                appointmentProvider.provider.id ===
-                                collapseProviderId
-                              }
-                            >
-                              <AppoitmentDiv>
-                                {appointmentProvider.appointments.map(
-                                  (appointmentsProviders) => (
-                                    <>
-                                      <DivDate>
-                                        <h4>Data:</h4>
-                                        {` ${format(
-                                          parseISO(appointmentsProviders.date),
-                                          "'Dia' dd 'de' MMMM 'de' yyyy",
-                                          {
-                                            locale: ptBR,
-                                          },
-                                        )} `}
-                                      </DivDate>
-                                      <Frequency>
-                                        {`${getFrequencyName(
-                                          appointmentsProviders.frequency,
-                                        )}`}
-                                      </Frequency>
-                                      <Period>
-                                        {`${getPeriodName(
-                                          appointmentsProviders.period,
-                                        )}`}
-                                      </Period>
-                                    </>
-                                  ),
-                                )}
-                              </AppoitmentDiv>
-                            </Collapse>
-                          </>
+
+                            {/* <Collapse
+                            isOpen={
+                              appointmentProvider.provider.id ===
+                              collapseProviderId
+                            }
+                          > */}
+
+                            <AppoitmentDiv>
+                              {appointmentProvider.appointments.map(
+                                (appointmentsProviders) => (
+                                  <div key={appointmentsProviders.id}>
+                                    <DivDate>
+                                      <h4>Data:</h4>
+                                      {` ${format(
+                                        parseISO(appointmentsProviders.date),
+                                        "'Dia' dd 'de' MMMM 'de' yyyy",
+                                        {
+                                          locale: ptBR,
+                                        },
+                                      )} `}
+                                    </DivDate>
+                                    <Frequency>
+                                      {`${getFrequencyName(
+                                        appointmentsProviders.frequency,
+                                      )}`}
+                                    </Frequency>
+                                    <Period>
+                                      {`${getPeriodName(
+                                        appointmentsProviders.period,
+                                      )}`}
+                                    </Period>
+                                  </div>
+                                ),
+                              )}
+                            </AppoitmentDiv>
+
+                            {/* </Collapse> */}
+                          </DivProviders>
                         ),
                       )}
                     </DivAppointments>
                   </Collapse>
-                </>
+                </div>
               ))}
             </ReportsData>
           </form>

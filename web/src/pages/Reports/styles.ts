@@ -1,4 +1,4 @@
-import { shade } from 'polished';
+import { lighten, shade } from 'polished';
 import styled, { keyframes } from 'styled-components';
 
 const appearFromStart = keyframes`
@@ -85,6 +85,10 @@ export const DivClients = styled.div`
   cursor: pointer;
 
   animation: ${appearFromStart} 0.5s;
+
+  &:hover {
+    background: ${shade(0.1, '#b28d9f')};
+  }
 `;
 
 export const Client = styled.div`
@@ -120,27 +124,36 @@ export const Cpf = styled.div`
   }
 `;
 
+export const DivProviders = styled.div`
+  height: 100%;
+`;
+
+export const Provider = styled.div`
+  font-size: 20px;
+  font-weight: 500;
+  text-transform: capitalize;
+`;
+
+export const Providers = styled.div`
+  display: flex;
+  margin-top: 2%;
+  margin-left: 2%;
+`;
+
 export const DivAppointments = styled.div`
   background: #ebf8ff;
   border-radius: 15px;
-  width: 80%;
+  width: 70%;
   margin: 0.5% auto;
+  padding-top: 1%;
 `;
 
 export const AppoitmentDiv = styled.div`
   background: #ebf8ff;
   color: #3172b7;
   width: 80%;
+  height: 100%;
   margin: 0.5% 5%;
-`;
-
-export const Providers = styled.div`
-  display: flex;
-  font-size: 20px;
-  font-weight: 500;
-  text-transform: capitalize;
-  padding-top: 2%;
-  margin-left: 2%;
 `;
 
 export const DivDate = styled.div`
