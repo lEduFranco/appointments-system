@@ -5,7 +5,7 @@ import { FiCalendar, FiFileText, FiList, FiPlus, FiUser } from 'react-icons/fi';
 const SecretaryHeaderRoutes: React.FC = () => {
   return (
     <>
-      <Link to="/list-appointments">
+      <Link to="/schedule">
         <FiCalendar />
         Agenda
       </Link>

@@ -13,6 +13,7 @@ interface IRequest {
   complement: string;
   reference_points: string;
   nearest_subway_station: string;
+  localization: string;
   user_id: string;
 }
 
@@ -33,6 +34,7 @@ class CreateAddressService {
     complement,
     reference_points,
     nearest_subway_station,
+    localization,
     user_id,
   }: IRequest): Promise<Address> {
     const createAddress = await this.addressesRepository.create({
@@ -45,6 +47,7 @@ class CreateAddressService {
       complement,
       reference_points,
       nearest_subway_station,
+      localization,
       user_id,
     });
 

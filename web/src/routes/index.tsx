@@ -53,9 +53,8 @@ const Routes: React.FC = () => (
       component={CreateAppointment}
       roles={['admin', 'secretary']}
     />
-
     <PrivateRoute
-      path="/list-appointments"
+      path="/schedule"
       component={ListAppointments}
       roles={['admin', 'secretary']}
     />

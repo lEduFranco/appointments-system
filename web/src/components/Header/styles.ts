@@ -13,7 +13,8 @@ export const HeaderContent = styled.div`
   align-items: center;
 
   > img {
-    height: 100%;
+    height: 95%;
+    margin-left: -1.55%;
   }
 
   button {

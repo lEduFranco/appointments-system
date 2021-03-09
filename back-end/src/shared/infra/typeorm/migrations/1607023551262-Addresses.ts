@@ -64,6 +64,11 @@ export default class Addresses1607023551262 implements MigrationInterface {
             isNullable: true,
           },
           {
+            name: 'localization',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

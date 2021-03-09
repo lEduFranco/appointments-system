@@ -36,6 +36,7 @@ export default class UserProfile1607008603802 implements MigrationInterface {
           {
             name: 'cpf',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'cnpj',
@@ -49,6 +50,11 @@ export default class UserProfile1607008603802 implements MigrationInterface {
           },
           {
             name: 'cel',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'birth_date',
             type: 'varchar',
             isNullable: true,
           },

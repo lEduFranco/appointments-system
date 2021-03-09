@@ -28,6 +28,7 @@ clientsRouter.post(
       cpf: Joi.string().required(),
       tel: Joi.string().allow(null, ''),
       cel: Joi.string().required(),
+      birth_date: Joi.string().required(),
       occuppation: Joi.string().allow(null, ''),
 
       uf: Joi.string().allow(null, ''),
@@ -39,6 +40,7 @@ clientsRouter.post(
       complement: Joi.string().allow(null, ''),
       reference_points: Joi.string().allow(null, ''),
       nearest_subway_station: Joi.string().allow(null, ''),
+      localization: Joi.string().allow(null, ''),
 
       cnpj: Joi.string().allow(null, ''),
       cf_df: Joi.string().allow(null, ''),

@@ -60,6 +60,7 @@ interface Appointment {
   neighborhood: string;
   address: string;
   number: string;
+  complement: string;
   provider: {
     user: {
       user_profile: {
@@ -239,7 +240,7 @@ const ListAppointments: React.FC = () => {
               ) : (
                 <tr>
                   <th className="empty" colSpan="4">
-                    Não tem agendamento hoje.
+                    Não tem agendamentos para hoje.
                   </th>
                 </tr>
               )}

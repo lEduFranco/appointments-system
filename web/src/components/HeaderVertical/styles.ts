@@ -16,7 +16,7 @@ export const Header = styled.header`
 
 export const HeaderTop = styled.div`
   width: 100%;
-  height: 9%;
+  height: 6.35%;
   display: flex;
   align-items: center;
   background: #b28d9f;

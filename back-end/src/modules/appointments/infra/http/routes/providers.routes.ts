@@ -33,6 +33,7 @@ providersRouter.post(
       cnpj: Joi.string().required(),
       tel: Joi.string().required(),
       cel: Joi.string().required(),
+      birth_date: Joi.string().required(),
 
       uf: Joi.string().allow(null, ''),
       city: Joi.string().allow(null, ''),
@@ -43,6 +44,7 @@ providersRouter.post(
       complement: Joi.string().allow(null, ''),
       reference_points: Joi.string().allow(null, ''),
       nearest_subway_station: Joi.string().allow(null, ''),
+      localization: Joi.string().allow(null, ''),
 
       begin_date: Joi.string().required(),
       final_date: Joi.string().allow(null, ''),

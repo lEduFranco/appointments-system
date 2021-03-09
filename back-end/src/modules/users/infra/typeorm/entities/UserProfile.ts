@@ -25,7 +25,7 @@ class UserProfile {
   @Column({ length: 10, nullable: true })
   rg: string;
 
-  @Column({ length: 11 })
+  @Column({ length: 11, nullable: true })
   cpf: string;
 
   @Column({ length: 14, nullable: true })
@@ -36,6 +36,9 @@ class UserProfile {
 
   @Column({ length: 11, nullable: true })
   cel: string;
+
+  @Column({ nullable: true })
+  birth_date: Date;
 
   @CreateDateColumn()
   created_at: Date;

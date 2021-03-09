@@ -42,6 +42,9 @@ class Address {
   @Column({ nullable: true })
   nearest_subway_station: string;
 
+  @Column({ nullable: true })
+  localization: string;
+
   @CreateDateColumn()
   created_at: Date;
 

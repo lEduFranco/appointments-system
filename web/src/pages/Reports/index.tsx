@@ -28,9 +28,11 @@ import {
   Client,
   Name,
   Cpf,
+  TotalClients,
   DivProviders,
   Providers,
   Provider,
+  TotalProviders,
   DivAppointments,
   AppoitmentDiv,
   DivDate,
@@ -89,8 +91,7 @@ const Reports: React.FC = () => {
   const [frequency, setFrequency] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [collapseClientId, setCollapseClientId] = useState('');
-  const [collapseProviderId, setCollapseProviderId] = useState('');
+  const [collapseClientId, setCollapseClientId] = useState<string[]>([]);
 
   function getFrequencyName(frequencyParam?: string): string {
     if (frequencyParam === 'weekly') {
@@ -231,62 +232,55 @@ const Reports: React.FC = () => {
               {appointments.map((appointment) => (
                 <div key={appointment.client.id}>
                   <DivClients
-                    onClick={() => setCollapseClientId(appointment.client.id)}
+                    onClick={() => {
+                      if (collapseClientId.includes(appointment.client.id)) {
+                        const filteredArray = collapseClientId.filter(
+                          (item: string) => item !== appointment.client.id,
+                        );
+
+                        setCollapseClientId(filteredArray);
+
+                        return;
+                      }
+
+                      setCollapseClientId((state) => {
+                        return [...state, appointment.client.id];
+                      });
+                    }}
                   >
                     <Client>
                       <Name> {appointment.client.name} </Name>
                       <Cpf>
-                        <h3>CPF :</h3> {appointment.client.cpf}
+                        <h3>CPF:</h3> {appointment.client.cpf}
                       </Cpf>
+                      <TotalClients>
+                        <h4>Total:</h4>
+                        {appointment.appointmentsProvider.reduce(
+                          (acc, item) => {
+                            return (acc += item.appointments.length);
+                          },
+                          0,
+                        )}
+                      </TotalClients>
                     </Client>
                   </DivClients>
-                  <Collapse isOpen={appointment.client.id === collapseClientId}>
+                  <Collapse
+                    isOpen={collapseClientId.includes(appointment.client.id)}
+                  >
                     <DivAppointments>
                       {appointment.appointmentsProvider.map(
                         (appointmentProvider) => (
                           <DivProviders key={appointmentProvider.provider.id}>
-                            <Providers
-                              onClick={() =>
-                                setCollapseProviderId(
-                                  appointmentProvider.provider.id,
-                                )
-                              }
-                            >
+                            <Providers>
                               <Provider>
                                 {appointmentProvider.provider.name}
                               </Provider>
 
-                              {/* {appointmentProvider.appointments.map(
-                                (appointmentsMonth) => {
-                                  return format(
-                                    parseISO(appointmentsMonth.date),
-                                    ' MMMM : ',
-                                    {
-                                      locale: ptBR,
-                                    },
-                                  );
-                                },
-                              )} */}
-                              {/*
-                              {appointmentProvider.appointments.map(
-                                (appointmentDay) => {
-                                  return format(
-                                    parseISO(appointmentDay.date),
-                                    ' dd |',
-                                    {
-                                      locale: ptBR,
-                                    },
-                                  );
-                                },
-                              )} */}
+                              <TotalProviders>
+                                <h4>Total:</h4>
+                                {appointmentProvider.appointments.length}
+                              </TotalProviders>
                             </Providers>
-
-                            {/* <Collapse
-                            isOpen={
-                              appointmentProvider.provider.id ===
-                              collapseProviderId
-                            }
-                          > */}
 
                             <AppoitmentDiv>
                               {appointmentProvider.appointments.map(

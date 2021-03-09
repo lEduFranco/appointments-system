@@ -121,7 +121,7 @@ const CreateClient: React.FC = () => {
 
         await api.post('/clients', datacClients);
 
-        history.push('/list-appointments');
+        history.push('/schedule');
 
         addToast({
           type: 'success',

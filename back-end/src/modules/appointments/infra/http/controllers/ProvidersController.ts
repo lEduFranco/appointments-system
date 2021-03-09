@@ -49,6 +49,7 @@ export default class ProvidersController {
       cnpj,
       tel,
       cel,
+      birth_date,
       uf,
       city,
       zip_code,
@@ -58,6 +59,7 @@ export default class ProvidersController {
       complement,
       reference_points,
       nearest_subway_station,
+      localization,
       begin_date,
       final_date,
       demission_reason,
@@ -88,6 +90,7 @@ export default class ProvidersController {
       cnpj,
       tel,
       cel,
+      birth_date,
       user_id: user.id,
     });
 
@@ -101,6 +104,7 @@ export default class ProvidersController {
       complement,
       reference_points,
       nearest_subway_station,
+      localization,
       user_id: user.id,
     });
 

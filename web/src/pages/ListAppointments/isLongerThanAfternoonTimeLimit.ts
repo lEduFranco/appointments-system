@@ -19,6 +19,7 @@ interface Appointment {
   neighborhood: string;
   address: string;
   number: string;
+  complement: string;
   provider: {
     user: {
       user_profile: {

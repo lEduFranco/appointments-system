@@ -6,5 +6,6 @@ export default interface ICreateUserProfileDTO {
   cnpj: string;
   tel: string;
   cel: string;
+  birth_date: Date;
   user_id: string;
 }

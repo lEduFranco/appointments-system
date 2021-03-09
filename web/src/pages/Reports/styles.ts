@@ -110,8 +110,7 @@ export const Name = styled.div`
 
 export const Cpf = styled.div`
   display: flex;
-  width: 50%;
-  justify-content: flex-end;
+  width: 35%;
   align-items: center;
   text-transform: uppercase;
   font-size: 22px;
@@ -124,35 +123,64 @@ export const Cpf = styled.div`
   }
 `;
 
-export const DivProviders = styled.div`
-  height: 100%;
+export const TotalClients = styled.div`
+  color: #f5f5f5;
+  font-size: 20px;
+  margin-right: 1%;
+
+  cursor: text;
+  width: 15%;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  h4 {
+    margin-right: 3%;
+  }
+`;
+
+export const DivProviders = styled.div``;
+
+export const Providers = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 export const Provider = styled.div`
   font-size: 20px;
   font-weight: 500;
   text-transform: capitalize;
+  margin-left: 2%;
+  padding-top: 1%;
 `;
 
-export const Providers = styled.div`
+export const TotalProviders = styled.div`
   display: flex;
-  margin-top: 2%;
-  margin-left: 2%;
+  font-size: 20px;
+  margin-right: 2%;
+  margin-top: 1%;
+  width: 50%;
+  justify-content: flex-end;
+
+  h4 {
+    margin-right: 1%;
+  }
 `;
 
 export const DivAppointments = styled.div`
   background: #ebf8ff;
   border-radius: 15px;
   width: 70%;
-  margin: 0.5% auto;
-  padding-top: 1%;
+  margin: 0 auto;
+  margin-top: 1%;
 `;
 
 export const AppoitmentDiv = styled.div`
   background: #ebf8ff;
   color: #3172b7;
   width: 80%;
-  height: 100%;
   margin: 0.5% 5%;
 `;
 

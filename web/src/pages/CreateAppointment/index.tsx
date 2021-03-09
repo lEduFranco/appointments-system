@@ -121,7 +121,7 @@ const CreateAppointments: React.FC = () => {
           year: yearSelected,
         })
         .then(() => {
-          history.push('/list-appointments');
+          history.push('/schedule');
 
           addToast({
             type: 'success',

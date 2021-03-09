@@ -40,6 +40,7 @@ export default class ClientsController {
       cnpj,
       tel,
       cel,
+      birth_date,
       uf,
       city,
       zip_code,
@@ -51,6 +52,7 @@ export default class ClientsController {
       complement,
       reference_points,
       nearest_subway_station,
+      localization,
       company_responsible,
       status,
     } = request.body;
@@ -74,6 +76,7 @@ export default class ClientsController {
       cnpj,
       tel,
       cel,
+      birth_date,
       user_id: user.id,
     });
 
@@ -87,6 +90,7 @@ export default class ClientsController {
       complement,
       reference_points,
       nearest_subway_station,
+      localization,
       user_id: user.id,
     });
 
