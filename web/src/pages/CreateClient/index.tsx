@@ -2,7 +2,6 @@ import React, { useCallback, useRef } from 'react';
 import cep from 'cep-promise';
 
 import {
-  FiArrowLeft,
   FiMail,
   FiUser,
   FiLock,
@@ -11,6 +10,7 @@ import {
   FiMap,
   FiBriefcase,
   FiMapPin,
+  FiCalendar,
 } from 'react-icons/fi';
 import {
   RiSubwayLine,
@@ -21,7 +21,7 @@ import {
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import api from '../../services/api';
 
@@ -32,6 +32,7 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import Input from '../../components/Input';
 import InputMask from '../../components/InputMask';
 import HeaderVertical from '../../components/HeaderVertical';
+import InputDatePicker from '../../components/InputDatePicker';
 
 import Button from '../../components/Button';
 import MultiStep from '../../components/MultiStep';
@@ -82,6 +83,7 @@ const CreateClient: React.FC = () => {
           cel: Yup.string()
             .min(11, 'No mínimo 11 dígitos')
             .required('campo obrigatório não preenchido'),
+          birth_date: Yup.string().required('campo obrigatório não preenchido'),
           occuppation: Yup.string(),
 
           zip_code: Yup.string()
@@ -98,9 +100,12 @@ const CreateClient: React.FC = () => {
           number: Yup.string().required('campo obrigatório não preenchido'),
           address: Yup.string().required('campo obrigatório não preenchido'),
           complement: Yup.string(),
-
           reference_points: Yup.string(),
           nearest_subway_station: Yup.string(),
+          localization: Yup.string().required(
+            'campo obrigatório não preenchido',
+          ),
+
           cnpj: Yup.string(),
           cf_df: Yup.string(),
           company_responsible: Yup.string().when('cnpj', {
@@ -134,12 +139,14 @@ const CreateClient: React.FC = () => {
 
           formRef.current?.setErrors(errors);
 
-          return addToast({
+          addToast({
             type: 'error',
             title: 'Erro no cadastro!',
             description:
               'Ocorreu um erro ao fazer cadastro, cheque as informações!',
           });
+
+          return;
         }
 
         addToast({
@@ -178,7 +185,11 @@ const CreateClient: React.FC = () => {
       <HeaderVertical />
       <Content>
         <AnimationContainer>
-          <Form ref={formRef} onSubmit={handleSubmit}>
+          <Form
+            ref={formRef}
+            onSubmit={handleSubmit}
+            initialData={{ birth_date: new Date() }}
+          >
             <h1>Cadastrar Cliente</h1>
 
             <MultiStep>
@@ -227,6 +238,8 @@ const CreateClient: React.FC = () => {
                   placeholder="Celular"
                   mask="(99) 9 9999-9999"
                 />
+                <h5>*Data de nascimento*</h5>
+                <InputDatePicker name="birth_date" icon={FiCalendar} />
 
                 <h5>*opcional*</h5>
                 <Input
@@ -256,29 +269,29 @@ const CreateClient: React.FC = () => {
                 />
                 <Input
                   name="neighborhood"
-                  icon={RiRoadMapLine}
+                  icon={RiCommunityLine}
                   placeholder="Bairro"
                 />
                 <Input
                   name="address"
-                  icon={RiRoadMapLine}
+                  icon={RiCommunityLine}
                   placeholder="Endereço"
                 />
                 <h5>*opcional*</h5>
                 <Input
                   name="complement"
-                  icon={RiRoadMapLine}
+                  icon={RiCommunityLine}
                   placeholder="complemento (do endereço)"
                 />
                 <Input
                   name="number"
-                  icon={RiRoadMapLine}
+                  icon={RiCommunityLine}
                   placeholder="Número"
                 />
                 <h5>*opcional*</h5>
                 <Input
                   name="reference_points"
-                  icon={FiMapPin}
+                  icon={RiRoadMapLine}
                   placeholder="Pontos de referência"
                 />
                 <h5>*opcional*</h5>
@@ -286,6 +299,11 @@ const CreateClient: React.FC = () => {
                   name="nearest_subway_station"
                   icon={RiSubwayLine}
                   placeholder="Estação de metro mais próxima"
+                />
+                <Input
+                  name="localization"
+                  icon={FiMapPin}
+                  placeholder="Localização"
                 />
               </div>
 

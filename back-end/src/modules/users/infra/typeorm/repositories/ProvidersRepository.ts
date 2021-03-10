@@ -52,6 +52,19 @@ class ProvidersRepository implements IProviderRepository {
     return providers;
   }
 
+  public async searchAllProviders(nameFilter: string): Promise<Provider[]> {
+    const providers = await this.ormRepository
+      .createQueryBuilder('providers')
+      .innerJoinAndSelect('providers.user', 'user')
+      .innerJoinAndSelect('user.user_profile', 'user_profile')
+      .where(`LOWER(user_profile.firstname) LIKE LOWER('%${nameFilter}%')`)
+      .orWhere(`LOWER(user_profile.lastname) LIKE LOWER('%${nameFilter}%')`)
+      .limit(20)
+      .getMany();
+
+    return providers;
+  }
+
   public async findAllShowProviders(): Promise<Provider[]> {
     const providers = await this.ormRepository.find({
       relations: ['user', 'user.user_profile'],

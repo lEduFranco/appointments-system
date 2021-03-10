@@ -12,7 +12,7 @@ import CreateClient from '../pages/CreateClient';
 import ListClient from '../pages/ListClient';
 import Reports from '../pages/Reports';
 
-import ListAppointments from '../pages/ListAppointments';
+import Schedule from '../pages/Schedule';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -55,7 +55,7 @@ const Routes: React.FC = () => (
     />
     <PrivateRoute
       path="/schedule"
-      component={ListAppointments}
+      component={Schedule}
       roles={['admin', 'secretary']}
     />
 

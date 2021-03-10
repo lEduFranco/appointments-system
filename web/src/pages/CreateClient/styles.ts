@@ -27,9 +27,7 @@ const appearFromRight = keyframes`
 export const AnimationContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: flex-end;
-  padding-top: 2%;
 
   animation: ${appearFromRight} 1s;
 
@@ -38,7 +36,7 @@ export const AnimationContainer = styled.div`
   }
 
   form {
-    margin: 80px 0;
+    margin-top: 20%;
     width: 340px;
     text-align: center;
 

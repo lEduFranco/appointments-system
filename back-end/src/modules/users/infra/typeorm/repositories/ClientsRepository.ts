@@ -38,6 +38,7 @@ class ClientsRepository implements IClientRepository {
       .innerJoinAndSelect('user.user_profile', 'user_profile')
       .where(`LOWER(user_profile.firstname) LIKE LOWER('%${nameFilter}%')`)
       .orWhere(`LOWER(user_profile.lastname) LIKE LOWER('%${nameFilter}%')`)
+      .limit(20)
       .getMany();
 
     return clients;

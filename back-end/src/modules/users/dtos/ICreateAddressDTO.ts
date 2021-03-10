@@ -8,6 +8,6 @@ export default interface ICreateAddressDTO {
   complement: string;
   reference_points: string;
   nearest_subway_station: string;
-  localizatoin: string;
+  localization: string;
   user_id: string;
 }

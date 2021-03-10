@@ -6,13 +6,20 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.main`
-  max-width: 1120px;
-  margin: 2% auto;
-  display: block;
+  padding-right: 4%;
+  align-items: center;
+  justify-content: space-evenly;
+
+  width: 83%;
+`;
+
+export const Div = styled.div`
+  width: 80%;
+  margin: 3% auto 0 auto;
 `;
 
 export const Schedule = styled.div`
-  min-width: 1120px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   margin-bottom: 2.5%;
@@ -21,6 +28,29 @@ export const Schedule = styled.div`
     font-size: 36px;
   }
 `;
+
+export const Search = styled.div`
+  width: 100%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+
+  input {
+    padding: 16px;
+    margin-left: 2%;
+    width: 98%;
+    text-transform: capitalize;
+
+    border-radius: 15px;
+    background: #e8e8ea;
+    border: 2px solid #b28d9f;
+    color: #3f1229;
+
+    &::placeholder {
+      color: #3f1229;
+    }
+  }
+`;
+
 export const CLientsList = styled.div`
   display: column;
   align-items: center;
@@ -50,9 +80,10 @@ export const Client = styled.div`
   display: flex;
   background-color: #e8e8ea;
   align-items: center;
-  padding: 1.5% 2%;
+  padding: 1% 2%;
   border-radius: 15px;
-  margin-left: 24px;
+  width: 98%;
+  margin-left: 2%;
 
   &:hover {
     color: ${shade(0.2, '#b28d9f')};

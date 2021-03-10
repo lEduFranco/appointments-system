@@ -31,7 +31,7 @@ import {
   CreateAppointment,
   CreateClient,
   Filter,
-  Schedule,
+  DivSchedule,
   Calendar,
 } from './styles';
 
@@ -83,7 +83,7 @@ interface Appointment {
   };
 }
 
-const ListAppointments: React.FC = () => {
+const Schedule: React.FC = () => {
   const [appointments, setAppointments] = useState<AppointmentsProvider[]>([]);
 
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -157,7 +157,7 @@ const ListAppointments: React.FC = () => {
 
       <Content>
         <Appointments>
-          <Schedule>
+          <DivSchedule>
             <thead>
               <tr>
                 <th />
@@ -240,12 +240,12 @@ const ListAppointments: React.FC = () => {
               ) : (
                 <tr>
                   <th className="empty" colSpan="4">
-                    Não tem agendamentos para hoje.
+                    Não há agendamentos para hoje.
                   </th>
                 </tr>
               )}
             </tbody>
-          </Schedule>
+          </DivSchedule>
         </Appointments>
 
         <Filter>
@@ -280,4 +280,4 @@ const ListAppointments: React.FC = () => {
     </Container>
   );
 };
-export default ListAppointments;
+export default Schedule;

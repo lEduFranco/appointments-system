@@ -24,7 +24,7 @@ interface SignInFormData {
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const { signIn, user } = useAuth();
+  const { signIn } = useAuth();
   const { addToast } = useToast();
 
   const history = useHistory();
@@ -51,12 +51,6 @@ const SignIn: React.FC = () => {
         });
 
         history.push('/dashboard');
-
-        // if (user.role === 'rh') {
-        //   history.push('/create-providers');
-
-        //   return;
-        // }
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -73,7 +67,7 @@ const SignIn: React.FC = () => {
         });
       }
     },
-    [signIn, addToast, history, user],
+    [signIn, addToast, history],
   );
   return (
     <Container>

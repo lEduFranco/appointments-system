@@ -8,13 +8,13 @@ import {
   FiSmartphone,
   FiMap,
   FiCalendar,
-  FiArrowLeft,
+  FiMapPin,
 } from 'react-icons/fi';
 import { RiCommunityLine, RiProfileLine, RiRoadMapLine } from 'react-icons/ri';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { format } from 'date-fns';
 import api from '../../services/api';
@@ -83,6 +83,7 @@ const CreateProvider: React.FC = () => {
           cel: Yup.string()
             .min(11, 'No máximo 11 dígitos')
             .required('campo obrigatório não preenchido'),
+          birth_date: Yup.string().required('campo obrigatório não preenchido'),
           uf: Yup.string()
             .max(2, 'No máximo 2 dígitos')
             .min(1, 'No mínimo 2 dígitos')
@@ -97,6 +98,9 @@ const CreateProvider: React.FC = () => {
           number: Yup.string(),
           address: Yup.string().required('campo obrigatório não preenchido'),
           complement: Yup.string(),
+          localization: Yup.string().required(
+            'campo obrigatório não preenchido',
+          ),
 
           begin_date: Yup.string().required('campo obrigatório não preenchido'),
           uniform_size: Yup.string()
@@ -145,12 +149,14 @@ const CreateProvider: React.FC = () => {
 
           formRef.current?.setErrors(errors);
 
-          return addToast({
+          addToast({
             type: 'error',
             title: 'Erro no cadastro!',
             description:
               'Ocorreu um erro ao fazer cadastro, cheque as informações!',
           });
+
+          return;
         }
 
         addToast({
@@ -184,7 +190,7 @@ const CreateProvider: React.FC = () => {
           <Form
             ref={formRef}
             onSubmit={handleSubmit}
-            initialData={{ begin_date: new Date() }}
+            initialData={{ begin_date: new Date(), birth_date: new Date() }}
           >
             <h1>Cadastrar Diarista</h1>
 
@@ -233,6 +239,8 @@ const CreateProvider: React.FC = () => {
                   placeholder="Celular"
                   mask="(99) 9 9999-9999"
                 />
+                <h5>*Data de nascimento*</h5>
+                <InputDatePicker name="birth_date" icon={FiCalendar} />
                 <InputMask
                   name="voter_registration"
                   icon={RiProfileLine}
@@ -272,25 +280,31 @@ const CreateProvider: React.FC = () => {
 
                 <Input
                   name="neighborhood"
-                  icon={RiRoadMapLine}
+                  icon={RiCommunityLine}
                   placeholder="Bairro"
                 />
                 <Input
                   name="address"
-                  icon={RiRoadMapLine}
+                  icon={RiCommunityLine}
                   placeholder="Endereço"
                 />
                 <h5>*opcional*</h5>
                 <Input
                   name="complement"
-                  icon={RiRoadMapLine}
+                  icon={RiCommunityLine}
                   placeholder="complemento (do endereço)"
                 />
                 <h5>*opcional*</h5>
                 <Input
                   name="number"
-                  icon={RiRoadMapLine}
+                  icon={RiCommunityLine}
                   placeholder="Número"
+                />
+                <h5>*opcional*</h5>
+                <Input
+                  name="localization"
+                  icon={FiMapPin}
+                  placeholder="Localização"
                 />
               </div>
 

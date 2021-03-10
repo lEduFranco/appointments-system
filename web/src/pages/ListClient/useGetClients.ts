@@ -4,6 +4,7 @@ import api from '../../services/api';
 
 interface GetProviders {
   setClients: Function;
+  autoCompleteValue: string;
 }
 
 interface Response {
@@ -20,16 +21,25 @@ interface Data {
   };
 }
 
-const useGetClients = ({ setClients }: GetProviders): void => {
+const useGetClients = ({
+  setClients,
+  autoCompleteValue,
+}: GetProviders): void => {
   async function getClients(): Promise<void> {
-    const { data }: Response = await api.get('/clients/show-clients');
+    const { data }: Response = await api.get(
+      `/clients?nameFilter=${autoCompleteValue}`,
+    );
 
     setClients(data);
   }
 
   useEffect(() => {
-    getClients();
-  }, []);
+    if (autoCompleteValue.length >= 3) {
+      getClients();
+    } else {
+      setClients([]);
+    }
+  }, [autoCompleteValue]);
 };
 
 export default useGetClients;

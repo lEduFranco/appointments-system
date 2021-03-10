@@ -6,4 +6,5 @@ export default interface IProviderRepository {
   create(data: ICreateProviderDTO): Promise<Provider>;
   findAllProviders(data: IFindAllProvidersDTO): Promise<Provider[]>;
   findAllShowProviders(): Promise<Provider[]>;
+  searchAllProviders(nameFilter: string): Promise<Provider[]>;
 }

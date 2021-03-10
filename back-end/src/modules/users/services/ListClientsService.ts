@@ -5,7 +5,7 @@ import IClientRepository from '@modules/users/repositories/IClientRepository';
 import Client from '@modules/users/infra/typeorm/entities/Client';
 
 @injectable()
-class ListProvidersService {
+class ListClientsService {
   constructor(
     @inject('ClientsRepository')
     private clientRepository: IClientRepository,
@@ -18,4 +18,4 @@ class ListProvidersService {
   }
 }
 
-export default ListProvidersService;
+export default ListClientsService;

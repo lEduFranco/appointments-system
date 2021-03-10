@@ -7,6 +7,7 @@ import useGetProviders from './useGetProviders';
 import {
   Container,
   Content,
+  Div,
   Schedule,
   ProvidersList,
   Provider,
@@ -34,20 +35,22 @@ const ListProviders: React.FC = (Data) => {
       <HeaderVertical />
 
       <Content>
-        <Schedule>
-          <h1>Diaristas</h1>
-        </Schedule>
+        <Div>
+          <Schedule>
+            <h1>Diaristas</h1>
+          </Schedule>
 
-        <ProvidersList>
-          {providers.map((provider) => {
-            return (
-              <Provider>
-                <h1>{provider.user.user_profile.firstname}</h1>
-                <h2>{provider.user.user_profile.lastname}</h2>
-              </Provider>
-            );
-          })}
-        </ProvidersList>
+          <ProvidersList>
+            {providers.map((provider) => {
+              return (
+                <Provider>
+                  <h1>{provider.user.user_profile.firstname}</h1>
+                  <h2>{provider.user.user_profile.lastname}</h2>
+                </Provider>
+              );
+            })}
+          </ProvidersList>
+        </Div>
       </Content>
     </Container>
   );

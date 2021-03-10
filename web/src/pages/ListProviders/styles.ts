@@ -6,13 +6,20 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.main`
-  max-width: 1120px;
-  margin: 2% auto;
-  display: block;
+  padding-right: 4%;
+  align-items: center;
+  justify-content: space-evenly;
+
+  width: 83%;
+`;
+
+export const Div = styled.div`
+  width: 80%;
+  margin: 3% auto 0 auto;
 `;
 
 export const Schedule = styled.div`
-  min-width: 1120px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   margin-right: 120px;
@@ -52,9 +59,9 @@ export const Provider = styled.div`
   display: flex;
   background-color: #e8e8ea;
   align-items: center;
-  padding: 1.5% 2%;
+  padding: 1% 2%;
   border-radius: 15px;
-  margin-left: 24px;
+  margin-left: 2%;
 
   &:hover {
     color: ${shade(0.2, '#b28d9f')};

@@ -4,7 +4,15 @@ import HeaderVertical from '../../components/HeaderVertical';
 
 import useGetClients from './useGetClients';
 
-import { Container, Content, Schedule, CLientsList, Client } from './styles';
+import {
+  Container,
+  Content,
+  Div,
+  Schedule,
+  Search,
+  CLientsList,
+  Client,
+} from './styles';
 
 interface Data {
   id: string;
@@ -18,9 +26,11 @@ interface Data {
 
 const ListClients: React.FC = (Data) => {
   const [clients, setClients] = useState<Data[]>([]);
+  const [autoCompleteValue, setAutoCompleteValue] = useState('');
 
   useGetClients({
     setClients,
+    autoCompleteValue,
   });
 
   return (
@@ -28,20 +38,30 @@ const ListClients: React.FC = (Data) => {
       <HeaderVertical />
 
       <Content>
-        <Schedule>
-          <h1>Clientes</h1>
-        </Schedule>
+        <Div>
+          <Schedule>
+            <h1>Clientes</h1>
+          </Schedule>
 
-        <CLientsList>
-          {clients.map((client) => {
-            return (
-              <Client>
-                <h1>{client.user.user_profile.firstname}</h1>
-                <h2>{client.user.user_profile.lastname}</h2>
-              </Client>
-            );
-          })}
-        </CLientsList>
+          <Search>
+            <input
+              onChange={(event) => setAutoCompleteValue(event.target.value)}
+              value={autoCompleteValue}
+              placeholder="Digite nome/sobrenome"
+            />
+          </Search>
+
+          <CLientsList>
+            {clients.map((client) => {
+              return (
+                <Client>
+                  <h1>{client.user.user_profile.firstname}</h1>
+                  <h2>{client.user.user_profile.lastname}</h2>
+                </Client>
+              );
+            })}
+          </CLientsList>
+        </Div>
       </Content>
     </Container>
   );
