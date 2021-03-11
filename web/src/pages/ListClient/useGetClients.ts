@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import api from '../../services/api';
 
-interface GetProviders {
+interface GetClients {
   setClients: Function;
   autoCompleteValue: string;
 }
@@ -21,10 +21,7 @@ interface Data {
   };
 }
 
-const useGetClients = ({
-  setClients,
-  autoCompleteValue,
-}: GetProviders): void => {
+const useGetClients = ({ setClients, autoCompleteValue }: GetClients): void => {
   async function getClients(): Promise<void> {
     const { data }: Response = await api.get(
       `/clients?nameFilter=${autoCompleteValue}`,

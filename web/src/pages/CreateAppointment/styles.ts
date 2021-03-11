@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { lighten, shade } from 'polished';
+import { shade } from 'polished';
 
 export const Container = styled.div`
   display: flex;
@@ -148,7 +148,7 @@ export const Calendar = styled.aside`
   width: 150%;
 
   .DayPicker {
-    background: #e8e8ea;
+    background: #3f1229;
     border-radius: 15px;
   }
 
@@ -176,12 +176,12 @@ export const Calendar = styled.aside`
   .DayPicker-Day--available:not(.DayPicker-Day--outside) {
     background: #b28d9f;
     border-radius: 15px;
-    color: #e8e8ea;
+    color: #f5f5f5;
   }
 
   .DayPicker:not(.DayPicker--interactionDisabled)
     .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
-    background: ${lighten(0.1, '#3f1229')};
+    background: ${shade(0.2, '#f29fc9')};
   }
 
   .DayPicker-Day--today {
@@ -194,8 +194,8 @@ export const Calendar = styled.aside`
   }
 
   .DayPicker-Day--selected {
-    background: #3f1229 !important;
+    background: #f29fc9 !important;
     border-radius: 15px;
-    color: #e8e8ea !important;
+    color: #3f1229 !important;
   }
 `;

@@ -5,9 +5,11 @@ import checkRole from '@modules/users/infra/http/middlewares/checkRole';
 
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import ProvidersController from '../controllers/ProvidersController';
+import Providers2Controller from '../controllers/Providers2Controller';
 
 const providersRouter = Router();
 const providersController = new ProvidersController();
+const providers2Controller = new Providers2Controller();
 
 providersRouter.use(ensureAuthenticated);
 
@@ -59,6 +61,13 @@ providersRouter.post(
     },
   }),
   providersController.create,
+);
+
+providersRouter.get(
+  '/search',
+  checkRole(['admin', 'rh']),
+  ensureAuthenticated,
+  providers2Controller.index,
 );
 
 providersRouter.get(

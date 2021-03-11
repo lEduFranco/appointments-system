@@ -4,6 +4,7 @@ import api from '../../services/api';
 
 interface GetProviders {
   setProviders: Function;
+  autoCompleteValue: string;
 }
 
 interface Response {
@@ -20,16 +21,25 @@ interface Data {
   };
 }
 
-const useGetProviders = ({ setProviders }: GetProviders): void => {
+const useGetProviders = ({
+  setProviders,
+  autoCompleteValue,
+}: GetProviders): void => {
   async function getProviders(): Promise<void> {
-    const { data }: Response = await api.get('/providers/show-providers');
+    const { data }: Response = await api.get(
+      `/providers/search?nameFilter=${autoCompleteValue}`,
+    );
 
     setProviders(data);
   }
 
   useEffect(() => {
-    getProviders();
-  }, []);
+    if (autoCompleteValue.length >= 3) {
+      getProviders();
+    } else {
+      setProviders([]);
+    }
+  }, [autoCompleteValue]);
 };
 
 export default useGetProviders;

@@ -30,6 +30,28 @@ export const Schedule = styled.div`
   }
 `;
 
+export const Search = styled.div`
+  width: 100%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+
+  input {
+    padding: 16px;
+    margin-left: 2%;
+    width: 98%;
+    text-transform: capitalize;
+
+    border-radius: 15px;
+    background: #e8e8ea;
+    border: 2px solid #b28d9f;
+    color: #3f1229;
+
+    &::placeholder {
+      color: #3f1229;
+    }
+  }
+`;
+
 export const ProvidersList = styled.div`
   display: column;
   align-items: center;

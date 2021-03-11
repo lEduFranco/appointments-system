@@ -9,6 +9,7 @@ import {
   Content,
   Div,
   Schedule,
+  Search,
   ProvidersList,
   Provider,
 } from './styles';
@@ -25,9 +26,11 @@ interface Data {
 
 const ListProviders: React.FC = (Data) => {
   const [providers, setProviders] = useState<Data[]>([]);
+  const [autoCompleteValue, setAutoCompleteValue] = useState('');
 
   useGetProviders({
     setProviders,
+    autoCompleteValue,
   });
 
   return (
@@ -39,6 +42,14 @@ const ListProviders: React.FC = (Data) => {
           <Schedule>
             <h1>Diaristas</h1>
           </Schedule>
+
+          <Search>
+            <input
+              onChange={(event) => setAutoCompleteValue(event.target.value)}
+              value={autoCompleteValue}
+              placeholder="Digite nome/sobrenome"
+            />
+          </Search>
 
           <ProvidersList>
             {providers.map((provider) => {
