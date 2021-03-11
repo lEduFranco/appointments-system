@@ -13,14 +13,8 @@ import RhMenu from './RhMenu';
 const HeaderVertival: React.FC = () => {
   const { signOut, user } = useAuth();
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  function toggleSidebar(): void {
-    setIsOpen(!isOpen);
-  }
-
   return (
-    <Header onMouseOver={toggleSidebar}>
+    <Header>
       <HeaderTop>
         <img src={logoImg} alt="ToMaisVip" />
 

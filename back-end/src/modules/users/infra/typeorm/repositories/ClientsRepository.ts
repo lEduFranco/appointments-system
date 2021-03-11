@@ -25,7 +25,7 @@ class ClientsRepository implements IClientRepository {
 
   public async findAllShowClients(): Promise<Client[]> {
     const client = await this.ormRepository.find({
-      relations: ['user', 'user.user_profile'],
+      relations: ['user', 'user.user_profile', 'user.addresses'],
     });
 
     return client;
@@ -36,6 +36,7 @@ class ClientsRepository implements IClientRepository {
       .createQueryBuilder('clients')
       .innerJoinAndSelect('clients.user', 'user')
       .innerJoinAndSelect('user.user_profile', 'user_profile')
+      .innerJoinAndSelect('user.addresses', 'addresses')
       .where(`LOWER(user_profile.firstname) LIKE LOWER('%${nameFilter}%')`)
       .orWhere(`LOWER(user_profile.lastname) LIKE LOWER('%${nameFilter}%')`)
       .limit(20)
