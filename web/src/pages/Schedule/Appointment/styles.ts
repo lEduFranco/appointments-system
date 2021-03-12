@@ -109,8 +109,6 @@ export const StyledModal = Modal.styled`
       color: #3172b7;
       font-size: 16px;
       margin-top: 5px;
-
-
     }
 
     p + p + p {

@@ -1,10 +1,14 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
+import cep from 'cep-promise';
+import { FiXCircle, FiCalendar } from 'react-icons/fi';
 
-import { FiXCircle } from 'react-icons/fi';
+import { parseISO } from 'date-fns';
 
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import HeaderVertical from '../../components/HeaderVertical';
+import InputEdit from '../../components/InputEdit';
+import InputDatePickerEdit from '../../components/InputDatePickerEdit';
 
 import useGetClients from './useGetClients';
 
@@ -18,7 +22,7 @@ import {
   Client,
   StyledModal,
 } from './styles';
-import Input from '../../components/Input';
+import { useToast } from '../../hooks/toast';
 
 interface Address {
   uf: string;
@@ -35,6 +39,10 @@ interface Address {
 
 interface Data {
   id: string;
+  cf_df: string;
+  occuppation: string;
+  company_responsible: string;
+  status: string;
   user: {
     user_profile: {
       fullname: string;
@@ -49,7 +57,17 @@ interface Data {
   };
 }
 
+interface CepPromise {
+  cep: string;
+  state: string;
+  city: string;
+  street: string;
+  neighborhood: string;
+}
+
 const ListClients: React.FC = (Data) => {
+  const { addToast } = useToast();
+
   const formRef = useRef<FormHandles>(null);
 
   const [clients, setClients] = useState<Data[]>([]);
@@ -65,9 +83,50 @@ const ListClients: React.FC = (Data) => {
   function toggleModal(client?: Data): void {
     setIsOpen(!isOpen);
     if (client) {
-      setEditClient(client);
+      const { user, ...restClient } = client;
+      const { user_profile, ...addresses } = user;
+      const { birth_date, ...restUserProfile } = user_profile;
+      const birthDateString = birth_date.toString();
+
+      const mapClient = {
+        ...restClient,
+        user: {
+          user_profile: {
+            ...restUserProfile,
+            birth_date: parseISO(birthDateString),
+          },
+          ...addresses,
+        },
+      };
+      setEditClient(mapClient);
     }
   }
+
+  const searchAddress = useCallback(
+    async (zipcode: string) => {
+      try {
+        cep(zipcode).then((data: CepPromise) => {
+          formRef?.current?.setFieldValue('user.addresses[0].uf', data.state);
+          formRef?.current?.setFieldValue('user.addresses[0].city', data.city);
+          formRef?.current?.setFieldValue(
+            'user.addresses[0].neighborhood',
+            data.neighborhood,
+          );
+          formRef?.current?.setFieldValue(
+            'user.addresses[0].address',
+            data.street,
+          );
+        });
+      } catch {
+        addToast({
+          type: 'error',
+          title: 'Erro no CEP!',
+          description: 'CEP não encontrado',
+        });
+      }
+    },
+    [addToast],
+  );
 
   return (
     <Container>
@@ -90,7 +149,7 @@ const ListClients: React.FC = (Data) => {
           <CLientsList>
             {clients.map((client) => {
               return (
-                <Client onClick={() => toggleModal(client)}>
+                <Client key={client.id} onClick={() => toggleModal(client)}>
                   <h1>{client.user.user_profile.fullname}</h1>
                 </Client>
               );
@@ -103,25 +162,111 @@ const ListClients: React.FC = (Data) => {
             onEscapeKeydown={() => toggleModal()}
           >
             <div className="modal">
-              <Form initialData={editClient} onSubmit={() => {}}>
+              <Form initialData={editClient} onSubmit={() => {}} ref={formRef}>
                 <div className="dados">
                   <div className="h1">
                     <h1>{editClient?.user.user_profile.fullname}</h1>
                     <FiXCircle onClick={() => toggleModal()} />
                   </div>
 
-                  <p className="address">
-                    <Input name="user.addresses[0].address" />
-                    <Input
-                      name="user.addresses[0].complement"
-                      placeholder="Complemento"
-                    />
-                    <Input name="user.addresses[0].number" />
-                  </p>
-                  <p className="contact">
-                    <Input name="user.user_profile.cel" />
-                    <Input name="user.user_profile.tel" />
-                  </p>
+                  <div className="data">
+                    <div className="div-personal">
+                      <h5>*dados pessoais*</h5>
+                      <div className="contact">
+                        <InputEdit
+                          name="user.user_profile.rg"
+                          placeholder="RG"
+                        />
+                        <InputEdit
+                          name="user.user_profile.cpf"
+                          placeholder="CPF"
+                        />
+                        <InputEdit
+                          name="user.user_profile.tel"
+                          placeholder="Telefone"
+                        />
+                        <InputEdit
+                          name="user.user_profile.cel"
+                          placeholder="Celular"
+                        />
+                        <InputDatePickerEdit
+                          name="user.user_profile.birth_date"
+                          icon={FiCalendar}
+                        />
+                        <InputEdit name="occuppation" placeholder="profissão" />
+                      </div>
+                    </div>
+                    <div className="div-address">
+                      <h5>*endereço*</h5>
+                      <div className="address">
+                        <div className="div-address-1">
+                          <InputEdit
+                            name="user.addresses[0].zip_code"
+                            placeholder="CEP"
+                            onChange={(event) => {
+                              if (event.target.value.length === 8) {
+                                searchAddress(event.target.value);
+                              }
+                            }}
+                          />
+                          <InputEdit
+                            name="user.addresses[0].uf"
+                            placeholder="UF"
+                          />
+                          <InputEdit
+                            name="user.addresses[0].city"
+                            placeholder="Cidade"
+                          />
+                          <InputEdit
+                            name="user.addresses[0].neighborhood"
+                            placeholder="Bairro"
+                          />
+                          <InputEdit
+                            name="user.addresses[0].address"
+                            placeholder="Endereço"
+                          />
+                        </div>
+                        <div className="div-address-2">
+                          <InputEdit
+                            name="user.addresses[0].complement"
+                            placeholder="Complemento"
+                          />
+                          <InputEdit
+                            name="user.addresses[0].number"
+                            placeholder="numero"
+                          />
+
+                          <InputEdit
+                            name="user.addresses[0].reference_points"
+                            placeholder="Pontos de referência"
+                          />
+
+                          <InputEdit
+                            name="user.addresses[0].nearest_subway_station"
+                            placeholder="Estação de metrô mais próxima"
+                          />
+                          <InputEdit
+                            name="user.addresses[0].localization"
+                            placeholder="Localização"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="div-company">
+                      <h5>*empresa*</h5>
+                      <div className="company">
+                        <InputEdit
+                          name="user.user_profile.cnpj"
+                          placeholder="CNPJ"
+                        />
+                        <InputEdit name="cf_df" placeholder="CF_DF" />
+                        <InputEdit
+                          name="company_responsible"
+                          placeholder="Responsavel pela empresa"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="textarea-block">
@@ -140,7 +285,7 @@ const ListClients: React.FC = (Data) => {
                     <button
                       type="button"
                       onClick={() => toggleModal()}
-                      className="delete"
+                      className="cancel"
                     >
                       Cancelar
                     </button>

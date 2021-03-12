@@ -113,7 +113,7 @@ const appearFromStart = keyframes`
 `;
 
 export const StyledModal = Modal.styled`
-  width: 40rem;
+  width: 85rem;
   height: 50rem;
   display: flex;
   align-items: center;
@@ -143,13 +143,9 @@ export const StyledModal = Modal.styled`
     }
   }
 
-    p {
-      color: #3172b7;
-      font-size: 16px;
-      margin-top: 5px;
-
-
-    }
+  h5 {
+    color: #3172b7;
+  }
 
     p + p + p {
       font-size: 16px;
@@ -158,14 +154,59 @@ export const StyledModal = Modal.styled`
   }
 
   .modal {
-    width: 28rem;
-    height: 28rem;
+    width: 95%;
+    height: 95%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
 
+  .data {
+    display: flex;
+  }
 
+  .div-personal {
+    width: 25%;
+  }
+  .contact {
+      color: #3172b7;
+      margin-top: 5px;
+      width: 100%;
+  }
+
+  .div-address {
+    width: 50%;
+    max-height: 22rem;
+    padding-left: 1%;
+
+    h5 {
+      padding-bottom: 0.9%;
+    }
+  }
+
+  .address {
+      display: flex;
+      color: #3172b7;
+      width: 100%;
+      margin: 0 auto;
+  }
+
+  .div-address-1 {
+     width: 100%;
+     padding-right: 1%;
+  }
+
+  .div-address-2 {
+    width: 100%;
+ }
+
+ .div-company {
+  width: 25%;
+  padding-left: 1%;
+  h5 {
+    padding-bottom: 1.4%;
+  }
+ }
 
   .textarea-block {
     position: relative;
@@ -180,7 +221,7 @@ export const StyledModal = Modal.styled`
     width: 100%;
     height: 8rem;
     min-height: 8rem;
-    max-height: 16rem;
+    max-height: 12rem;
     margin-top: 0.8rem;
     border-radius: 15px;
     background: #F8F8FC;
@@ -209,29 +250,13 @@ export const StyledModal = Modal.styled`
     align-items: flex-end;
   }
 
-  .delete {
+  .cancel {
     width: 5rem;
     height: 3rem;
     background: #fddede;
     color: #c53030;
     border: 0;
     border-radius: 15px;
-  }
-
-  .edit {
-    width: 5rem;
-    height: 3rem;
-
-    background: #ffffbf;
-    color: #d19111;
-    border: 0;
-    border-radius: 15px;
-
-    a {
-
-      color: #d19111;
-      text-decoration: none;
-    }
   }
 
   .save {

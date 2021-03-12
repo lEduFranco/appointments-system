@@ -164,10 +164,10 @@ const CreateClient: React.FC = () => {
     async (zipcode: string) => {
       try {
         cep(zipcode).then((data: CepPromise) => {
-          formRef?.current.setFieldValue('uf', data.state);
-          formRef?.current.setFieldValue('city', data.city);
-          formRef?.current.setFieldValue('neighborhood', data.neighborhood);
-          formRef?.current.setFieldValue('address', data.street);
+          formRef?.current?.setFieldValue('uf', data.state);
+          formRef?.current?.setFieldValue('city', data.city);
+          formRef?.current?.setFieldValue('neighborhood', data.neighborhood);
+          formRef?.current?.setFieldValue('address', data.street);
         });
       } catch {
         addToast({
