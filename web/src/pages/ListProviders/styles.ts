@@ -1,5 +1,6 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
+import Modal from 'styled-react-modal';
 
 export const Container = styled.div`
   display: flex;
@@ -96,5 +97,191 @@ export const Provider = styled.div`
   h2 {
     font-size: 22px;
     margin-left: 0.6%;
+  }
+`;
+
+const appearFromStart = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+`;
+
+export const StyledModal = Modal.styled`
+  width: 100rem;
+  height: 50rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 15px;
+  margin: 0 auto;
+
+  animation: ${appearFromStart} 0.8s;
+
+  h1 {
+    width: 98%;
+    color: #3172b7;
+    font-size: 20px;
+    text-transform: capitalize;
+
+  }
+
+  .h1 {
+    display: flex;
+    justify-items: space-beetwen;
+
+    svg {
+      color: #3172b7;
+      font-size: 30px;
+      cursor: pointer;
+    }
+  }
+
+  h5 {
+    color: #3172b7;
+  }
+
+    p + p + p {
+      font-size: 16px;
+      margin-top: 10px;
+      font-weight: bold;
+  }
+
+  .modal {
+    width: 98%;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .data {
+    display: flex;
+  }
+
+  .div-personal {
+    width: 20%;
+
+  }
+  .contact {
+      color: #3172b7;
+      margin-top: 5px;
+      width: 100%;
+  }
+
+  .div-address {
+    width: 40%;
+    max-height: 22rem;
+    padding-left: 1%;
+
+    h5 {
+      padding-bottom: 0.9%;
+    }
+  }
+
+  .address {
+      display: flex;
+      color: #3172b7;
+      width: 100%;
+      margin: 0 auto;
+  }
+
+  .div-address-1 {
+     width: 100%;
+     padding-right: 1%;
+  }
+
+  .div-address-2 {
+    width: 100%;
+ }
+
+ .div-company {
+  width: 40%;
+  padding-left: 1%;
+  h5 {
+    padding-bottom: 1%;
+  }
+ }
+
+ .company {
+  width: 100%;
+  display: flex;
+  margin: 0 auto;
+ }
+
+ .div-company-1{
+  width: 100%;
+  margin-right: 1%;
+}
+
+ .div-company-2 {
+  width: 100%;
+}
+
+  .textarea-block {
+    position: relative;
+  }
+
+  .textarea-block + .textarea-block {
+    margin-top: 1.4rem;
+  }
+
+
+  .textarea-block textarea {
+    width: 100%;
+    height: 8rem;
+    min-height: 8rem;
+    max-height: 12rem;
+    margin-top: 0.8rem;
+    border-radius: 15px;
+    background: #F8F8FC;
+    border: 1px solid #3172b7;
+    outline: 0;
+    resize: vertical;
+    padding: 1.2rem 1.6rem;
+    font: 1rem Montserrat;
+
+  }
+
+  .textarea-block:focus-within::after {
+    width: calc(100% - 3.2rem);
+    height: 2px;
+    content: '';
+    background: #3172b7;
+    position: absolute;
+    left: 1.6rem;
+    right: 1.6rem;
+    bottom: 7px;
+  }
+
+  .container-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .cancel {
+    width: 5rem;
+    height: 3rem;
+    background: #fddede;
+    color: #c53030;
+    border: 0;
+    border-radius: 15px;
+  }
+
+  .save {
+    width: 5rem;
+    height: 3rem;
+    background: #d6f9fa;
+    color: #2e656a;
+    border: 0;
+    border-radius: 15px;
+
   }
 `;

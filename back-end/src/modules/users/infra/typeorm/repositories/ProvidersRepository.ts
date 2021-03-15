@@ -57,6 +57,7 @@ class ProvidersRepository implements IProviderRepository {
       .createQueryBuilder('providers')
       .innerJoinAndSelect('providers.user', 'user')
       .innerJoinAndSelect('user.user_profile', 'user_profile')
+      .innerJoinAndSelect('user.addresses', 'addresses')
       .where(`LOWER(user_profile.firstname) LIKE LOWER('%${nameFilter}%')`)
       .orWhere(`LOWER(user_profile.lastname) LIKE LOWER('%${nameFilter}%')`)
       .limit(20)
