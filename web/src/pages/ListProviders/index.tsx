@@ -204,11 +204,11 @@ const ListProviders: React.FC = (Data) => {
                           name="user.user_profile.cel"
                           placeholder="Celular"
                         />
+                        <h6>*data de nascimento*</h6>
                         <InputDatePickerEdit
                           name="user.user_profile.birth_date"
                           icon={FiCalendar}
                         />
-                        <InputEdit name="occuppation" placeholder="profissão" />
                       </div>
                     </div>
                     <div className="div-address">
@@ -275,10 +275,12 @@ const ListProviders: React.FC = (Data) => {
                             name="user.user_profile.cnpj"
                             placeholder="CNPJ"
                           />
+                          <h6>*data de admissão*</h6>
                           <InputDatePickerEdit
                             name="begin_date"
                             icon={FiCalendar}
                           />
+                          <h6>*data de demissão*</h6>
                           <InputDatePickerEdit
                             name="final_date"
                             icon={FiCalendar}

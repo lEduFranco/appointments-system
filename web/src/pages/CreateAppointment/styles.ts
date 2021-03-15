@@ -111,6 +111,7 @@ export const AutoCompleteStyle = styled.div`
 export const Dates = styled.div`
   display: flex;
   flex-direction: column;
+  width: 26%;
 
   padding-bottom: 13%;
 
@@ -131,7 +132,7 @@ export const Dates = styled.div`
       align-items: center;
       text-transform: uppercase;
       font-weight: 700;
-      font-size: 20px;
+      font-size: 18px;
     }
 
     span + span::before {

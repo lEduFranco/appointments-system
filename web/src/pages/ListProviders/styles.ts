@@ -145,6 +145,7 @@ export const StyledModal = Modal.styled`
 
   h5 {
     color: #3172b7;
+    font-size: 16px;
   }
 
     p + p + p {
@@ -173,6 +174,12 @@ export const StyledModal = Modal.styled`
       color: #3172b7;
       margin-top: 5px;
       width: 100%;
+
+      h6 {
+        color: #3172b7;
+        font-size: 12px;
+        margin-top: 0.5%;
+      }
   }
 
   .div-address {
@@ -213,6 +220,12 @@ export const StyledModal = Modal.styled`
   width: 100%;
   display: flex;
   margin: 0 auto;
+
+  h6 {
+    color: #3172b7;
+    font-size: 12px;
+    margin-top: 0.5%;
+  }
  }
 
  .div-company-1{
