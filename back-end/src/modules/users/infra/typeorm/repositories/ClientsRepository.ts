@@ -2,6 +2,7 @@ import { getRepository, Repository } from 'typeorm';
 
 import IClientRepository from '@modules/users/repositories/IClientRepository';
 import ICreateClientDTO from '@modules/users/dtos/ICreateClientDTO';
+import IEditClientDTO from '@modules/users/dtos/IEditClientDTO';
 
 import Client from '../entities/Client';
 
@@ -27,6 +28,18 @@ class ClientsRepository implements IClientRepository {
     const client = await this.ormRepository.find({
       relations: ['user', 'user.user_profile', 'user.addresses'],
     });
+
+    return client;
+  }
+
+  public async updateClient(data: IEditClientDTO): Promise<Client> {
+    const partialClient = await this.ormRepository.preload(data);
+
+    if (!partialClient) {
+      throw new Error('Client not found');
+    }
+
+    const client = await this.ormRepository.save(partialClient);
 
     return client;
   }

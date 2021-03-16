@@ -66,4 +66,11 @@ clientsRouter.get(
   clientsController.show,
 );
 
+clientsRouter.put(
+  '/update-client',
+  checkRole(['admin', 'secretary']),
+  ensureAuthenticated,
+  clientsController.update,
+);
+
 export default clientsRouter;

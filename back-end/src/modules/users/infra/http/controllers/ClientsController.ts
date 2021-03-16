@@ -4,6 +4,7 @@ import { classToClass } from 'class-transformer';
 
 import ListClientsService from 'modules/users/services/ListClientsService';
 import CreateUserService from 'modules/users/services/CreateUserService';
+import EditClientService from 'modules/users/services/EditClientService';
 import CreateUserProfileService from 'modules/users/services/CreateUserProfileService';
 import CreateAddressService from 'modules/users/services/CreateAddressService';
 import CreateClientService from 'modules/users/services/CreateClientService';
@@ -105,5 +106,31 @@ export default class ClientsController {
     delete user.password;
 
     return response.json(classToClass(user));
+  }
+
+  public async update(request: Request, response: Response): Promise<Response> {
+    const {
+      id,
+      cf_df,
+      occuppation,
+      company_responsible,
+      status,
+      user_id,
+      user,
+    } = request.body;
+
+    const editClient = container.resolve(EditClientService);
+
+    const updatedUser = await editClient.execute({
+      id,
+      cf_df,
+      occuppation,
+      company_responsible,
+      status,
+      user_id,
+      user,
+    });
+
+    return response.json(classToClass(updatedUser));
   }
 }
