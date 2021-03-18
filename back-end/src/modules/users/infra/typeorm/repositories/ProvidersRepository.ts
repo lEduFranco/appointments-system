@@ -7,6 +7,7 @@ import IFindAllProvidersDTO from '@modules/users/dtos/IFindAllProvidersDTO';
 
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 
+import IEditProviderDTO from '@modules/users/dtos/IEditProviderDTO';
 import Provider from '../entities/Provider';
 
 class ProvidersRepository implements IProviderRepository {
@@ -80,6 +81,39 @@ class ProvidersRepository implements IProviderRepository {
     await this.ormRepository.save(provider);
 
     return provider;
+  }
+
+  public async updateProvider({
+    id,
+    begin_date,
+    final_date,
+    demission_reason,
+    uniform_size,
+    voter_registration,
+    voting_zone,
+    voting_section,
+    password_mei,
+    status,
+  }: IEditProviderDTO): Promise<Provider | undefined> {
+    const provider = await this.ormRepository.findOne(id);
+
+    if (!provider) {
+      throw new Error('Client not found');
+    }
+
+    return this.ormRepository.save({
+      ...provider,
+      id,
+      begin_date,
+      final_date,
+      demission_reason,
+      uniform_size,
+      voter_registration,
+      voting_zone,
+      voting_section,
+      password_mei,
+      status,
+    });
   }
 }
 

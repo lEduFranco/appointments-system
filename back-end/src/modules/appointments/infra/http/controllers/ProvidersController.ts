@@ -9,6 +9,9 @@ import CreateUserProfileService from 'modules/users/services/CreateUserProfileSe
 import CreateAddressService from 'modules/users/services/CreateAddressService';
 import CreateProviderService from 'modules/users/services/CreateProviderService';
 import ShowProvidersService from 'modules/users/services/ShowProvidersService';
+import EditUserProfileService from 'modules/users/services/EditUserProfileService';
+import EditAddressService from 'modules/users/services/EditAddressService';
+import EditProviderService from 'modules/users/services/EditProviderService';
 
 export default class ProvidersController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -124,5 +127,21 @@ export default class ProvidersController {
     delete user.password;
 
     return response.json(classToClass(user));
+  }
+
+  public async update(request: Request, response: Response): Promise<Response> {
+    const { providers, userProfile, address } = request.body;
+
+    const editProvider = container.resolve(EditProviderService);
+    const editUserProfile = container.resolve(EditUserProfileService);
+    const editAddress = container.resolve(EditAddressService);
+
+    await editUserProfile.execute(userProfile);
+
+    await editAddress.execute(address);
+
+    const providerResponse = await editProvider.execute(providers);
+
+    return response.json(classToClass(providerResponse));
   }
 }
