@@ -7,5 +7,5 @@ export default interface IClientRepository {
   findAllClients(nameFilter: string): Promise<Client[]>;
   findAllShowClients(): Promise<Client[]>;
   findClient(id: string): Promise<Client>;
-  updateClient(data: IEditClientDTO): Promise<Client>;
+  updateClient(data: IEditClientDTO): Promise<Client | undefined>;
 }

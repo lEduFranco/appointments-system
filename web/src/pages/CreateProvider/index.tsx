@@ -136,7 +136,7 @@ const CreateProvider: React.FC = () => {
 
         await api.post('/providers', dataProviders);
 
-        history.push('/dashoboard');
+        history.push('/dashboard');
 
         addToast({
           type: 'success',

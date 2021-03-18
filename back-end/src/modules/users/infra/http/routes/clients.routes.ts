@@ -70,6 +70,41 @@ clientsRouter.put(
   '/update-client',
   checkRole(['admin', 'secretary']),
   ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      userProfile: {
+        id: Joi.string().allow(null, ''),
+        firstname: Joi.string().allow(null, ''),
+        lastname: Joi.string().allow(null, ''),
+        rg: Joi.string().allow(null, ''),
+        cpf: Joi.string().allow(null, ''),
+        cnpj: Joi.string().allow(null, ''),
+        tel: Joi.string().allow(null, ''),
+        cel: Joi.string().allow(null, ''),
+        birth_date: Joi.string().allow(null, ''),
+      },
+      address: {
+        id: Joi.string().allow(null, ''),
+        uf: Joi.string().allow(null, ''),
+        city: Joi.string().allow(null, ''),
+        zip_code: Joi.string().allow(null, ''),
+        neighborhood: Joi.string().allow(null, ''),
+        number: Joi.string().allow(null, ''),
+        address: Joi.string().allow(null, ''),
+        complement: Joi.string().allow(null, ''),
+        reference_points: Joi.string().allow(null, ''),
+        nearest_subway_station: Joi.string().allow(null, ''),
+        localization: Joi.string().allow(null, ''),
+      },
+      clients: {
+        id: Joi.string().allow(null, ''),
+        cf_df: Joi.string().allow(null, ''),
+        company_responsible: Joi.string().allow(null, ''),
+        occuppation: Joi.string().allow(null, ''),
+        status: Joi.string(),
+      },
+    },
+  }),
   clientsController.update,
 );
 

@@ -55,7 +55,7 @@ export default class Providers1607019820297 implements MigrationInterface {
           {
             name: 'status',
             type: 'enum',
-            enum: ['active', 'inative', 'suspended'],
+            enum: ['active', 'inactive', 'suspended'],
           },
           {
             name: 'created_at',

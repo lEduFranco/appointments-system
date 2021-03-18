@@ -118,7 +118,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
         date: Between(startDate, endDate),
       },
       {
-        frequency: 'monthly',
+        frequency: 'detached',
         date: Between(startDate, endDate),
       },
     ];

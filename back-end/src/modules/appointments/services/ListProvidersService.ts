@@ -7,7 +7,7 @@ import Provider from '@modules/users/infra/typeorm/entities/Provider';
 
 interface IRequest {
   period: 'integral' | 'part_time_morning' | 'part_time_afternoon';
-  frequency: 'first_contact' | 'weekly' | 'biweekly' | 'monthly';
+  frequency: 'first_contact' | 'weekly' | 'biweekly' | 'detached';
   day: number;
   month: number;
   year: number;
@@ -32,7 +32,7 @@ class ListProvidersService {
 
     let dates = [];
 
-    if (frequency === 'first_contact' || frequency === 'monthly') {
+    if (frequency === 'first_contact' || frequency === 'detached') {
       dates.push(date);
     }
 

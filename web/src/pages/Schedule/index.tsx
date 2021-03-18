@@ -35,10 +35,6 @@ import {
   Calendar,
 } from './styles';
 
-interface SignUpFormData {
-  name: string;
-}
-
 interface AppointmentsProvider {
   provider: {
     id: string;

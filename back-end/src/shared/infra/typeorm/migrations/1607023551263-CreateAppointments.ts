@@ -41,7 +41,13 @@ export default class CreateAppointments1607023551263
           {
             name: 'frequency',
             type: 'enum',
-            enum: ['first_contact', 'weekly', 'biweekly', 'monthly'],
+            enum: [
+              'first_contact',
+              'weekly',
+              'biweekly',
+              'detached',
+              'fixed_variable',
+            ],
           },
           {
             name: 'provider_id',

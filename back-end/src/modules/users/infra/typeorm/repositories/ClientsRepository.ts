@@ -32,16 +32,26 @@ class ClientsRepository implements IClientRepository {
     return client;
   }
 
-  public async updateClient(data: IEditClientDTO): Promise<Client> {
-    const partialClient = await this.ormRepository.preload(data);
+  public async updateClient({
+    id,
+    cf_df,
+    occuppation,
+    company_responsible,
+    status,
+  }: IEditClientDTO): Promise<Client | undefined> {
+    const client = await this.ormRepository.findOne(id);
 
-    if (!partialClient) {
+    if (!client) {
       throw new Error('Client not found');
     }
 
-    const client = await this.ormRepository.save(partialClient);
-
-    return client;
+    return this.ormRepository.save({
+      ...client,
+      cf_df,
+      occuppation,
+      company_responsible,
+      status,
+    });
   }
 
   public async findAllClients(nameFilter: string): Promise<Client[]> {

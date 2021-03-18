@@ -3,12 +3,16 @@ import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
 import ListClientsService from 'modules/users/services/ListClientsService';
-import CreateUserService from 'modules/users/services/CreateUserService';
+import ShowClientsService from 'modules/users/services/ShowClientsService';
+
 import EditClientService from 'modules/users/services/EditClientService';
+import EditAddressService from 'modules/users/services/EditAddressService';
+import EditUserProfileService from 'modules/users/services/EditUserProfileService';
+
 import CreateUserProfileService from 'modules/users/services/CreateUserProfileService';
 import CreateAddressService from 'modules/users/services/CreateAddressService';
 import CreateClientService from 'modules/users/services/CreateClientService';
-import ShowClientsService from 'modules/users/services/ShowClientsService';
+import CreateUserService from 'modules/users/services/CreateUserService';
 
 export default class ClientsController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -103,34 +107,22 @@ export default class ClientsController {
       user_id: user.id,
     });
 
-    delete user.password;
-
     return response.json(classToClass(user));
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const {
-      id,
-      cf_df,
-      occuppation,
-      company_responsible,
-      status,
-      user_id,
-      user,
-    } = request.body;
+    const { clients, userProfile, address } = request.body;
 
     const editClient = container.resolve(EditClientService);
+    const editUserProfile = container.resolve(EditUserProfileService);
+    const editAddress = container.resolve(EditAddressService);
 
-    const updatedUser = await editClient.execute({
-      id,
-      cf_df,
-      occuppation,
-      company_responsible,
-      status,
-      user_id,
-      user,
-    });
+    await editUserProfile.execute(userProfile);
 
-    return response.json(classToClass(updatedUser));
+    await editAddress.execute(address);
+
+    const clientResponse = await editClient.execute(clients);
+
+    return response.json(classToClass(clientResponse));
   }
 }

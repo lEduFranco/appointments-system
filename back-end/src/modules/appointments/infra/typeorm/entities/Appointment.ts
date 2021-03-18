@@ -19,7 +19,8 @@ export type UserFrequencyType =
   | 'first_contact'
   | 'weekly'
   | 'biweekly'
-  | 'monthly';
+  | 'detached'
+  | 'fixed_available';
 
 export type AppointmentStatusType =
   | 'created'
@@ -65,7 +66,13 @@ class Appointment {
 
   @Column({
     type: 'enum',
-    enum: ['first_contact', 'weekly', 'biweekly', 'monthly'],
+    enum: [
+      'first_contact',
+      'weekly',
+      'biweekly',
+      'detached',
+      'fixed_available',
+    ],
   })
   frequency: UserFrequencyType;
 

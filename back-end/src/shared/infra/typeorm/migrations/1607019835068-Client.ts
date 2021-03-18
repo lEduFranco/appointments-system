@@ -36,7 +36,7 @@ export default class Client1607019835068 implements MigrationInterface {
           {
             name: 'status',
             type: 'enum',
-            enum: ['active', 'inative', 'suspended'],
+            enum: ['active', 'inactive', 'suspended'],
           },
           {
             name: 'created_at',
