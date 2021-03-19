@@ -133,6 +133,10 @@ class AppointmentsRepository implements IAppointmentsRepository {
           frequency: 'biweekly',
           date: Between(startDate, endDate),
         },
+        {
+          frequency: 'fixed_variable',
+          date: Between(startDate, endDate),
+        },
       ];
     }
     const appointments = await this.ormRepository.find({
