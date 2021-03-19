@@ -18,7 +18,12 @@ import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 interface IRequest {
   provider_id: string;
   period: 'integral' | 'part_time_morning' | 'part_time_afternoon';
-  frequency: 'first_contact' | 'weekly' | 'biweekly' | 'detached';
+  frequency:
+    | 'first_contact'
+    | 'weekly'
+    | 'biweekly'
+    | 'detached'
+    | 'fixed_variable';
   day: number;
   month: number;
   year: number;
@@ -95,7 +100,11 @@ class CreateAppointmentService {
 
     let dates = [];
 
-    if (frequency === 'first_contact' || frequency === 'detached') {
+    if (
+      frequency === 'first_contact' ||
+      frequency === 'detached' ||
+      frequency === 'fixed_variable'
+    ) {
       dates.push(date);
     }
 

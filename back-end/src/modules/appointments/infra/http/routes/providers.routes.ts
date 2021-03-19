@@ -121,7 +121,7 @@ providersRouter.put(
       },
     },
   }),
-  providersController.show,
+  providersController.update,
 );
 
 export default providersRouter;

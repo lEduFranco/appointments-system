@@ -1,4 +1,5 @@
 export default interface IEditProviderDTO {
+  id: string;
   begin_date: string;
   final_date: string;
   demission_reason: string;
