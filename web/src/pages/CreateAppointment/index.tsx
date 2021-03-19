@@ -238,9 +238,10 @@ const CreateAppointments: React.FC = () => {
                 }}
                 options={[
                   { value: 'first_contact', label: 'Primeira diária' },
-                  { value: 'monthly', label: 'Avulso' },
+                  { value: 'detached', label: 'Avulso' },
                   { value: 'weekly', label: 'Semanal' },
                   { value: 'biweekly', label: 'Quinzenal' },
+                  { value: 'fixed_variable', label: 'Fixo variado' },
                 ]}
               />
               <Select

@@ -102,8 +102,12 @@ const Reports: React.FC = () => {
       return 'Quinzenal';
     }
 
-    if (frequencyParam === 'monthly') {
+    if (frequencyParam === 'detached') {
       return 'Avulso';
+    }
+
+    if (frequencyParam === 'fixed_variable') {
+      return 'Fixo variado';
     }
 
     return 'Primeira Diária';

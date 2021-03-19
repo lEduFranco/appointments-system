@@ -82,8 +82,12 @@ const Appointment: React.FC<Props> = ({
       return 'Quinzenal';
     }
 
-    if (frequency === 'monthly') {
+    if (frequency === 'detached') {
       return 'Avulso';
+    }
+
+    if (frequency === 'fixed_variable') {
+      return 'Fixo variado';
     }
 
     return 'Primeira Diária';
