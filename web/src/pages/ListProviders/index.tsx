@@ -1,13 +1,16 @@
 import React, { useCallback, useRef, useState } from 'react';
 
+import * as Yup from 'yup';
 import { FiCalendar, FiXCircle } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { parseISO } from 'date-fns';
 import cep from 'cep-promise';
+import { useHistory } from 'react-router';
 import HeaderVertical from '../../components/HeaderVertical';
 import InputEdit from '../../components/InputEdit';
 import InputDatePickerEdit from '../../components/InputDatePickerEdit';
+import SelectEdit from '../../components/SelectEdit';
 
 import useGetProviders from './useGetProviders';
 
@@ -22,8 +25,11 @@ import {
   Provider,
 } from './styles';
 import { useToast } from '../../hooks/toast';
+import api from '../../services/api';
+import getValidationErrors from '../../utils/getValidationErrors';
 
 interface Address {
+  id: string;
   uf: string;
   city: string;
   zip_code: string;
@@ -48,7 +54,9 @@ interface Data {
   password_mei: string;
   status: string;
   user: {
+    id: string;
     user_profile: {
+      id: string;
       fullname: string;
       rg: string;
       cpf: string;
@@ -71,6 +79,7 @@ interface CepPromise {
 
 const ListProviders: React.FC = (Data) => {
   const { addToast } = useToast();
+  const history = useHistory();
 
   const formRef = useRef<FormHandles>(null);
 
@@ -94,7 +103,7 @@ const ListProviders: React.FC = (Data) => {
       const beginDateString = begin_date.toString();
       // const finalDateString = final_date.toString();
 
-      const mapClient = {
+      const mapProvider = {
         ...restProvider,
         begin_date: parseISO(beginDateString),
         // final_date: parseISO(finalDateString),
@@ -106,7 +115,7 @@ const ListProviders: React.FC = (Data) => {
           ...addresses,
         },
       };
-      setEditProvider(mapClient);
+      setEditProvider(mapProvider);
     }
   }
 
@@ -134,6 +143,94 @@ const ListProviders: React.FC = (Data) => {
       }
     },
     [addToast],
+  );
+
+  const handleSubmit = useCallback(
+    async (data: Data) => {
+      try {
+        formRef.current?.setErrors({});
+
+        const schema = Yup.object().shape({
+          rg: Yup.string(),
+          cpf: Yup.string(),
+          tel: Yup.string(),
+          cel: Yup.string(),
+          birth_date: Yup.string(),
+          occuppation: Yup.string(),
+          zip_code: Yup.string(),
+          uf: Yup.string(),
+          city: Yup.string(),
+          neighborhood: Yup.string(),
+          number: Yup.string(),
+          address: Yup.string(),
+          complement: Yup.string(),
+          reference_points: Yup.string(),
+          nearest_subway_station: Yup.string(),
+          localization: Yup.string(),
+          cnpj: Yup.string(),
+          begin_date: Yup.string(),
+          uniform_size: Yup.string(),
+          voter_registration: Yup.string(),
+
+          voting_zone: Yup.string(),
+          voting_section: Yup.string(),
+          password_mei: Yup.string(),
+          status: Yup.string().required(),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        const dataProviders = {
+          user_profile: data.user.user_profile,
+          address: data.user.addresses[0],
+          providers: {
+            id: data.id,
+            begin_date: data.begin_date,
+            final_date: data.final_date,
+            demission_reason: data.demission_reason,
+            uniform_size: data.uniform_size,
+            voter_registration: data.voter_registration,
+            voting_zone: data.voting_zone,
+            voting_section: data.voting_section,
+            password_mei: data.password_mei,
+            status: data.status,
+          },
+        };
+
+        await api.put('/providers/update-provider', dataProviders);
+
+        history.push('/list-providers');
+
+        addToast({
+          type: 'success',
+          title: 'Atualização realizada!',
+          description: 'Cliente atualizado com sucesso!',
+        });
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+
+          formRef.current?.setErrors(errors);
+
+          addToast({
+            type: 'error',
+            title: 'Erro na Atualização!',
+            description: 'Ocorreu um erro ao fazer atualizão, cheque os dados!',
+          });
+
+          return;
+        }
+
+        addToast({
+          type: 'error',
+          title: 'Erro na Atualização!',
+          description: 'Ocorreu um erro ao fazer atualizão, cheque os dados!',
+        });
+      }
+    },
+    [addToast, history],
   );
 
   return (
@@ -175,7 +272,7 @@ const ListProviders: React.FC = (Data) => {
             <div className="modal">
               <Form
                 initialData={editProvider}
-                onSubmit={() => {}}
+                onSubmit={handleSubmit}
                 ref={formRef}
               >
                 <div className="dados">
@@ -186,7 +283,7 @@ const ListProviders: React.FC = (Data) => {
 
                   <div className="data">
                     <div className="div-personal">
-                      <h5>*dados pessoais*</h5>
+                      <h5>*Dados pessoais*</h5>
                       <div className="contact">
                         <InputEdit
                           name="user.user_profile.rg"
@@ -209,10 +306,13 @@ const ListProviders: React.FC = (Data) => {
                           name="user.user_profile.birth_date"
                           icon={FiCalendar}
                         />
+                        <div className="id">
+                          <InputEdit name="user.user_profile.id" />
+                        </div>
                       </div>
                     </div>
                     <div className="div-address">
-                      <h5>*endereço*</h5>
+                      <h5>*Endereço*</h5>
                       <div className="address">
                         <div className="div-address-1">
                           <InputEdit
@@ -264,11 +364,14 @@ const ListProviders: React.FC = (Data) => {
                             name="user.addresses[0].localization"
                             placeholder="Localização"
                           />
+                          <div className="id">
+                            <InputEdit name="user.addresses[0].id" />
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div className="div-company">
-                      <h5>*empresa*</h5>
+                      <h5>*Empresa*</h5>
                       <div className="company">
                         <div className="div-company-1">
                           <InputEdit
@@ -311,21 +414,38 @@ const ListProviders: React.FC = (Data) => {
                             name="password_mei"
                             placeholder="senha MEI"
                           />
+                          <div className="id">
+                            <InputEdit name="id" />
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
+                <SelectEdit
+                  name="status"
+                  options={[
+                    {
+                      value: 'active',
+                      label: 'Ativo',
+                    },
+                    {
+                      value: 'inactive',
+                      label: 'Inativo',
+                    },
+                    {
+                      value: 'suspended',
+                      label: 'Suspenso',
+                    },
+                  ]}
+                />
+
                 <div className="textarea-block">
                   <textarea />
                 </div>
                 <div className="container-buttons">
-                  <button
-                    type="button"
-                    onClick={() => toggleModal()}
-                    className="save"
-                  >
+                  <button type="submit" className="save">
                     Salvar
                   </button>
 

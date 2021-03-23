@@ -182,6 +182,10 @@ export const StyledModal = Modal.styled`
       }
   }
 
+  .id {
+    visibility: hidden;
+  }
+
   .div-address {
     width: 40%;
     max-height: 22rem;
@@ -249,7 +253,7 @@ export const StyledModal = Modal.styled`
   .textarea-block textarea {
     width: 100%;
     height: 8rem;
-    min-height: 8rem;
+    min-height: 12rem;
     max-height: 12rem;
     margin-top: 0.8rem;
     border-radius: 15px;
@@ -277,6 +281,7 @@ export const StyledModal = Modal.styled`
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    padding-top: 2%;
   }
 
   .cancel {

@@ -1,35 +1,45 @@
-import React, { SelectHTMLAttributes } from 'react';
+import React, { useRef, useEffect } from 'react';
+import ReactSelect, {
+  OptionTypeBase,
+  Props as SelectProps,
+} from 'react-select';
+import { useField } from '@unform/core';
 
-import './styles.css';
-
-interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+interface Props extends SelectProps<OptionTypeBase> {
   name: string;
-  label: string;
-  options: Array<{
-    value: string;
-    label: string;
-  }>;
 }
 
-const Select: React.FC<SelectProps> = ({ label, name, options, ...rest }) => {
-  return (
-    <div className="select-block">
-      <label htmlFor={name}>{label}</label>
-      <select value="" id={name} {...rest}>
-        <option value="" disabled hidden>
-          Selecione uma opção
-        </option>
+const SelectEdit: React.FC<Props> = ({ name, ...rest }) => {
+  const selectRef = useRef(null);
+  const { fieldName, defaultValue, registerField, error } = useField(name);
 
-        {options.map((option) => {
-          return (
-            <option className="option" key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          );
-        })}
-      </select>
-    </div>
+  useEffect(() => {
+    registerField({
+      name: fieldName,
+      ref: selectRef.current,
+      getValue: (ref: any) => {
+        if (rest.isMulti) {
+          if (!ref.state.value) {
+            return [];
+          }
+          return ref.state.value.map((option: OptionTypeBase) => option.value);
+        }
+        if (!ref.state.value) {
+          return '';
+        }
+        return ref.state.value.value;
+      },
+    });
+  }, [fieldName, registerField, rest.isMulti]);
+
+  return (
+    <ReactSelect
+      defaultValue={defaultValue}
+      ref={selectRef}
+      classNamePrefix="react-select"
+      {...rest}
+    />
   );
 };
 
-export default Select;
+export default SelectEdit;

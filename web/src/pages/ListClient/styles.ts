@@ -229,7 +229,7 @@ export const StyledModal = Modal.styled`
     width: 100%;
     height: 8rem;
     min-height: 8rem;
-    max-height: 12rem;
+    max-height: 8rem;
     margin-top: 0.8rem;
     border-radius: 15px;
     background: #F8F8FC;

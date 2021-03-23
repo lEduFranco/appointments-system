@@ -117,7 +117,7 @@ providersRouter.put(
         voting_zone: Joi.string().allow(null, ''),
         voting_section: Joi.string().allow(null, ''),
         password_mei: Joi.string().allow(null, ''),
-        status: Joi.string(),
+        status: Joi.string().required(),
       },
     },
   }),

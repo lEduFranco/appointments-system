@@ -83,7 +83,6 @@ const ListClients: React.FC = (Data) => {
   const [editClient, setEditClient] = useState<Data>();
   const [autoCompleteValue, setAutoCompleteValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-  const [status, setStatus] = useState('');
 
   useGetClients({
     setClients,
@@ -261,7 +260,7 @@ const ListClients: React.FC = (Data) => {
 
                   <div className="data">
                     <div className="div-personal">
-                      <h5>*dados pessoais*</h5>
+                      <h5>*Dados pessoais*</h5>
                       <div className="contact">
                         <InputEdit
                           name="user.user_profile.rg"
@@ -290,7 +289,7 @@ const ListClients: React.FC = (Data) => {
                       </div>
                     </div>
                     <div className="div-address">
-                      <h5>*endereço*</h5>
+                      <h5>*Endereço*</h5>
                       <div className="address">
                         <div className="div-address-1">
                           <InputEdit
@@ -349,7 +348,7 @@ const ListClients: React.FC = (Data) => {
                       </div>
                     </div>
                     <div className="div-company">
-                      <h5>*empresa*</h5>
+                      <h5>*Empresa*</h5>
                       <div className="company">
                         <InputEdit
                           name="user.user_profile.cnpj"
@@ -367,11 +366,6 @@ const ListClients: React.FC = (Data) => {
 
                 <SelectEdit
                   name="status"
-                  value={status}
-                  label="Status"
-                  onChange={(e) => {
-                    setStatus(e.target.value);
-                  }}
                   options={[
                     {
                       value: 'active',
