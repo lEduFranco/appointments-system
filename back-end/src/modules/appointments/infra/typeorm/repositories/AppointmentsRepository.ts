@@ -154,6 +154,27 @@ class AppointmentsRepository implements IAppointmentsRepository {
     return appointments;
   }
 
+  public async findAllAppointmentsByDate(
+    startDate: Date,
+    endDate: Date,
+  ): Promise<Appointment[]> {
+    const appointments = await this.ormRepository.find({
+      where: {
+        date: Between(startDate, endDate),
+      },
+      relations: [
+        'provider',
+        'provider.user',
+        'provider.user.user_profile',
+        'client',
+        'client.user',
+        'client.user.user_profile',
+      ],
+    });
+
+    return appointments;
+  }
+
   public async create({
     provider_id,
     period,

@@ -3,12 +3,15 @@ import cep from 'cep-promise';
 import { FiXCircle, FiCalendar } from 'react-icons/fi';
 
 import { parseISO } from 'date-fns';
+import * as Yup from 'yup';
 
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
+import { useHistory } from 'react-router';
 import HeaderVertical from '../../components/HeaderVertical';
 import InputEdit from '../../components/InputEdit';
 import InputDatePickerEdit from '../../components/InputDatePickerEdit';
+import SelectEdit from '../../components/SelectEdit';
 
 import useGetClients from './useGetClients';
 
@@ -23,8 +26,11 @@ import {
   StyledModal,
 } from './styles';
 import { useToast } from '../../hooks/toast';
+import getValidationErrors from '../../utils/getValidationErrors';
+import api from '../../services/api';
 
 interface Address {
+  id: string;
   uf: string;
   city: string;
   zip_code: string;
@@ -44,7 +50,9 @@ interface Data {
   company_responsible: string;
   status: string;
   user: {
+    id: string;
     user_profile: {
+      id: string;
       fullname: string;
       rg: string;
       cpf: string;
@@ -67,6 +75,7 @@ interface CepPromise {
 
 const ListClients: React.FC = (Data) => {
   const { addToast } = useToast();
+  const history = useHistory();
 
   const formRef = useRef<FormHandles>(null);
 
@@ -74,6 +83,7 @@ const ListClients: React.FC = (Data) => {
   const [editClient, setEditClient] = useState<Data>();
   const [autoCompleteValue, setAutoCompleteValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const [status, setStatus] = useState('');
 
   useGetClients({
     setClients,
@@ -87,7 +97,6 @@ const ListClients: React.FC = (Data) => {
       const { user_profile, ...addresses } = user;
       const { birth_date, ...restUserProfile } = user_profile;
       const birthDateString = birth_date.toString();
-
       const mapClient = {
         ...restClient,
         user: {
@@ -128,6 +137,83 @@ const ListClients: React.FC = (Data) => {
     [addToast],
   );
 
+  const handleSubmit = useCallback(
+    async (data: Data) => {
+      try {
+        formRef.current?.setErrors({});
+
+        const schema = Yup.object().shape({
+          rg: Yup.string(),
+          cpf: Yup.string(),
+          tel: Yup.string(),
+          cel: Yup.string(),
+          birth_date: Yup.string(),
+          occuppation: Yup.string(),
+          zip_code: Yup.string(),
+          uf: Yup.string(),
+          city: Yup.string(),
+          neighborhood: Yup.string(),
+          number: Yup.string(),
+          address: Yup.string(),
+          complement: Yup.string(),
+          reference_points: Yup.string(),
+          nearest_subway_station: Yup.string(),
+          localization: Yup.string(),
+          cnpj: Yup.string(),
+          cf_df: Yup.string(),
+          company_responsible: Yup.string(),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        const dataClients = {
+          user_profile: data.user.user_profile,
+          address: data.user.addresses[0],
+          clients: {
+            id: data.id,
+            cf_df: data.cf_df,
+            occuppation: data.occuppation,
+            company_responsible: data.company_responsible,
+            status: data.status,
+          },
+        };
+
+        await api.put('/clients/update-client', dataClients);
+
+        history.push('/list-clients');
+
+        addToast({
+          type: 'success',
+          title: 'Atualização realizada!',
+          description: 'Cliente atualizado com sucesso!',
+        });
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+
+          formRef.current?.setErrors(errors);
+
+          addToast({
+            type: 'error',
+            title: 'Erro na Atualização!',
+            description: 'Ocorreu um erro ao fazer atualizão, cheque os dados!',
+          });
+
+          return;
+        }
+
+        addToast({
+          type: 'error',
+          title: 'Erro na Atualização!',
+          description: 'Ocorreu um erro ao fazer atualizão, cheque os dados!',
+        });
+      }
+    },
+    [addToast, history],
+  );
+
   return (
     <Container>
       <HeaderVertical />
@@ -162,7 +248,11 @@ const ListClients: React.FC = (Data) => {
             onEscapeKeydown={() => toggleModal()}
           >
             <div className="modal">
-              <Form initialData={editClient} onSubmit={() => {}} ref={formRef}>
+              <Form
+                initialData={editClient}
+                onSubmit={handleSubmit}
+                ref={formRef}
+              >
                 <div className="dados">
                   <div className="h1">
                     <h1>{editClient?.user.user_profile.fullname}</h1>
@@ -194,6 +284,9 @@ const ListClients: React.FC = (Data) => {
                           icon={FiCalendar}
                         />
                         <InputEdit name="occuppation" placeholder="profissão" />
+                        <div className="id">
+                          <InputEdit name="user.user_profile.id" />
+                        </div>
                       </div>
                     </div>
                     <div className="div-address">
@@ -249,6 +342,9 @@ const ListClients: React.FC = (Data) => {
                             name="user.addresses[0].localization"
                             placeholder="Localização"
                           />
+                          <div className="id">
+                            <InputEdit name="user.addresses[0].id" />
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -269,15 +365,34 @@ const ListClients: React.FC = (Data) => {
                   </div>
                 </div>
 
+                <SelectEdit
+                  name="status"
+                  value={status}
+                  label="Status"
+                  onChange={(e) => {
+                    setStatus(e.target.value);
+                  }}
+                  options={[
+                    {
+                      value: 'active',
+                      label: 'Ativo',
+                    },
+                    {
+                      value: 'inactive',
+                      label: 'Inativo',
+                    },
+                    {
+                      value: 'suspended',
+                      label: 'Suspenso',
+                    },
+                  ]}
+                />
+
                 <div className="textarea-block">
                   <textarea />
                 </div>
                 <div className="container-buttons">
-                  <button
-                    type="button"
-                    onClick={() => toggleModal()}
-                    className="save"
-                  >
+                  <button type="submit" className="save">
                     Salvar
                   </button>
 

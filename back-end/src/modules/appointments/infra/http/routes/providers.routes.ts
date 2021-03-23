@@ -83,7 +83,7 @@ providersRouter.put(
   ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
-      userProfile: {
+      user_profile: {
         id: Joi.string().allow(null, ''),
         firstname: Joi.string().allow(null, ''),
         lastname: Joi.string().allow(null, ''),

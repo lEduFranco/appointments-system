@@ -125,7 +125,10 @@ export const StyledModal = Modal.styled`
     justify-content: space-between;
   }
 
-
+  .dados {
+    color: #3172b7;
+    text-transform: capitalize;
+  }
 
   .textarea-block {
     position: relative;

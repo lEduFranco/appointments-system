@@ -237,7 +237,7 @@ const Appointment: React.FC<Props> = ({
                 </h1>
                 <FiXCircle onClick={toggleModal} />
               </div>
-
+              <h3>{appointment?.neighborhood}</h3>
               <p className="address">
                 {appointment?.address} {appointment?.complement}{' '}
                 {appointment?.number}

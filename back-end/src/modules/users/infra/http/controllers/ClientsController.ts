@@ -111,13 +111,13 @@ export default class ClientsController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const { clients, userProfile, address } = request.body;
+    const { clients, user_profile, address } = request.body;
 
     const editClient = container.resolve(EditClientService);
     const editUserProfile = container.resolve(EditUserProfileService);
     const editAddress = container.resolve(EditAddressService);
 
-    await editUserProfile.execute(userProfile);
+    await editUserProfile.execute(user_profile);
 
     await editAddress.execute(address);
 

@@ -130,13 +130,13 @@ export default class ProvidersController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const { providers, userProfile, address } = request.body;
+    const { providers, user_profile, address } = request.body;
 
     const editProvider = container.resolve(EditProviderService);
     const editUserProfile = container.resolve(EditUserProfileService);
     const editAddress = container.resolve(EditAddressService);
 
-    await editUserProfile.execute(userProfile);
+    await editUserProfile.execute(user_profile);
 
     await editAddress.execute(address);
 

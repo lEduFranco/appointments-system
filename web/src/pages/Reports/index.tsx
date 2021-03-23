@@ -146,7 +146,7 @@ const Reports: React.FC = () => {
       });
 
       api
-        .get('/appointments/reports', {
+        .get('/appointments/reports-clients', {
           params: {
             frequency,
             startDate,

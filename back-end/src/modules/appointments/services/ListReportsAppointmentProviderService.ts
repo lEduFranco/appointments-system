@@ -5,12 +5,21 @@ import groupBy from 'lodash/groupBy';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
+
 import { map } from 'lodash';
 
 interface IRequest {
-  frequency: 'detached' | 'fixed';
   startDate: string;
   endDate: string;
+}
+
+interface IAppointmentsProvider {
+  provider: {
+    id: string;
+    name: string;
+  };
+
+  appointmentsProvider: IAppointmentsClient[];
 }
 
 interface IAppointmentsClient {
@@ -20,63 +29,52 @@ interface IAppointmentsClient {
     cpf: string;
   };
 
-  appointmentsProvider: IAppointmentsProvider[];
-}
-
-interface IAppointmentsProvider {
-  provider: {
-    id: string;
-    name: string;
-  };
-
   appointments: Appointment[];
 }
 
 @injectable()
-class ListReportsAppointmentsService {
+class ListReportsAppointmentsProviderService {
   constructor(
     @inject('AppointmentsRepository')
     private appointmentsRepository: IAppointmentsRepository,
   ) {}
 
   public async execute({
-    frequency,
     startDate,
     endDate,
-  }: IRequest): Promise<IAppointmentsClient[]> {
+  }: IRequest): Promise<IAppointmentsProvider[]> {
     const startDateParsed = parseISO(startDate);
     const endDateParsed = parseISO(endDate);
 
-    const appointments = await this.appointmentsRepository.findAllAppointmentsByFrequencyAndDate(
-      frequency,
+    const appointments = await this.appointmentsRepository.findAllAppointmentsByDate(
       startDateParsed,
       endDateParsed,
     );
 
-    const groupAppointments = groupBy(appointments, 'client.id');
+    const groupAppointments = groupBy(appointments, 'provider.id');
     const mapAppointments = map(
       groupAppointments,
-      (appointmentsClient, index) => {
+      (appointmentsProvider, index) => {
         const groupedAppointmentsProvider = groupBy(
-          appointmentsClient,
-          'provider_id',
+          appointmentsProvider,
+          'client_id',
         );
 
         return {
-          client: {
+          provider: {
             id: index,
-            name: `${appointmentsClient[0].client.user.user_profile.firstname} ${appointmentsClient[0].client.user.user_profile.lastname}`,
-            cpf: appointmentsClient[0].client.user.user_profile.cpf,
+            name: `${appointmentsProvider[0].provider.user.user_profile.firstname} ${appointmentsProvider[0].provider.user.user_profile.lastname}`,
           },
           appointmentsProvider: map(
             groupedAppointmentsProvider,
-            (appointmentsProvider, indexProvider) => {
+            (appointmentsClient, indexProvider) => {
               return {
-                provider: {
+                client: {
                   id: indexProvider,
-                  name: `${appointmentsProvider[0].provider.user.user_profile.firstname} ${appointmentsProvider[0].provider.user.user_profile.lastname}`,
+                  name: `${appointmentsClient[0].client.user.user_profile.firstname} ${appointmentsClient[0].client.user.user_profile.lastname}`,
+                  cpf: appointmentsClient[0].client.user.user_profile.cpf,
                 },
-                appointments: appointmentsProvider,
+                appointments: appointmentsClient,
               };
             },
           ),
@@ -88,4 +86,4 @@ class ListReportsAppointmentsService {
   }
 }
 
-export default ListReportsAppointmentsService;
+export default ListReportsAppointmentsProviderService;

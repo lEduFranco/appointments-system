@@ -42,7 +42,6 @@ class AddressesRepository implements IAddressRepository {
 
     return this.ormRepository.save({
       ...addresses,
-      id,
       uf,
       city,
       zip_code,

@@ -40,7 +40,6 @@ class UserProfilesRepository implements IUserProfilesRepository {
 
     return this.ormRepository.save({
       ...userProfile,
-      id,
       firstname,
       lastname,
       rg,

@@ -172,6 +172,14 @@ export const StyledModal = Modal.styled`
       color: #3172b7;
       margin-top: 5px;
       width: 100%;
+
+     input:first-child(1) {
+
+     }
+  }
+
+  .id {
+    visibility: hidden;
   }
 
   .div-address {
@@ -248,6 +256,7 @@ export const StyledModal = Modal.styled`
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    margin-top: 2.5%;
   }
 
   .cancel {

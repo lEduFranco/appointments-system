@@ -3,17 +3,17 @@ import { container } from 'tsyringe';
 
 import { classToClass } from 'class-transformer';
 
-import ListReportsAppointmentService from '@modules/appointments/services/ListReportsAppointmentService';
+import ListReportsAppointmentClientService from '@modules/appointments/services/ListReportsAppointmentClientService';
 
-export default class ReportsAppointmentsController {
+export default class ReportsAppointmentsClientController {
   public async index(request: Request, response: Response): Promise<Response> {
     const { frequency, startDate, endDate } = request.query;
 
-    const listReportsAppointmentService = container.resolve(
-      ListReportsAppointmentService,
+    const listReportsAppointmentClientService = container.resolve(
+      ListReportsAppointmentClientService,
     );
 
-    const appointments = await listReportsAppointmentService.execute({
+    const appointments = await listReportsAppointmentClientService.execute({
       frequency,
       startDate,
       endDate,
