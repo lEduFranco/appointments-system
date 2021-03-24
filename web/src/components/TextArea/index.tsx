@@ -9,7 +9,7 @@ interface Props {
 
 type TextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & Props;
 
-function TextArea({ name, label, ...rest }: TextareaProps) {
+const TextArea: React.FC<TextareaProps> = ({ name, label, ...rest }) => {
   const textareaRef = useRef(null);
   const { fieldName, defaultValue = '', registerField, error } = useField(name);
 
@@ -43,6 +43,6 @@ function TextArea({ name, label, ...rest }: TextareaProps) {
       {error && <span>{error}</span>}
     </div>
   );
-}
+};
 
 export default TextArea;

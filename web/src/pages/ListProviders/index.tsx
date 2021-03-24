@@ -146,6 +146,21 @@ const ListProviders: React.FC = (Data) => {
     [addToast],
   );
 
+  const selectOptions = [
+    {
+      value: 'active',
+      label: 'Ativa',
+    },
+    {
+      value: 'inactive',
+      label: 'Inativa',
+    },
+    {
+      value: 'suspended',
+      label: 'Suspensa',
+    },
+  ];
+
   const handleSubmit = useCallback(
     async (data: Data) => {
       try {
@@ -427,23 +442,13 @@ const ListProviders: React.FC = (Data) => {
 
                 <div className="select-status">
                   <h2>Status</h2>
-                  <SelectEdit
-                    name="status"
-                    options={[
-                      {
-                        value: 'active',
-                        label: 'Ativa',
-                      },
-                      {
-                        value: 'inactive',
-                        label: 'Inativa',
-                      },
-                      {
-                        value: 'suspended',
-                        label: 'Suspensa',
-                      },
-                    ]}
-                  />
+                  <SelectEdit name="status">
+                    {selectOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </SelectEdit>
                 </div>
 
                 <div className="textarea-block">

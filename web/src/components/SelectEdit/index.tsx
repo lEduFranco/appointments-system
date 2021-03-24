@@ -1,44 +1,54 @@
-import React, { useRef, useEffect } from 'react';
-import ReactSelect, {
-  OptionTypeBase,
-  Props as SelectProps,
-} from 'react-select';
-import { useField } from '@unform/core';
+import React, {
+  useRef,
+  useEffect,
+  ReactNode,
+  SelectHTMLAttributes,
+} from 'react';
 
-interface Props extends SelectProps<OptionTypeBase> {
+import { useField } from '@unform/core';
+import { SelectImput } from './styles';
+
+interface SelectProps {
   name: string;
+  children: ReactNode;
 }
 
-const SelectEdit: React.FC<Props> = ({ name, ...rest }) => {
-  const selectRef = useRef(null);
+type Props = SelectHTMLAttributes<HTMLSelectElement> & SelectProps;
+
+const SelectEdit: React.FC<Props> = ({ name, children, ...rest }) => {
+  const selectRef = useRef<HTMLSelectElement>(null);
+
   const { fieldName, defaultValue, registerField, error } = useField(name);
 
   useEffect(() => {
     registerField({
+      ref: selectRef,
       name: fieldName,
-      ref: selectRef.current,
-      getValue: (ref: any) => {
-        if (rest.isMulti) {
-          if (!ref.state.value) {
-            return [];
-          }
-          return ref.state.value.map((option: OptionTypeBase) => option.value);
-        }
-        if (!ref.state.value) {
-          return '';
-        }
-        return ref.state.value.value;
+      getValue: (ref) => {
+        return ref.current?.value;
+      },
+      setValue: (ref, newValue) => {
+        ref.current.value = newValue;
+      },
+      clearValue: (ref) => {
+        ref.current.value = '';
       },
     });
-  }, [fieldName, registerField, rest.isMulti]);
+  }, [fieldName, registerField]);
 
   return (
-    <ReactSelect
-      defaultValue={defaultValue}
-      ref={selectRef}
-      classNamePrefix="react-select"
-      {...rest}
-    />
+    <SelectImput>
+      <select
+        id={fieldName}
+        ref={selectRef}
+        defaultValue={defaultValue}
+        {...rest}
+      >
+        {children}
+      </select>
+
+      {error && <span className="error">{error}</span>}
+    </SelectImput>
   );
 };
 

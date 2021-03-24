@@ -138,6 +138,21 @@ const ListClients: React.FC = (Data) => {
     [addToast],
   );
 
+  const selectOptions = [
+    {
+      value: 'active',
+      label: 'Ativo',
+    },
+    {
+      value: 'inactive',
+      label: 'Inativo',
+    },
+    {
+      value: 'suspended',
+      label: 'Suspenso',
+    },
+  ];
+
   const handleSubmit = useCallback(
     async (data: Data) => {
       try {
@@ -184,7 +199,7 @@ const ListClients: React.FC = (Data) => {
 
         await api.put('/clients/update-client', dataClients);
 
-        history.push('/list-clients');
+        history.push('/schedule');
 
         addToast({
           type: 'success',
@@ -369,23 +384,13 @@ const ListClients: React.FC = (Data) => {
 
                 <div className="select-status">
                   <h2>Status</h2>
-                  <SelectEdit
-                    name="status"
-                    options={[
-                      {
-                        value: 'active',
-                        label: 'Ativo',
-                      },
-                      {
-                        value: 'inactive',
-                        label: 'Inativo',
-                      },
-                      {
-                        value: 'suspended',
-                        label: 'Suspenso',
-                      },
-                    ]}
-                  />
+                  <SelectEdit name="status">
+                    {selectOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </SelectEdit>
                 </div>
                 <div className="textarea-block">
                   <TextArea label="Comentários" name="observation" />
