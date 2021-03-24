@@ -12,6 +12,7 @@ interface IRequest {
   tel: string;
   cel: string;
   birth_date: Date;
+  pix: string;
   user_id: string;
 }
 
@@ -31,6 +32,7 @@ class CreateUserProfileService {
     tel,
     cel,
     birth_date,
+    pix,
     user_id,
   }: IRequest): Promise<UserProfile> {
     const userProfile = await this.userProfilesRepository.create({
@@ -42,6 +44,7 @@ class CreateUserProfileService {
       tel,
       cel,
       birth_date,
+      pix,
       user_id,
     });
 

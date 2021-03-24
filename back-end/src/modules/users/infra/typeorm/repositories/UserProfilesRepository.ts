@@ -31,6 +31,8 @@ class UserProfilesRepository implements IUserProfilesRepository {
     tel,
     cel,
     birth_date,
+    observation,
+    pix,
   }: IEditUserProfileDTO): Promise<UserProfile | undefined> {
     const userProfile = await this.ormRepository.findOne(id);
 
@@ -48,6 +50,8 @@ class UserProfilesRepository implements IUserProfilesRepository {
       tel,
       cel,
       birth_date,
+      observation,
+      pix,
     });
   }
 }

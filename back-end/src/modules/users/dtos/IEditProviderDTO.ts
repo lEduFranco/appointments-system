@@ -9,4 +9,7 @@ export default interface IEditProviderDTO {
   voting_section: string;
   password_mei: string;
   status: 'active' | 'inactive' | 'suspended';
+  uniform_amount: number;
+  relatives_contacts: string;
+  disc: 'dominante' | 'influente' | 'estabilidade' | 'conformidade';
 }

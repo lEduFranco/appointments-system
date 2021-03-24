@@ -40,6 +40,9 @@ class UserProfile {
   @Column({ nullable: true })
   birth_date: Date;
 
+  @Column({ nullable: true })
+  pix: string;
+
   @CreateDateColumn()
   created_at: Date;
 

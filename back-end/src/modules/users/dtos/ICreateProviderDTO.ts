@@ -8,5 +8,8 @@ export default interface ICreateProviderDTO {
   voting_section: string;
   password_mei: string;
   status: 'active' | 'inactive' | 'suspended';
+  uniform_amount: number;
+  relatives_contacts: string;
+  disc: 'dominante' | 'influente' | 'estabilidade' | 'conformidade';
   user_id: string;
 }

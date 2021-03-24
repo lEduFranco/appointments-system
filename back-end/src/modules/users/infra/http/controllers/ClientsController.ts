@@ -46,6 +46,7 @@ export default class ClientsController {
       tel,
       cel,
       birth_date,
+      pix,
       uf,
       city,
       zip_code,
@@ -82,6 +83,7 @@ export default class ClientsController {
       tel,
       cel,
       birth_date,
+      pix,
       user_id: user.id,
     });
 

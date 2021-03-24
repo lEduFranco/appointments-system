@@ -34,7 +34,7 @@ export default class Providers1607019820297 implements MigrationInterface {
           },
           {
             name: 'uniform_amount',
-            type: 'varchar',
+            type: 'int',
           },
           {
             name: 'uniform_size',
@@ -59,6 +59,11 @@ export default class Providers1607019820297 implements MigrationInterface {
           {
             name: 'relatives_contacts',
             type: 'varchar',
+          },
+          {
+            name: 'disc',
+            type: 'enum',
+            enum: ['dominante', 'influente', 'estabilidade', 'conformidade'],
           },
           {
             name: 'status',

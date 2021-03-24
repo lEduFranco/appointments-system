@@ -30,6 +30,7 @@ clientsRouter.post(
       cel: Joi.string().required(),
       birth_date: Joi.string().required(),
       occuppation: Joi.string().allow(null, ''),
+      pix: Joi.string(),
 
       uf: Joi.string().allow(null, ''),
       city: Joi.string().allow(null, ''),
@@ -82,6 +83,8 @@ clientsRouter.put(
         tel: Joi.string().allow(null, ''),
         cel: Joi.string().allow(null, ''),
         birth_date: Joi.string().allow(null, ''),
+        observation: Joi.string().allow(null, ''),
+        pix: Joi.string().allow(null, ''),
       },
       address: {
         id: Joi.string().allow(null, ''),

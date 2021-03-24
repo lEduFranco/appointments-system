@@ -93,12 +93,15 @@ class ProvidersRepository implements IProviderRepository {
     voting_zone,
     voting_section,
     password_mei,
+    uniform_amount,
+    relatives_contacts,
+    disc,
     status,
   }: IEditProviderDTO): Promise<Provider | undefined> {
     const provider = await this.ormRepository.findOne(id);
 
     if (!provider) {
-      throw new Error('Client not found');
+      throw new Error('Provider not found');
     }
 
     return this.ormRepository.save({
@@ -113,6 +116,9 @@ class ProvidersRepository implements IProviderRepository {
       voting_section,
       password_mei,
       status,
+      uniform_amount,
+      relatives_contacts,
+      disc,
     });
   }
 }

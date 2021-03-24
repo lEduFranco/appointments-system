@@ -7,5 +7,6 @@ export default interface ICreateUserProfileDTO {
   tel: string;
   cel: string;
   birth_date: Date;
+  pix: string;
   user_id: string;
 }

@@ -43,7 +43,7 @@ import {
 } from './styles';
 
 export interface AppointmentsClient {
-  client: {
+  [typeUser: string]: {
     id: string;
     name: string;
     cpf: string;
@@ -53,7 +53,7 @@ export interface AppointmentsClient {
 }
 
 interface AppointmentsProvider {
-  provider: {
+  [typeUser: string]: {
     id: string;
     name: string;
   };
@@ -89,6 +89,7 @@ const Reports: React.FC = () => {
 
   const [appointments, setAppointments] = useState<AppointmentsClient[]>([]);
   const [frequency, setFrequency] = useState('');
+  const [typeUser, setTypeUser] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [collapseClientId, setCollapseClientId] = useState<string[]>([]);
@@ -145,22 +146,40 @@ const Reports: React.FC = () => {
         abortEarly: false,
       });
 
-      api
-        .get('/appointments/reports-clients', {
-          params: {
-            frequency,
-            startDate,
-            endDate,
-          },
-        })
-        .then((response) => {
-          setAppointments(response.data);
-          addToast({
-            type: 'success',
-            title: 'Sucesso',
-            description: 'O relatório foi buscado com sucesso!',
+      if (users === 'client') {
+        api
+          .get('/appointments/reports-clients', {
+            params: {
+              frequency,
+              startDate,
+              endDate,
+            },
+          })
+          .then((response) => {
+            setAppointments(response.data);
+            addToast({
+              type: 'success',
+              title: 'Sucesso',
+              description: 'O relatório foi buscado com sucesso!',
+            });
           });
-        });
+      } else {
+        api
+          .get('/appointments/reports-providers', {
+            params: {
+              startDate,
+              endDate,
+            },
+          })
+          .then((response) => {
+            setAppointments(response.data);
+            addToast({
+              type: 'success',
+              title: 'Sucesso',
+              description: 'O relatório foi buscado com sucesso!',
+            });
+          });
+      }
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
@@ -197,6 +216,24 @@ const Reports: React.FC = () => {
           <form onSubmit={handleSubmit}>
             <Search>
               <Select>
+                <h3>Cliente/Diarista</h3>
+                <SelectReport
+                  name="typeUser"
+                  value={typeUser}
+                  onChange={(e) => {
+                    setTypeUser(e.target.value);
+                  }}
+                  options={[
+                    {
+                      value: 'client',
+                      label: 'Cliente',
+                    },
+                    {
+                      value: 'provider',
+                      label: 'Diarista',
+                    },
+                  ]}
+                />
                 <h3>Tipo de diária</h3>
                 <SelectReport
                   name="freaquncy"
@@ -253,7 +290,7 @@ const Reports: React.FC = () => {
                     }}
                   >
                     <Client>
-                      <Name> {appointment.client.name} </Name>
+                      <Name> {appointment.[typeUser].name} </Name>
                       <Cpf>
                         <h3>CPF:</h3> {appointment.client.cpf}
                       </Cpf>

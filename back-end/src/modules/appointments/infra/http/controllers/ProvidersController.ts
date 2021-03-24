@@ -53,6 +53,7 @@ export default class ProvidersController {
       tel,
       cel,
       birth_date,
+      pix,
       uf,
       city,
       zip_code,
@@ -72,6 +73,9 @@ export default class ProvidersController {
       voting_section,
       password_mei,
       status,
+      uniform_amount,
+      relatives_contacts,
+      disc,
     } = request.body;
 
     const createUser = container.resolve(CreateUserService);
@@ -94,6 +98,7 @@ export default class ProvidersController {
       tel,
       cel,
       birth_date,
+      pix,
       user_id: user.id,
     });
 
@@ -121,6 +126,9 @@ export default class ProvidersController {
       voting_section,
       password_mei,
       status,
+      uniform_amount,
+      relatives_contacts,
+      disc,
       user_id: user.id,
     });
 

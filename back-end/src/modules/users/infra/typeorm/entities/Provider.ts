@@ -13,6 +13,11 @@ import Appointment from '../../../../appointments/infra/typeorm/entities/Appoint
 import User from './User';
 
 export type ProviderStatusType = 'active' | 'inactive' | 'suspended';
+export type ProviderDiscType =
+  | 'dominante'
+  | 'influente'
+  | 'estabilidade'
+  | 'conformidade';
 
 @Entity('providers')
 class Provider {
@@ -31,6 +36,9 @@ class Provider {
   @Column({ length: 2 })
   uniform_size: string;
 
+  @Column()
+  uniform_amount: number;
+
   @Column({ length: 12 })
   voter_registration: string;
 
@@ -39,6 +47,15 @@ class Provider {
 
   @Column()
   voting_section: string;
+
+  @Column()
+  relatives_contacts: string;
+
+  @Column({
+    type: 'enum',
+    enum: ['dominante', 'influente', 'estabilidade', 'conformidade'],
+  })
+  disc: ProviderDiscType;
 
   @Column()
   password_mei: string;

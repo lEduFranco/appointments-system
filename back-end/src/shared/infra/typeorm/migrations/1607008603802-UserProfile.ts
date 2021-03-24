@@ -66,6 +66,7 @@ export default class UserProfile1607008603802 implements MigrationInterface {
           {
             name: 'pix',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'created_at',

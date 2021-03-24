@@ -36,6 +36,7 @@ providersRouter.post(
       tel: Joi.string().required(),
       cel: Joi.string().required(),
       birth_date: Joi.string().required(),
+      pix: Joi.string().required(),
 
       uf: Joi.string().allow(null, ''),
       city: Joi.string().allow(null, ''),
@@ -58,6 +59,9 @@ providersRouter.post(
       password_mei: Joi.string().required(),
 
       status: Joi.string().default('active'),
+      uniform_amount: Joi.string().required(),
+      relatives_contacts: Joi.string().required(),
+      disc: Joi.string().required(),
     },
   }),
   providersController.create,
@@ -93,6 +97,8 @@ providersRouter.put(
         tel: Joi.string().allow(null, ''),
         cel: Joi.string().allow(null, ''),
         birth_date: Joi.string().allow(null, ''),
+        pix: Joi.string().allow(null, ''),
+        observation: Joi.string().required(),
       },
       address: {
         id: Joi.string().allow(null, ''),
@@ -117,7 +123,10 @@ providersRouter.put(
         voting_zone: Joi.string().allow(null, ''),
         voting_section: Joi.string().allow(null, ''),
         password_mei: Joi.string().allow(null, ''),
-        status: Joi.string().required(),
+        status: Joi.string().allow(null, ''),
+        uniform_amount: Joi.string().allow(null, ''),
+        relatives_contacts: Joi.string().allow(null, ''),
+        disc: Joi.string().allow(null, ''),
       },
     },
   }),

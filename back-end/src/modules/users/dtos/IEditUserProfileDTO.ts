@@ -8,4 +8,6 @@ export default interface IEditUserProfileDTO {
   tel: string;
   cel: string;
   birth_date: Date;
+  observation: string;
+  pix: string;
 }

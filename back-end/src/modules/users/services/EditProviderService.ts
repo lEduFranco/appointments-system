@@ -9,11 +9,14 @@ interface IRequest {
   final_date: string;
   demission_reason: string;
   uniform_size: string;
+  uniform_amount: number;
   voter_registration: string;
   voting_zone: string;
   voting_section: string;
   password_mei: string;
   status: 'active' | 'inactive' | 'suspended';
+  relatives_contacts: string;
+  disc: 'dominante' | 'influente' | 'estabilidade' | 'conformidade';
 }
 
 @injectable()

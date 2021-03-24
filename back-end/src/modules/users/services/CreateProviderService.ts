@@ -13,6 +13,9 @@ interface IRequest {
   voting_section: string;
   password_mei: string;
   status: 'active' | 'inactive' | 'suspended';
+  uniform_amount: number;
+  relatives_contacts: string;
+  disc: 'dominante' | 'influente' | 'estabilidade' | 'conformidade';
   user_id: string;
 }
 
@@ -33,6 +36,9 @@ class CreateProviderService {
     voting_section,
     password_mei,
     status,
+    uniform_amount,
+    relatives_contacts,
+    disc,
     user_id,
   }: IRequest): Promise<Provider> {
     const createProvider = await this.providersRepository.create({
@@ -45,6 +51,9 @@ class CreateProviderService {
       voting_section,
       password_mei,
       status,
+      uniform_amount,
+      relatives_contacts,
+      disc,
       user_id,
     });
 
