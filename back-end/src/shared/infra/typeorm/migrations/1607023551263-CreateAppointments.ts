@@ -30,7 +30,7 @@ export default class CreateAppointments1607023551263
           },
           {
             name: 'observation',
-            type: 'varchar',
+            type: 'text',
             isNullable: true,
           },
           {

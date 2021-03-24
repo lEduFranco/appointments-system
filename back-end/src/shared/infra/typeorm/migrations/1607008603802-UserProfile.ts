@@ -59,6 +59,15 @@ export default class UserProfile1607008603802 implements MigrationInterface {
             isNullable: true,
           },
           {
+            name: 'observation',
+            type: 'text',
+            isNullable: true,
+          },
+          {
+            name: 'pix',
+            type: 'varchar',
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

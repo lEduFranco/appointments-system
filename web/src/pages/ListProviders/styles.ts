@@ -241,8 +241,21 @@ export const StyledModal = Modal.styled`
   width: 100%;
 }
 
+.select-status {
+  color: #3172b7;
+  margin-top: -2%;
+  margin-bottom: 1%;
+
+  h2 {
+    margin-bottom: 0.5%;
+  }
+}
+
   .textarea-block {
     position: relative;
+    color: #3172b7;
+    font-size: 18px;
+    font-weight: 700;
   }
 
   .textarea-block + .textarea-block {
@@ -253,8 +266,8 @@ export const StyledModal = Modal.styled`
   .textarea-block textarea {
     width: 100%;
     height: 8rem;
-    min-height: 12rem;
-    max-height: 12rem;
+    min-height: 10rem;
+    max-height: 10rem;
     margin-top: 0.8rem;
     border-radius: 15px;
     background: #F8F8FC;

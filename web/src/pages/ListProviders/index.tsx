@@ -11,6 +11,7 @@ import HeaderVertical from '../../components/HeaderVertical';
 import InputEdit from '../../components/InputEdit';
 import InputDatePickerEdit from '../../components/InputDatePickerEdit';
 import SelectEdit from '../../components/SelectEdit';
+import TextArea from '../../components/TextArea';
 
 import useGetProviders from './useGetProviders';
 
@@ -171,6 +172,7 @@ const ListProviders: React.FC = (Data) => {
           begin_date: Yup.string(),
           uniform_size: Yup.string(),
           voter_registration: Yup.string(),
+          observation: Yup.string(),
 
           voting_zone: Yup.string(),
           voting_section: Yup.string(),
@@ -423,26 +425,29 @@ const ListProviders: React.FC = (Data) => {
                   </div>
                 </div>
 
-                <SelectEdit
-                  name="status"
-                  options={[
-                    {
-                      value: 'active',
-                      label: 'Ativo',
-                    },
-                    {
-                      value: 'inactive',
-                      label: 'Inativo',
-                    },
-                    {
-                      value: 'suspended',
-                      label: 'Suspenso',
-                    },
-                  ]}
-                />
+                <div className="select-status">
+                  <h2>Status</h2>
+                  <SelectEdit
+                    name="status"
+                    options={[
+                      {
+                        value: 'active',
+                        label: 'Ativa',
+                      },
+                      {
+                        value: 'inactive',
+                        label: 'Inativa',
+                      },
+                      {
+                        value: 'suspended',
+                        label: 'Suspensa',
+                      },
+                    ]}
+                  />
+                </div>
 
                 <div className="textarea-block">
-                  <textarea />
+                  <TextArea label="Comentários" name="observation" />
                 </div>
                 <div className="container-buttons">
                   <button type="submit" className="save">

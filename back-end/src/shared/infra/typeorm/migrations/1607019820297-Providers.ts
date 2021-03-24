@@ -33,6 +33,10 @@ export default class Providers1607019820297 implements MigrationInterface {
             isNullable: true,
           },
           {
+            name: 'uniform_amount',
+            type: 'varchar',
+          },
+          {
             name: 'uniform_size',
             type: 'varchar',
           },
@@ -50,6 +54,10 @@ export default class Providers1607019820297 implements MigrationInterface {
           },
           {
             name: 'password_mei',
+            type: 'varchar',
+          },
+          {
+            name: 'relatives_contacts',
             type: 'varchar',
           },
           {

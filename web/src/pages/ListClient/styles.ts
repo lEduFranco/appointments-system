@@ -216,8 +216,21 @@ export const StyledModal = Modal.styled`
   }
  }
 
+ .select-status {
+   color: #3172b7;
+   margin-top: -2%;
+   margin-bottom: 1%;
+
+   h2 {
+     margin-bottom: 0.5%;
+   }
+ }
+
   .textarea-block {
     position: relative;
+    color: #3172b7;
+    font-size: 18px;
+    font-weight: 700;
   }
 
   .textarea-block + .textarea-block {
@@ -256,7 +269,7 @@ export const StyledModal = Modal.styled`
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-top: 2.5%;
+    margin-top: 0.5%;
   }
 
   .cancel {

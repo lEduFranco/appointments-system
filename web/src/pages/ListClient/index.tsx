@@ -12,6 +12,7 @@ import HeaderVertical from '../../components/HeaderVertical';
 import InputEdit from '../../components/InputEdit';
 import InputDatePickerEdit from '../../components/InputDatePickerEdit';
 import SelectEdit from '../../components/SelectEdit';
+import TextArea from '../../components/TextArea';
 
 import useGetClients from './useGetClients';
 
@@ -60,6 +61,7 @@ interface Data {
       tel: string;
       cel: string;
       birth_date: Date;
+      observation: string;
     };
     addresses: Address[];
   };
@@ -161,6 +163,7 @@ const ListClients: React.FC = (Data) => {
           cnpj: Yup.string(),
           cf_df: Yup.string(),
           company_responsible: Yup.string(),
+          observation: Yup.string(),
         });
 
         await schema.validate(data, {
@@ -364,26 +367,28 @@ const ListClients: React.FC = (Data) => {
                   </div>
                 </div>
 
-                <SelectEdit
-                  name="status"
-                  options={[
-                    {
-                      value: 'active',
-                      label: 'Ativo',
-                    },
-                    {
-                      value: 'inactive',
-                      label: 'Inativo',
-                    },
-                    {
-                      value: 'suspended',
-                      label: 'Suspenso',
-                    },
-                  ]}
-                />
-
+                <div className="select-status">
+                  <h2>Status</h2>
+                  <SelectEdit
+                    name="status"
+                    options={[
+                      {
+                        value: 'active',
+                        label: 'Ativo',
+                      },
+                      {
+                        value: 'inactive',
+                        label: 'Inativo',
+                      },
+                      {
+                        value: 'suspended',
+                        label: 'Suspenso',
+                      },
+                    ]}
+                  />
+                </div>
                 <div className="textarea-block">
-                  <textarea />
+                  <TextArea label="Comentários" name="observation" />
                 </div>
                 <div className="container-buttons">
                   <button type="submit" className="save">
