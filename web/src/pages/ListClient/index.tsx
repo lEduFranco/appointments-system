@@ -61,6 +61,7 @@ interface Data {
       tel: string;
       cel: string;
       birth_date: Date;
+      pix: string;
       observation: string;
     };
     addresses: Address[];
@@ -141,15 +142,15 @@ const ListClients: React.FC = (Data) => {
   const selectOptions = [
     {
       value: 'active',
-      label: 'Ativo',
+      label: 'Ativo (a)',
     },
     {
       value: 'inactive',
-      label: 'Inativo',
+      label: 'Inativo (a)',
     },
     {
       value: 'suspended',
-      label: 'Suspenso',
+      label: 'Suspenso (a)',
     },
   ];
 
@@ -164,6 +165,7 @@ const ListClients: React.FC = (Data) => {
           tel: Yup.string(),
           cel: Yup.string(),
           birth_date: Yup.string(),
+          pix: Yup.string(),
           occuppation: Yup.string(),
           zip_code: Yup.string(),
           uf: Yup.string(),
@@ -280,29 +282,41 @@ const ListClients: React.FC = (Data) => {
                     <div className="div-personal">
                       <h5>*Dados pessoais*</h5>
                       <div className="contact">
-                        <InputEdit
-                          name="user.user_profile.rg"
-                          placeholder="RG"
-                        />
-                        <InputEdit
-                          name="user.user_profile.cpf"
-                          placeholder="CPF"
-                        />
-                        <InputEdit
-                          name="user.user_profile.tel"
-                          placeholder="Telefone"
-                        />
-                        <InputEdit
-                          name="user.user_profile.cel"
-                          placeholder="Celular"
-                        />
-                        <InputDatePickerEdit
-                          name="user.user_profile.birth_date"
-                          icon={FiCalendar}
-                        />
-                        <InputEdit name="occuppation" placeholder="profissão" />
-                        <div className="id">
-                          <InputEdit name="user.user_profile.id" />
+                        <div className="div-personal-1">
+                          <InputEdit
+                            name="user.user_profile.rg"
+                            placeholder="RG"
+                          />
+                          <InputEdit
+                            name="user.user_profile.cpf"
+                            placeholder="CPF"
+                          />
+                          <InputEdit
+                            name="user.user_profile.tel"
+                            placeholder="Telefone"
+                          />
+                          <InputEdit
+                            name="user.user_profile.cel"
+                            placeholder="Celular"
+                          />
+                        </div>
+                        <div className="div-personal-2">
+                          <h6>*data de nascimento*</h6>
+                          <InputDatePickerEdit
+                            name="user.user_profile.birth_date"
+                            icon={FiCalendar}
+                          />
+                          <InputEdit
+                            name="occuppation"
+                            placeholder="profissão"
+                          />
+                          <InputEdit
+                            name="user.user_profile.pix"
+                            placeholder="PIX"
+                          />
+                          <div className="id">
+                            <InputEdit name="user.user_profile.id" />
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -393,7 +407,10 @@ const ListClients: React.FC = (Data) => {
                   </SelectEdit>
                 </div>
                 <div className="textarea-block">
-                  <TextArea label="Comentários" name="observation" />
+                  <TextArea
+                    label="Comentários"
+                    name="user.user_profile.observation"
+                  />
                 </div>
                 <div className="container-buttons">
                   <button type="submit" className="save">

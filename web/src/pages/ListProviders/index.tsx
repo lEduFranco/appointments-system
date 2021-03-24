@@ -54,6 +54,9 @@ interface Data {
   voting_section: string;
   password_mei: string;
   status: string;
+  uniform_amount: number;
+  relatives_contacts: string;
+  disc: string;
   user: {
     id: string;
     user_profile: {
@@ -65,6 +68,8 @@ interface Data {
       tel: string;
       cel: string;
       birth_date: Date;
+      pix: string;
+      observation: string;
     };
     addresses: Address[];
   };
@@ -193,6 +198,9 @@ const ListProviders: React.FC = (Data) => {
           voting_section: Yup.string(),
           password_mei: Yup.string(),
           status: Yup.string().required(),
+          uniform_amount: Yup.string(),
+          relatives_contacts: Yup.string(),
+          disc: Yup.string(),
         });
 
         await schema.validate(data, {

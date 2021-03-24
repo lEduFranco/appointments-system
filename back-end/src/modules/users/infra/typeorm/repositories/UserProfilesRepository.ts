@@ -37,7 +37,7 @@ class UserProfilesRepository implements IUserProfilesRepository {
     const userProfile = await this.ormRepository.findOne(id);
 
     if (!userProfile) {
-      throw new Error('Client not found');
+      throw new Error('User_Profile not found');
     }
 
     return this.ormRepository.save({

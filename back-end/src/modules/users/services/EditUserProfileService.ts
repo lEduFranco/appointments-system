@@ -13,6 +13,8 @@ interface IRequest {
   tel: string;
   cel: string;
   birth_date: Date;
+  pix: string;
+  observation: string;
 }
 
 @injectable()

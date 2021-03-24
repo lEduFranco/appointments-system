@@ -113,7 +113,7 @@ const appearFromStart = keyframes`
 `;
 
 export const StyledModal = Modal.styled`
-  width: 85rem;
+  width: 100rem;
   height: 50rem;
   display: flex;
   align-items: center;
@@ -166,24 +166,37 @@ export const StyledModal = Modal.styled`
   }
 
   .div-personal {
-    width: 25%;
+    width: 40%;
   }
   .contact {
-      color: #3172b7;
-      margin-top: 5px;
-      width: 100%;
+    display: flex;
+    color: #3172b7;
+    width: 100%;
 
-     input:first-child(1) {
+    margin-top: 1%;
 
-     }
+      h6 {
+        color: #3172b7;
+        font-size: 12px;
+      }
   }
+
+  .div-personal-1 {
+    width: 100%;
+    padding-right: 1%;
+ }
+
+ .div-personal-2 {
+   width: 100%;
+   margin-top: -2%;
+}
 
   .id {
     visibility: hidden;
   }
 
   .div-address {
-    width: 50%;
+    width: 40%;
     max-height: 22rem;
     padding-left: 1%;
 
@@ -209,7 +222,7 @@ export const StyledModal = Modal.styled`
  }
 
  .div-company {
-  width: 25%;
+  width: 20%;
   padding-left: 1%;
   h5 {
     padding-bottom: 1.4%;
@@ -218,7 +231,7 @@ export const StyledModal = Modal.styled`
 
  .select-status {
    color: #3172b7;
-   margin-top: -2%;
+   margin-top: 2%;
    margin-bottom: 1%;
 
    h2 {
@@ -231,12 +244,8 @@ export const StyledModal = Modal.styled`
     color: #3172b7;
     font-size: 18px;
     font-weight: 700;
+    margin-top: 1.5%;
   }
-
-  .textarea-block + .textarea-block {
-    margin-top: 1.4rem;
-  }
-
 
   .textarea-block textarea {
     width: 100%;
@@ -269,7 +278,7 @@ export const StyledModal = Modal.styled`
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-top: 0.5%;
+    margin-top: 2%;
   }
 
   .cancel {
