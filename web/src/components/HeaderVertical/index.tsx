@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { FiPower } from 'react-icons/fi';
 import logoImg from '../../assets/logo_top.svg';

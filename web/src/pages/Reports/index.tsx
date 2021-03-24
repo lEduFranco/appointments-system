@@ -42,24 +42,24 @@ import {
   ButtonSearch,
 } from './styles';
 
-export interface AppointmentsClient {
-  [typeUser: string]: {
-    id: string;
-    name: string;
-    cpf: string;
-  };
+// export interface AppointmentsClient {
+//   [typeUser: string]: {
+//     id: string;
+//     name: string;
+//     cpf: string;
+//   };
 
-  appointmentsProvider: AppointmentsProvider[];
-}
+//   appointmentsProvider: AppointmentsProvider[];
+// }
 
-interface AppointmentsProvider {
-  [typeUser: string]: {
-    id: string;
-    name: string;
-  };
+// interface AppointmentsProvider {
+//   [typeUser: string]: {
+//     id: string;
+//     name: string;
+//   };
 
-  appointments: Appointment[];
-}
+//   appointments: Appointment[];
+// }
 
 interface Appointment {
   id: string;
@@ -146,40 +146,57 @@ const Reports: React.FC = () => {
         abortEarly: false,
       });
 
-      if (users === 'client') {
-        api
-          .get('/appointments/reports-clients', {
-            params: {
-              frequency,
-              startDate,
-              endDate,
-            },
-          })
-          .then((response) => {
-            setAppointments(response.data);
-            addToast({
-              type: 'success',
-              title: 'Sucesso',
-              description: 'O relatório foi buscado com sucesso!',
-            });
+      // if (users === 'client') {
+      //   api
+      //     .get('/appointments/reports-clients', {
+      //       params: {
+      //         frequency,
+      //         startDate,
+      //         endDate,
+      //       },
+      //     })
+      //     .then((response) => {
+      //       setAppointments(response.data);
+      //       addToast({
+      //         type: 'success',
+      //         title: 'Sucesso',
+      //         description: 'O relatório foi buscado com sucesso!',
+      //       });
+      //     });
+      // } else {
+      //   api
+      //     .get('/appointments/reports-providers', {
+      //       params: {
+      //         startDate,
+      //         endDate,
+      //       },
+      //     })
+      //     .then((response) => {
+      //       setAppointments(response.data);
+      //       addToast({
+      //         type: 'success',
+      //         title: 'Sucesso',
+      //         description: 'O relatório foi buscado com sucesso!',
+      //       });
+      //     });
+      // }
+
+      api
+        .get('/appointments/reports-clients', {
+          params: {
+            frequency,
+            startDate,
+            endDate,
+          },
+        })
+        .then((response) => {
+          setAppointments(response.data);
+          addToast({
+            type: 'success',
+            title: 'Sucesso',
+            description: 'O relatório foi buscado com sucesso!',
           });
-      } else {
-        api
-          .get('/appointments/reports-providers', {
-            params: {
-              startDate,
-              endDate,
-            },
-          })
-          .then((response) => {
-            setAppointments(response.data);
-            addToast({
-              type: 'success',
-              title: 'Sucesso',
-              description: 'O relatório foi buscado com sucesso!',
-            });
-          });
-      }
+        });
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
@@ -290,7 +307,7 @@ const Reports: React.FC = () => {
                     }}
                   >
                     <Client>
-                      <Name> {appointment.[typeUser].name} </Name>
+                      {/* <Name> {appointment.[typeUser].name} </Name> */}
                       <Cpf>
                         <h3>CPF:</h3> {appointment.client.cpf}
                       </Cpf>

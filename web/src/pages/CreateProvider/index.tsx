@@ -9,6 +9,7 @@ import {
   FiMap,
   FiCalendar,
   FiMapPin,
+  FiKey,
 } from 'react-icons/fi';
 import { RiCommunityLine, RiProfileLine, RiRoadMapLine } from 'react-icons/ri';
 import { FormHandles } from '@unform/core';
@@ -37,7 +38,6 @@ interface SignUpFormData {
   name: string;
   role: 'admin' | 'rh' | 'secretary' | 'provider' | 'client';
   email: string;
-  begin_date: Date;
 }
 
 interface CepPromise {
@@ -77,13 +77,16 @@ const CreateProvider: React.FC = () => {
           cnpj: Yup.string()
             .min(14, 'No mínimo 14 dígitos')
             .required('campo obrigatório não preenchido'),
-          tel: Yup.string()
-            .min(10, 'No mínimo 10 dígitos')
-            .required('campo obrigatório não preenchido'),
+          tel: Yup.string(),
           cel: Yup.string()
             .min(11, 'No máximo 11 dígitos')
             .required('campo obrigatório não preenchido'),
+          relatives_contacts: Yup.string()
+            .min(11, 'No máximo 11 dígitos')
+            .required('campo obrigatório não preenchido'),
           birth_date: Yup.string().required('campo obrigatório não preenchido'),
+          pix: Yup.string().required('campo obrigatório não preenchido'),
+
           uf: Yup.string()
             .max(2, 'No máximo 2 dígitos')
             .min(1, 'No mínimo 2 dígitos')
@@ -120,6 +123,10 @@ const CreateProvider: React.FC = () => {
           password_mei: Yup.string().required(
             'campo obrigatório não preenchido',
           ),
+          uniform_amount: Yup.number().required(
+            'campo obrigatório não preenchido',
+          ),
+          disc: Yup.string().required('campo obrigatório não preenchido'),
         });
 
         await schema.validate(data, {
@@ -173,10 +180,10 @@ const CreateProvider: React.FC = () => {
   const searchAddress = useCallback(async (zipcode: string) => {
     try {
       cep(zipcode).then((data: CepPromise) => {
-        formRef?.current.setFieldValue('uf', data.state);
-        formRef?.current.setFieldValue('city', data.city);
-        formRef?.current.setFieldValue('neighborhood', data.neighborhood);
-        formRef?.current.setFieldValue('address', data.street);
+        formRef?.current?.setFieldValue('uf', data.state);
+        formRef?.current?.setFieldValue('city', data.city);
+        formRef?.current?.setFieldValue('neighborhood', data.neighborhood);
+        formRef?.current?.setFieldValue('address', data.street);
       });
     } catch {}
   }, []);
@@ -226,6 +233,12 @@ const CreateProvider: React.FC = () => {
                   placeholder="CPF"
                   mask="999.999.999-99"
                 />
+                <InputMask
+                  name="cel"
+                  icon={FiSmartphone}
+                  placeholder="Celular"
+                  mask="(99) 9 9999-9999"
+                />
                 <h5>*opcional*</h5>
                 <InputMask
                   name="tel"
@@ -234,9 +247,9 @@ const CreateProvider: React.FC = () => {
                   mask="(99) 9999-99999"
                 />
                 <InputMask
-                  name="cel"
+                  name="relatives_contacts"
                   icon={FiSmartphone}
-                  placeholder="Celular"
+                  placeholder="Contato de parentes"
                   mask="(99) 9 9999-9999"
                 />
                 <h5>*Data de nascimento*</h5>
@@ -257,6 +270,7 @@ const CreateProvider: React.FC = () => {
                   icon={RiRoadMapLine}
                   placeholder="seção de votação"
                 />
+                <Input name="pix" icon={FiKey} placeholder="PIX" />
               </div>
 
               <div>
@@ -324,11 +338,17 @@ const CreateProvider: React.FC = () => {
                   mask="aa"
                 />
                 <Input
+                  name="uniform_amount"
+                  icon={FiUser}
+                  placeholder="Quantidade de uniformes"
+                />
+                <Input
                   name="password_mei"
                   icon={FiLock}
                   type="password"
                   placeholder="Senha MEI"
                 />
+                <Input name="disc" icon={FiUser} placeholder="DISC" />
 
                 <Button type="submit">Cadastrar</Button>
               </div>

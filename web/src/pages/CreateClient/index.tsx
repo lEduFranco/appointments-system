@@ -11,6 +11,7 @@ import {
   FiBriefcase,
   FiMapPin,
   FiCalendar,
+  FiKey,
 } from 'react-icons/fi';
 import {
   RiSubwayLine,
@@ -85,6 +86,7 @@ const CreateClient: React.FC = () => {
             .required('campo obrigatório não preenchido'),
           birth_date: Yup.string().required('campo obrigatório não preenchido'),
           occuppation: Yup.string(),
+          pix: Yup.string().required('campo obrigatório não preenchido'),
 
           zip_code: Yup.string()
             .min(8, 'No mínimo 8 dígitos')
@@ -126,7 +128,7 @@ const CreateClient: React.FC = () => {
 
         await api.post('/clients', datacClients);
 
-        history.push('/schedule');
+        history.push('/dashboard');
 
         addToast({
           type: 'success',
@@ -247,6 +249,7 @@ const CreateClient: React.FC = () => {
                   icon={FiBriefcase}
                   placeholder="Profissão"
                 />
+                <Input name="pix" icon={FiKey} placeholder="PIX" />
               </div>
 
               <div>
