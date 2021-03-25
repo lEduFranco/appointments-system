@@ -47,13 +47,22 @@ export const Search = styled.div`
 `;
 
 export const Select = styled.div`
-  width: 25%;
+  width: 50%;
+  display: flex;
 
   h3 {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.4rem;
     padding-bottom: 0.5rem;
   }
+`;
+
+export const DivSelectTypeUser = styled.div`
+  width: 100%;
+`;
+
+export const DivSelectTypeAppointment = styled.div`
+  width: 100%;
 `;
 
 export const DateSearch = styled.div`

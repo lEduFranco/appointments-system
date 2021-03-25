@@ -20,6 +20,7 @@ class ProvidersRepository implements IProviderRepository {
   public async findAllProviders({
     period,
     dates,
+    lastSaturday,
   }: IFindAllProvidersDTO): Promise<Provider[]> {
     let periods: Array<IFindAllProvidersDTO['period']> = [
       'integral',

@@ -6,6 +6,8 @@ import { useToast } from '../../../hooks/toast';
 
 import api from '../../../services/api';
 
+import TextArea from '../../../components/TextArea';
+
 import {
   Container,
   AppointmentAvailability,
@@ -34,6 +36,7 @@ interface AppointmentProps {
   address: string;
   complement: string;
   number: string;
+  observation: string;
   provider: {
     user: {
       user_profile: {
@@ -250,6 +253,7 @@ const Appointment: React.FC<Props> = ({
             </div>
 
             <div className="textarea-block">
+              {/* <TextArea label="Observações" name="observation" /> */}
               <textarea />
             </div>
             <div className="container-buttons">

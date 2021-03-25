@@ -22,6 +22,8 @@ import {
   Report,
   Search,
   Select,
+  DivSelectTypeUser,
+  DivSelectTypeAppointment,
   DateSearch,
   ReportsData,
   DivClients,
@@ -42,24 +44,35 @@ import {
   ButtonSearch,
 } from './styles';
 
-// export interface AppointmentsClient {
-//   [typeUser: string]: {
-//     id: string;
-//     name: string;
-//     cpf: string;
-//   };
+export interface AppointmentsClient {
+  client?: {
+    id: string;
+    name: string;
+    cpf: string;
+  };
 
-//   appointmentsProvider: AppointmentsProvider[];
-// }
+  provider?: {
+    id: string;
+    name: string;
+    cpf: string;
+  };
 
-// interface AppointmentsProvider {
-//   [typeUser: string]: {
-//     id: string;
-//     name: string;
-//   };
+  appointmentsProvider: AppointmentsProvider[];
+}
 
-//   appointments: Appointment[];
-// }
+interface AppointmentsProvider {
+  provider?: {
+    id: string;
+    name: string;
+  };
+
+  client?: {
+    id: string;
+    name: string;
+  };
+
+  appointments: Appointment[];
+}
 
 interface Appointment {
   id: string;
@@ -89,7 +102,10 @@ const Reports: React.FC = () => {
 
   const [appointments, setAppointments] = useState<AppointmentsClient[]>([]);
   const [frequency, setFrequency] = useState('');
-  const [typeUser, setTypeUser] = useState('');
+  const [typeUser, setTypeUser] = useState<'client' | 'provider'>('client');
+  const [otherTypeUser, setOtherTypeUser] = useState<'client' | 'provider'>(
+    'provider',
+  );
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [collapseClientId, setCollapseClientId] = useState<string[]>([]);
@@ -131,13 +147,15 @@ const Reports: React.FC = () => {
       e.preventDefault();
 
       const data = {
-        frequency,
         startDate,
         endDate,
       };
+      if (typeUser === 'client') {
+        Object.assign(data, { frequency });
+      }
 
       const schema = Yup.object().shape({
-        frequency: Yup.string().required('Selecione a frequência, por favor!'),
+        frequency: Yup.string(),
         startDate: Yup.date().required('Selecione a data, por favor!'),
         endDate: Yup.date().required('Selecione a data, por favor!'),
       });
@@ -146,57 +164,41 @@ const Reports: React.FC = () => {
         abortEarly: false,
       });
 
-      // if (users === 'client') {
-      //   api
-      //     .get('/appointments/reports-clients', {
-      //       params: {
-      //         frequency,
-      //         startDate,
-      //         endDate,
-      //       },
-      //     })
-      //     .then((response) => {
-      //       setAppointments(response.data);
-      //       addToast({
-      //         type: 'success',
-      //         title: 'Sucesso',
-      //         description: 'O relatório foi buscado com sucesso!',
-      //       });
-      //     });
-      // } else {
-      //   api
-      //     .get('/appointments/reports-providers', {
-      //       params: {
-      //         startDate,
-      //         endDate,
-      //       },
-      //     })
-      //     .then((response) => {
-      //       setAppointments(response.data);
-      //       addToast({
-      //         type: 'success',
-      //         title: 'Sucesso',
-      //         description: 'O relatório foi buscado com sucesso!',
-      //       });
-      //     });
-      // }
+      if (typeUser === 'client') {
+        api
 
-      api
-        .get('/appointments/reports-clients', {
-          params: {
-            frequency,
-            startDate,
-            endDate,
-          },
-        })
-        .then((response) => {
-          setAppointments(response.data);
-          addToast({
-            type: 'success',
-            title: 'Sucesso',
-            description: 'O relatório foi buscado com sucesso!',
+          .get('/appointments/reports-clients', {
+            params: {
+              frequency,
+              startDate,
+              endDate,
+            },
+          })
+          .then((response) => {
+            setAppointments(response.data);
+            addToast({
+              type: 'success',
+              title: 'Sucesso',
+              description: 'O relatório foi buscado com sucesso!',
+            });
           });
-        });
+      } else {
+        api
+          .get('/appointments/reports-providers', {
+            params: {
+              startDate,
+              endDate,
+            },
+          })
+          .then((response) => {
+            setAppointments(response.data);
+            addToast({
+              type: 'success',
+              title: 'Sucesso',
+              description: 'O relatório foi buscado com sucesso!',
+            });
+          });
+      }
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
@@ -233,42 +235,57 @@ const Reports: React.FC = () => {
           <form onSubmit={handleSubmit}>
             <Search>
               <Select>
-                <h3>Cliente/Diarista</h3>
-                <SelectReport
-                  name="typeUser"
-                  value={typeUser}
-                  onChange={(e) => {
-                    setTypeUser(e.target.value);
-                  }}
-                  options={[
-                    {
-                      value: 'client',
-                      label: 'Cliente',
-                    },
-                    {
-                      value: 'provider',
-                      label: 'Diarista',
-                    },
-                  ]}
-                />
-                <h3>Tipo de diária</h3>
-                <SelectReport
-                  name="freaquncy"
-                  value={frequency}
-                  onChange={(e) => {
-                    setFrequency(e.target.value);
-                  }}
-                  options={[
-                    {
-                      value: 'detached',
-                      label: 'Avulsos',
-                    },
-                    {
-                      value: 'fixed',
-                      label: 'Fixos',
-                    },
-                  ]}
-                />
+                <DivSelectTypeUser>
+                  <h3>Cliente/Diarista</h3>
+                  <SelectReport
+                    name="typeUser"
+                    value={typeUser}
+                    onChange={(e) => {
+                      if (e.target.value === 'client') {
+                        setTypeUser('client');
+                        setOtherTypeUser('provider');
+
+                        return;
+                      }
+
+                      if (e.target.value === 'provider') {
+                        setTypeUser('provider');
+                        setOtherTypeUser('client');
+                      }
+                    }}
+                    options={[
+                      {
+                        value: 'client',
+                        label: 'Cliente',
+                      },
+                      {
+                        value: 'provider',
+                        label: 'Diarista',
+                      },
+                    ]}
+                  />
+                </DivSelectTypeUser>
+                <DivSelectTypeAppointment>
+                  <h3>Tipo de diária</h3>
+                  <SelectReport
+                    name="frequency"
+                    value={frequency}
+                    onChange={(e) => {
+                      setFrequency(e.target.value);
+                    }}
+                    disabled={typeUser === 'provider'}
+                    options={[
+                      {
+                        value: 'detached',
+                        label: 'Avulsos',
+                      },
+                      {
+                        value: 'fixed',
+                        label: 'Fixos',
+                      },
+                    ]}
+                  />
+                </DivSelectTypeAppointment>
               </Select>
 
               <DateSearch>
@@ -288,12 +305,13 @@ const Reports: React.FC = () => {
 
             <ReportsData>
               {appointments.map((appointment) => (
-                <div key={appointment.client.id}>
+                <div key={appointment?.[typeUser]?.id}>
                   <DivClients
                     onClick={() => {
-                      if (collapseClientId.includes(appointment.client.id)) {
+                      const idAppointment = appointment?.[typeUser]?.id ?? '';
+                      if (collapseClientId.includes(idAppointment)) {
                         const filteredArray = collapseClientId.filter(
-                          (item: string) => item !== appointment.client.id,
+                          (item: string) => item !== idAppointment,
                         );
 
                         setCollapseClientId(filteredArray);
@@ -302,14 +320,14 @@ const Reports: React.FC = () => {
                       }
 
                       setCollapseClientId((state) => {
-                        return [...state, appointment.client.id];
+                        return [...state, idAppointment];
                       });
                     }}
                   >
                     <Client>
-                      {/* <Name> {appointment.[typeUser].name} </Name> */}
+                      <Name> {appointment?.[typeUser]?.name} </Name>
                       <Cpf>
-                        <h3>CPF:</h3> {appointment.client.cpf}
+                        <h3>CPF:</h3> {appointment?.[typeUser]?.cpf}
                       </Cpf>
                       <TotalClients>
                         <h4>Total:</h4>
@@ -323,15 +341,19 @@ const Reports: React.FC = () => {
                     </Client>
                   </DivClients>
                   <Collapse
-                    isOpen={collapseClientId.includes(appointment.client.id)}
+                    isOpen={collapseClientId.includes(
+                      appointment?.[typeUser]?.id ?? '',
+                    )}
                   >
                     <DivAppointments>
                       {appointment.appointmentsProvider.map(
                         (appointmentProvider) => (
-                          <DivProviders key={appointmentProvider.provider.id}>
+                          <DivProviders
+                            key={appointmentProvider?.[otherTypeUser]?.id}
+                          >
                             <Providers>
                               <Provider>
-                                {appointmentProvider.provider.name}
+                                {appointmentProvider?.[otherTypeUser]?.name}
                               </Provider>
 
                               <TotalProviders>
@@ -368,8 +390,6 @@ const Reports: React.FC = () => {
                                 ),
                               )}
                             </AppoitmentDiv>
-
-                            {/* </Collapse> */}
                           </DivProviders>
                         ),
                       )}

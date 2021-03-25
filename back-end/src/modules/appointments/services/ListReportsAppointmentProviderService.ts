@@ -64,6 +64,7 @@ class ListReportsAppointmentsProviderService {
           provider: {
             id: index,
             name: `${appointmentsProvider[0].provider.user.user_profile.firstname} ${appointmentsProvider[0].provider.user.user_profile.lastname}`,
+            cpf: appointmentsProvider[0].provider.user.user_profile.cpf,
           },
           appointmentsProvider: map(
             groupedAppointmentsProvider,
