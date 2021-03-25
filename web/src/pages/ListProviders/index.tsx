@@ -1,12 +1,29 @@
 import React, { useCallback, useRef, useState } from 'react';
 
 import * as Yup from 'yup';
-import { FiCalendar, FiXCircle } from 'react-icons/fi';
+import {
+  FiAlertCircle,
+  FiCalendar,
+  FiKey,
+  FiLock,
+  FiMap,
+  FiMapPin,
+  FiPhone,
+  FiSmartphone,
+  FiUser,
+  FiXCircle,
+} from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { parseISO } from 'date-fns';
 import cep from 'cep-promise';
 import { useHistory } from 'react-router';
+import {
+  RiCommunityLine,
+  RiProfileLine,
+  RiRoadMapLine,
+  RiSubwayLine,
+} from 'react-icons/ri';
 import HeaderVertical from '../../components/HeaderVertical';
 import InputEdit from '../../components/InputEdit';
 import InputDatePickerEdit from '../../components/InputDatePickerEdit';
@@ -198,7 +215,7 @@ const ListProviders: React.FC = (Data) => {
           voting_section: Yup.string(),
           password_mei: Yup.string(),
           status: Yup.string().required(),
-          uniform_amount: Yup.string(),
+          uniform_amount: Yup.number(),
           relatives_contacts: Yup.string(),
           disc: Yup.string(),
         });
@@ -221,12 +238,15 @@ const ListProviders: React.FC = (Data) => {
             voting_section: data.voting_section,
             password_mei: data.password_mei,
             status: data.status,
+            uniform_amount: data.uniform_amount,
+            relatives_contacts: data.relatives_contacts,
+            disc: data.disc,
           },
         };
 
         await api.put('/providers/update-provider', dataProviders);
 
-        history.push('/list-providers');
+        history.push('/dashboard');
 
         addToast({
           type: 'success',
@@ -312,25 +332,30 @@ const ListProviders: React.FC = (Data) => {
                       <div className="contact">
                         <InputEdit
                           name="user.user_profile.rg"
+                          icon={RiProfileLine}
                           placeholder="RG"
                         />
                         <InputEdit
                           name="user.user_profile.cpf"
+                          icon={RiProfileLine}
                           placeholder="CPF"
                         />
                         <InputEdit
-                          name="user.user_profile.tel"
-                          placeholder="Telefone"
+                          name="user.user_profile.cel"
+                          icon={FiSmartphone}
+                          placeholder="Celular"
                         />
                         <InputEdit
-                          name="user.user_profile.cel"
-                          placeholder="Celular"
+                          name="user.user_profile.tel"
+                          icon={FiPhone}
+                          placeholder="Telefone"
                         />
                         <h6>*data de nascimento*</h6>
                         <InputDatePickerEdit
                           name="user.user_profile.birth_date"
                           icon={FiCalendar}
                         />
+                        <InputEdit name="user.user_profile.pix" icon={FiKey} />
                         <div className="id">
                           <InputEdit name="user.user_profile.id" />
                         </div>
@@ -342,6 +367,7 @@ const ListProviders: React.FC = (Data) => {
                         <div className="div-address-1">
                           <InputEdit
                             name="user.addresses[0].zip_code"
+                            icon={FiMap}
                             placeholder="CEP"
                             onChange={(event) => {
                               if (event.target.value.length === 8) {
@@ -351,42 +377,54 @@ const ListProviders: React.FC = (Data) => {
                           />
                           <InputEdit
                             name="user.addresses[0].uf"
+                            icon={RiRoadMapLine}
                             placeholder="UF"
                           />
                           <InputEdit
                             name="user.addresses[0].city"
+                            icon={RiCommunityLine}
                             placeholder="Cidade"
                           />
                           <InputEdit
                             name="user.addresses[0].neighborhood"
+                            icon={RiCommunityLine}
                             placeholder="Bairro"
                           />
                           <InputEdit
                             name="user.addresses[0].address"
+                            icon={RiCommunityLine}
                             placeholder="Endereço"
                           />
+                          <div className="id">
+                            <InputEdit name="user.user_profile.id" />
+                          </div>
                         </div>
                         <div className="div-address-2">
                           <InputEdit
                             name="user.addresses[0].complement"
+                            icon={RiCommunityLine}
                             placeholder="Complemento"
                           />
                           <InputEdit
                             name="user.addresses[0].number"
+                            icon={RiCommunityLine}
                             placeholder="numero"
                           />
 
                           <InputEdit
                             name="user.addresses[0].reference_points"
+                            icon={RiRoadMapLine}
                             placeholder="Pontos de referência"
                           />
 
                           <InputEdit
                             name="user.addresses[0].nearest_subway_station"
+                            icon={RiSubwayLine}
                             placeholder="Estação de metrô mais próxima"
                           />
                           <InputEdit
                             name="user.addresses[0].localization"
+                            icon={FiMapPin}
                             placeholder="Localização"
                           />
                           <div className="id">
@@ -401,6 +439,7 @@ const ListProviders: React.FC = (Data) => {
                         <div className="div-company-1">
                           <InputEdit
                             name="user.user_profile.cnpj"
+                            icon={RiProfileLine}
                             placeholder="CNPJ"
                           />
                           <h6>*data de admissão*</h6>
@@ -415,29 +454,50 @@ const ListProviders: React.FC = (Data) => {
                           />
                           <InputEdit
                             name="demission_reason"
+                            icon={FiAlertCircle}
                             placeholder="Motivo da demissão"
                           />
                           <InputEdit
                             name="uniform_size"
+                            icon={FiUser}
                             placeholder="Tamanho do unifome"
+                          />
+                          <InputEdit
+                            name="uniform_amount"
+                            icon={FiUser}
+                            placeholder="Quantidade de Uniformes"
                           />
                         </div>
                         <div className="div-company-2">
                           <InputEdit
                             name="voter_registration"
+                            icon={RiProfileLine}
                             placeholder="Título de eleitor"
                           />
                           <InputEdit
                             name="voting_zone"
+                            icon={RiProfileLine}
                             placeholder="Zona de votação"
                           />
                           <InputEdit
                             name="voting_section"
+                            icon={RiProfileLine}
                             placeholder="seção de votação"
                           />
                           <InputEdit
                             name="password_mei"
+                            icon={FiLock}
                             placeholder="senha MEI"
+                          />
+                          <InputEdit
+                            name="relatives_contacts"
+                            icon={FiSmartphone}
+                            placeholder="Contato de parentes"
+                          />
+                          <InputEdit
+                            name="disc"
+                            icon={FiUser}
+                            placeholder="DISC"
                           />
                           <div className="id">
                             <InputEdit name="id" />
@@ -460,7 +520,10 @@ const ListProviders: React.FC = (Data) => {
                 </div>
 
                 <div className="textarea-block">
-                  <TextArea label="Comentários" name="observation" />
+                  <TextArea
+                    label="Observações"
+                    name="user.user_profile.observation"
+                  />
                 </div>
                 <div className="container-buttons">
                   <button type="submit" className="save">

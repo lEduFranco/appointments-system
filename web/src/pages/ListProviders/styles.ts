@@ -243,7 +243,7 @@ export const StyledModal = Modal.styled`
 
 .select-status {
   color: #3172b7;
-  margin-top: -2%;
+  margin-top: -3%;
   margin-bottom: 1%;
 
   h2 {
@@ -266,8 +266,8 @@ export const StyledModal = Modal.styled`
   .textarea-block textarea {
     width: 100%;
     height: 8rem;
-    min-height: 10rem;
-    max-height: 10rem;
+    min-height: 8rem;
+    max-height: 8rem;
     margin-top: 0.8rem;
     border-radius: 15px;
     background: #F8F8FC;
@@ -294,7 +294,7 @@ export const StyledModal = Modal.styled`
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    padding-top: 2%;
+    padding-top: 0.5%;
   }
 
   .cancel {

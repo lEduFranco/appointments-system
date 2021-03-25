@@ -1,6 +1,15 @@
 import React, { useCallback, useRef, useState } from 'react';
 import cep from 'cep-promise';
-import { FiXCircle, FiCalendar } from 'react-icons/fi';
+import {
+  FiXCircle,
+  FiCalendar,
+  FiSmartphone,
+  FiPhone,
+  FiKey,
+  FiMap,
+  FiMapPin,
+  FiUser,
+} from 'react-icons/fi';
 
 import { parseISO } from 'date-fns';
 import * as Yup from 'yup';
@@ -8,6 +17,12 @@ import * as Yup from 'yup';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { useHistory } from 'react-router';
+import {
+  RiCommunityLine,
+  RiProfileLine,
+  RiRoadMapLine,
+  RiSubwayLine,
+} from 'react-icons/ri';
 import HeaderVertical from '../../components/HeaderVertical';
 import InputEdit from '../../components/InputEdit';
 import InputDatePickerEdit from '../../components/InputDatePickerEdit';
@@ -201,7 +216,7 @@ const ListClients: React.FC = (Data) => {
 
         await api.put('/clients/update-client', dataClients);
 
-        history.push('/schedule');
+        history.push('/dashboard');
 
         addToast({
           type: 'success',
@@ -285,19 +300,23 @@ const ListClients: React.FC = (Data) => {
                         <div className="div-personal-1">
                           <InputEdit
                             name="user.user_profile.rg"
+                            icon={RiProfileLine}
                             placeholder="RG"
                           />
                           <InputEdit
                             name="user.user_profile.cpf"
+                            icon={RiProfileLine}
                             placeholder="CPF"
                           />
                           <InputEdit
-                            name="user.user_profile.tel"
-                            placeholder="Telefone"
+                            name="user.user_profile.cel"
+                            icon={FiSmartphone}
+                            placeholder="Celular"
                           />
                           <InputEdit
-                            name="user.user_profile.cel"
-                            placeholder="Celular"
+                            name="user.user_profile.tel"
+                            icon={FiPhone}
+                            placeholder="Telefone"
                           />
                         </div>
                         <div className="div-personal-2">
@@ -308,11 +327,12 @@ const ListClients: React.FC = (Data) => {
                           />
                           <InputEdit
                             name="occuppation"
+                            icon={FiUser}
                             placeholder="profissão"
                           />
                           <InputEdit
                             name="user.user_profile.pix"
-                            placeholder="PIX"
+                            icon={FiKey}
                           />
                           <div className="id">
                             <InputEdit name="user.user_profile.id" />
@@ -326,6 +346,7 @@ const ListClients: React.FC = (Data) => {
                         <div className="div-address-1">
                           <InputEdit
                             name="user.addresses[0].zip_code"
+                            icon={FiMap}
                             placeholder="CEP"
                             onChange={(event) => {
                               if (event.target.value.length === 8) {
@@ -335,42 +356,54 @@ const ListClients: React.FC = (Data) => {
                           />
                           <InputEdit
                             name="user.addresses[0].uf"
+                            icon={RiRoadMapLine}
                             placeholder="UF"
                           />
                           <InputEdit
                             name="user.addresses[0].city"
+                            icon={RiCommunityLine}
                             placeholder="Cidade"
                           />
                           <InputEdit
                             name="user.addresses[0].neighborhood"
+                            icon={RiCommunityLine}
                             placeholder="Bairro"
                           />
                           <InputEdit
                             name="user.addresses[0].address"
+                            icon={RiCommunityLine}
                             placeholder="Endereço"
                           />
+                          <div className="id">
+                            <InputEdit name="user.user_profile.id" />
+                          </div>
                         </div>
                         <div className="div-address-2">
                           <InputEdit
                             name="user.addresses[0].complement"
+                            icon={RiCommunityLine}
                             placeholder="Complemento"
                           />
                           <InputEdit
                             name="user.addresses[0].number"
+                            icon={RiCommunityLine}
                             placeholder="numero"
                           />
 
                           <InputEdit
                             name="user.addresses[0].reference_points"
+                            icon={RiRoadMapLine}
                             placeholder="Pontos de referência"
                           />
 
                           <InputEdit
                             name="user.addresses[0].nearest_subway_station"
+                            icon={RiSubwayLine}
                             placeholder="Estação de metrô mais próxima"
                           />
                           <InputEdit
                             name="user.addresses[0].localization"
+                            icon={FiMapPin}
                             placeholder="Localização"
                           />
                           <div className="id">
@@ -384,11 +417,17 @@ const ListClients: React.FC = (Data) => {
                       <div className="company">
                         <InputEdit
                           name="user.user_profile.cnpj"
+                          icon={RiProfileLine}
                           placeholder="CNPJ"
                         />
-                        <InputEdit name="cf_df" placeholder="CF_DF" />
+                        <InputEdit
+                          name="cf_df"
+                          icon={RiProfileLine}
+                          placeholder="CF_DF"
+                        />
                         <InputEdit
                           name="company_responsible"
+                          icon={FiUser}
                           placeholder="Responsavel pela empresa"
                         />
                       </div>
@@ -408,7 +447,7 @@ const ListClients: React.FC = (Data) => {
                 </div>
                 <div className="textarea-block">
                   <TextArea
-                    label="Comentários"
+                    label="Observações"
                     name="user.user_profile.observation"
                   />
                 </div>

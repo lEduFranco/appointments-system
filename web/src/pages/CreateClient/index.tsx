@@ -198,12 +198,7 @@ const CreateClient: React.FC = () => {
               <div>
                 <h3>Dados da conta</h3>
                 <Input name="email" icon={FiMail} placeholder="E-mail" />
-                <Input
-                  name="password"
-                  icon={FiLock}
-                  type="password"
-                  placeholder="Senha"
-                />
+                <Input name="password" icon={FiLock} placeholder="Senha" />
               </div>
 
               <div>

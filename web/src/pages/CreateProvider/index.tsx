@@ -11,7 +11,12 @@ import {
   FiMapPin,
   FiKey,
 } from 'react-icons/fi';
-import { RiCommunityLine, RiProfileLine, RiRoadMapLine } from 'react-icons/ri';
+import {
+  RiCommunityLine,
+  RiProfileLine,
+  RiRoadMapLine,
+  RiSubwayLine,
+} from 'react-icons/ri';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
@@ -101,6 +106,8 @@ const CreateProvider: React.FC = () => {
           number: Yup.string(),
           address: Yup.string().required('campo obrigatório não preenchido'),
           complement: Yup.string(),
+          reference_points: Yup.string(),
+          nearest_subway_station: Yup.string(),
           localization: Yup.string().required(
             'campo obrigatório não preenchido',
           ),
@@ -205,12 +212,7 @@ const CreateProvider: React.FC = () => {
               <div>
                 <h3>Dados da conta</h3>
                 <Input name="email" icon={FiMail} placeholder="E-mail" />
-                <Input
-                  name="password"
-                  icon={FiLock}
-                  type="password"
-                  placeholder="Senha"
-                />
+                <Input name="password" icon={FiLock} placeholder="Senha" />
               </div>
 
               <div>
@@ -250,7 +252,7 @@ const CreateProvider: React.FC = () => {
                   name="relatives_contacts"
                   icon={FiSmartphone}
                   placeholder="Contato de parentes"
-                  mask="(99) 9 9999-9999"
+                  mask="(99) 9 9999-9999  (99) 9 9999-9999"
                 />
                 <h5>*Data de nascimento*</h5>
                 <InputDatePicker name="birth_date" icon={FiCalendar} />
@@ -262,12 +264,12 @@ const CreateProvider: React.FC = () => {
                 />
                 <Input
                   name="voting_zone"
-                  icon={RiRoadMapLine}
+                  icon={RiProfileLine}
                   placeholder="zona da votação"
                 />
                 <Input
                   name="voting_section"
-                  icon={RiRoadMapLine}
+                  icon={RiProfileLine}
                   placeholder="seção de votação"
                 />
                 <Input name="pix" icon={FiKey} placeholder="PIX" />
@@ -316,6 +318,17 @@ const CreateProvider: React.FC = () => {
                 />
                 <h5>*opcional*</h5>
                 <Input
+                  name="reference_points"
+                  icon={RiRoadMapLine}
+                  placeholder="Pontos de referência"
+                />
+                <h5>*opcional*</h5>
+                <Input
+                  name="nearest_subway_station"
+                  icon={RiSubwayLine}
+                  placeholder="Estação de metro mais próxima"
+                />
+                <Input
                   name="localization"
                   icon={FiMapPin}
                   placeholder="Localização"
@@ -345,7 +358,6 @@ const CreateProvider: React.FC = () => {
                 <Input
                   name="password_mei"
                   icon={FiLock}
-                  type="password"
                   placeholder="Senha MEI"
                 />
                 <Input name="disc" icon={FiUser} placeholder="DISC" />
