@@ -46,10 +46,6 @@ class ListProvidersService {
 
     let dates = [];
 
-    if (saturday) {
-      dates.push(dateSevenDaysAgo);
-    }
-
     if (
       frequency === 'first_contact' ||
       frequency === 'detached' ||
@@ -86,10 +82,25 @@ class ListProvidersService {
       format(dateToFormat, 'yyyy-MM-dd'),
     );
 
-    const providers = await this.providersRepository.findAllProviders({
+    let providers = await this.providersRepository.findAllProvidersNotInactive({
       period,
       dates: datesFormatted,
     });
+
+    if (saturday) {
+      const formattedDateSevenDaysAgo = format(dateSevenDaysAgo, 'yyyy-MM-dd');
+      const providersWhoWorkedLastSaturday = await this.providersRepository.findAllProvidersNotInactiveWhoWorkedLastSaturday(
+        formattedDateSevenDaysAgo,
+      );
+
+      const providersWhoWorkedLastSaturdayIds = providersWhoWorkedLastSaturday.map(
+        provider => provider.id,
+      );
+
+      providers = providers.filter(provider =>
+        providersWhoWorkedLastSaturdayIds.includes(provider.id),
+      );
+    }
 
     return providers;
   }

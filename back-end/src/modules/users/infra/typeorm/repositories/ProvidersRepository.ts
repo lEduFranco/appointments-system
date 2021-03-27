@@ -17,7 +17,30 @@ class ProvidersRepository implements IProviderRepository {
     this.ormRepository = getRepository(Provider);
   }
 
-  public async findAllProviders({
+  public async findAllProvidersNotInactiveWhoWorkedLastSaturday(
+    date: string,
+  ): Promise<Provider[]> {
+    const providers: Provider[] = await this.ormRepository
+      .createQueryBuilder('provider')
+      .andWhere(qb => {
+        const subQuery = qb
+          .subQuery()
+          .select('1')
+          .from(Appointment, 'appointment')
+          .andWhere('appointment.provider_id = provider.id')
+          .andWhere('appointment.date = :date')
+          .getQuery();
+        return `NOT EXISTS (${subQuery})`;
+      })
+      .andWhere('status != :status')
+      .setParameter('status', 'inactive')
+      .setParameter('date', date)
+      .getMany();
+
+    return providers;
+  }
+
+  public async findAllProvidersNotInactive({
     period,
     dates,
   }: IFindAllProvidersDTO): Promise<Provider[]> {
