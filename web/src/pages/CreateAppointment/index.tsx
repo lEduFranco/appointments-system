@@ -129,21 +129,7 @@ const CreateAppointments: React.FC = () => {
             description: 'Seu agendamento foi cadastrado com sucesso!',
           });
         });
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationErrors(err);
-
-        // formRef.current?.setErrors(errors);
-
-        addToast({
-          type: 'error',
-          title: 'Erro nos Dados!',
-          description:
-            'Ocorreu um erro ao fazer cadastro do agendamento, tente novamente!',
-        });
-
-        return;
-      }
+    } catch {
       addToast({
         type: 'error',
         title: 'Erro no cadastro!',

@@ -1,4 +1,10 @@
-import { format, addYears, eachDayOfInterval, subDays, da } from 'date-fns';
+import {
+  format,
+  addYears,
+  eachDayOfInterval,
+  subDays,
+  isSaturday,
+} from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 
 import IProviderRepository from '@modules/users/repositories/IProviderRepository';
@@ -35,9 +41,14 @@ class ListProvidersService {
     const parsedMonth = month - 1;
     const date = new Date(year, parsedMonth, day);
 
+    const dateSevenDaysAgo = subDays(date, 7);
+    const saturday = isSaturday(dateSevenDaysAgo);
+
     let dates = [];
-    const lastSaturday = subDays(date, 7);
-    dates.push(lastSaturday);
+
+    if (saturday) {
+      dates.push(dateSevenDaysAgo);
+    }
 
     if (
       frequency === 'first_contact' ||

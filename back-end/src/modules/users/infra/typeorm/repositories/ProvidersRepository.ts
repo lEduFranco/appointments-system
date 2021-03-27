@@ -20,7 +20,6 @@ class ProvidersRepository implements IProviderRepository {
   public async findAllProviders({
     period,
     dates,
-    lastSaturday,
   }: IFindAllProvidersDTO): Promise<Provider[]> {
     let periods: Array<IFindAllProvidersDTO['period']> = [
       'integral',
@@ -45,6 +44,8 @@ class ProvidersRepository implements IProviderRepository {
           .getQuery();
         return `NOT EXISTS (${subQuery})`;
       })
+      .andWhere('status != :status')
+      .setParameter('status', 'inactive')
       .setParameter('periods', periods)
       .setParameter('dates', dates)
       .leftJoinAndSelect('provider.user', 'user')
