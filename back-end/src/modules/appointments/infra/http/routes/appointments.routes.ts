@@ -52,7 +52,7 @@ appointmentsRouter.get(
 
 appointmentsRouter.get(
   '/reports-providers',
-  checkRole(['admin', 'secretary']),
+  checkRole(['admin', 'secretary', 'rh']),
   reportsAppointmentsProviderController.index,
 );
 

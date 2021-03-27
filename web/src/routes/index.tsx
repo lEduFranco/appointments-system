@@ -62,7 +62,7 @@ const Routes: React.FC = () => (
     <PrivateRoute
       path="/reports"
       component={Reports}
-      roles={['admin', 'secretary']}
+      roles={['admin', 'secretary', 'rh']}
     />
   </Switch>
 );

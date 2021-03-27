@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiList, FiUser } from 'react-icons/fi';
+import { FiFileText, FiList, FiUser } from 'react-icons/fi';
 
 const RhHeaderRoutes: React.FC = () => {
   return (
@@ -12,6 +12,10 @@ const RhHeaderRoutes: React.FC = () => {
       <Link to="/list-providers">
         <FiList />
         Lista de Diaristas
+      </Link>
+      <Link to="/reports">
+        <FiFileText />
+        Relatórios
       </Link>
     </>
   );
