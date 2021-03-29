@@ -12,14 +12,9 @@ import {
   HeaderTitle,
   UserName,
   Logoff,
-  ProfileButton,
-  UserAvatar,
   ProvidersList,
   ProvidersListTitle,
-  ClientButton,
-  ClientButtonText,
   ProviderContainer,
-  ProviderAvatar,
   ProviderInfo,
   ProviderName,
   ProviderMeta,
@@ -33,7 +28,6 @@ export interface Provider {
   id: string;
   name: string;
   // eslint-disable-next-line camelcase
-  avatar_url: string;
 }
 
 const Dashboard: React.FC = () => {
@@ -48,10 +42,6 @@ const Dashboard: React.FC = () => {
       setProviders(response.data);
     });
   }, []);
-
-  const navigateToProfile = useCallback(() => {
-    navigate('Profile');
-  }, [navigate]);
 
   const navigateToCreateAppointment = useCallback(
     (providerId: string) => {
@@ -70,10 +60,6 @@ const Dashboard: React.FC = () => {
         <Logoff>
           <Icon onPress={signOut} name="power" size={25} color="#fff" />
         </Logoff>
-
-        <ProfileButton onPress={navigateToProfile}>
-          <UserAvatar source={{ uri: user.avatar_url }} />
-        </ProfileButton>
       </Header>
 
       <ProvidersList
@@ -84,8 +70,6 @@ const Dashboard: React.FC = () => {
           <ProviderContainer
             onPress={() => navigateToCreateAppointment(provider.id)}
           >
-            <ProviderAvatar source={{ uri: provider.avatar_url }} />
-
             <ProviderInfo>
               <ProviderName>{provider.name}</ProviderName>
 
@@ -114,11 +98,6 @@ const Dashboard: React.FC = () => {
           </ProviderContainer>
         )}
       />
-
-      <ClientButton onPress={() => navigation.navigate('ListClient')}>
-        <Icon name="user" size={20} color="#b28d9f" />
-        <ClientButtonText>Clientes</ClientButtonText>
-      </ClientButton>
     </Container>
   );
 };

@@ -3,6 +3,7 @@ import ICreateAppointmentDTO from '../dtos/ICreateAppointmentDTO';
 
 import IFindAllAppointmentsFromProvidersByDateDTO from '../dtos/IFindAllAppointmentsFromProvidersByDateDTO';
 import IDeleteAllFutureAppointmentsDTO from '../dtos/IDeleteAllFutureAppointmentsDTO';
+import IUpdateAppointmentDTO from '../dtos/IUpdateAppointmentDTO';
 
 export interface IAppointmentsProvider {
   provider: {
@@ -54,4 +55,8 @@ export default interface IAppointmentsRepository {
   deleteAllFutureAppointments(
     data: IDeleteAllFutureAppointmentsDTO,
   ): Promise<void>;
+
+  updateAppointment(
+    data: IUpdateAppointmentDTO,
+  ): Promise<Appointment | undefined>;
 }

@@ -7,8 +7,6 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
-import { useNavigation } from '@react-navigation/native';
 import * as Yup from 'yup';
 
 import { Form } from '@unform/mobile';

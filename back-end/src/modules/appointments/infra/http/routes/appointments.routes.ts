@@ -74,4 +74,20 @@ appointmentsRouter.delete(
   deleteAllFutureAppointmentsController.delete,
 );
 
+appointmentsRouter.put(
+  '/update-appointment',
+  checkRole(['admin', 'secretary']),
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      appointment: {
+        id: Joi.string(),
+        observation: Joi.string().allow(null, ''),
+        status: Joi.string(),
+      },
+    },
+  }),
+  appointmentsController.update,
+);
+
 export default appointmentsRouter;

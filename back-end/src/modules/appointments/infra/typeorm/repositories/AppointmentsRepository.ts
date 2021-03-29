@@ -10,6 +10,7 @@ import IAppointmentsRepository, {
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
 import IFindAllAppointmentsFromProvidersByDateDTO from '@modules/appointments/dtos/IFindAllAppointmentsFromProvidersByDateDTO';
 import IDeleteAllFutureAppointmentsDTO from '@modules/appointments/dtos/IDeleteAllFutureAppointmentsDTO';
+import IUpdateAppointmentDTO from '@modules/appointments/dtos/IUpdateAppointmentDTO';
 
 import Appointment from '../entities/Appointment';
 
@@ -286,6 +287,25 @@ class AppointmentsRepository implements IAppointmentsRepository {
         date,
       })
       .execute();
+  }
+
+  public async updateAppointment({
+    id,
+    observation,
+    status,
+  }: IUpdateAppointmentDTO): Promise<Appointment | undefined> {
+    const appointment = await this.ormRepository.findOne(id);
+
+    if (!appointment) {
+      throw new Error('appointment not found');
+    }
+
+    return this.ormRepository.save({
+      ...appointment,
+      id,
+      observation,
+      status,
+    });
   }
 }
 

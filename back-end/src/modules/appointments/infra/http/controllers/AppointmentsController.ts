@@ -6,6 +6,7 @@ import { classToClass } from 'class-transformer';
 import ListAppointmentsService from '@modules/appointments/services/ListAppointmentsService';
 import CreateAppointmentService from '@modules/appointments/services/CreateAppointmentService';
 import DeleteAppointmentService from '@modules/appointments/services/DeleteAppointmentService';
+import EditAppointmentService from '@modules/appointments/services/EditAppointmentService';
 
 export default class AppointmentsController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -80,5 +81,15 @@ export default class AppointmentsController {
     });
 
     return response.json(appointment);
+  }
+
+  public async update(request: Request, response: Response): Promise<Response> {
+    const { appointment } = request.body;
+
+    const editAppointment = container.resolve(EditAppointmentService);
+
+    const AppointmentResponse = await editAppointment.execute(appointment);
+
+    return response.json(classToClass(AppointmentResponse));
   }
 }
