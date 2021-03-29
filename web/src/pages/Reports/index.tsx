@@ -9,7 +9,6 @@ import ptBR from 'date-fns/locale/pt-BR';
 import api from '../../services/api';
 
 import { useToast } from '../../hooks/toast';
-import getValidationErrors from '../../utils/getValidationErrors';
 
 import SelectReport from '../../components/SelectReport';
 import InputDatePickerReport from '../../components/InputDatePickerReport';
@@ -199,21 +198,7 @@ const Reports: React.FC = () => {
             });
           });
       }
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationErrors(err);
-
-        // formRef.current?.setErrors(errors);
-
-        addToast({
-          type: 'error',
-          title: 'Erro nos Dados!',
-          description:
-            'Ocorreu um erro ao buscar relatórios, verifique os campos!',
-        });
-
-        return;
-      }
+    } catch {
       addToast({
         type: 'error',
         title: 'Erro no cadastro!',

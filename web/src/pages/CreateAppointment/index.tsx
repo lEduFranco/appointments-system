@@ -10,8 +10,6 @@ import { ptBR } from 'date-fns/locale';
 import { useToast } from '../../hooks/toast';
 import 'react-day-picker/lib/style.css';
 
-import getValidationErrors from '../../utils/getValidationErrors';
-
 import Button from '../../components/Button';
 import Select from '../../components/Select';
 

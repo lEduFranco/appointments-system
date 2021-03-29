@@ -63,7 +63,7 @@ interface Address {
 interface Data {
   id: string;
   begin_date: Date;
-  final_date: Date;
+  final_date: Date | null;
   demission_reason: string;
   uniform_size: string;
   voter_registration: string;
@@ -119,17 +119,20 @@ const ListProviders: React.FC = (Data) => {
   function toggleModal(provider?: Data): void {
     setIsOpen(!isOpen);
     if (provider) {
-      const { user, begin_date, ...restProvider } = provider;
+      const { user, begin_date, final_date, ...restProvider } = provider;
       const { user_profile, ...addresses } = user;
       const { birth_date, ...restUserProfile } = user_profile;
       const birthDateString = birth_date.toString();
       const beginDateString = begin_date.toString();
-      // const finalDateString = final_date.toString();
+      const finalDateString = final_date ? final_date.toString() : null;
+      const parsedFinalDateString = finalDateString
+        ? parseISO(finalDateString)
+        : null;
 
       const mapProvider = {
         ...restProvider,
         begin_date: parseISO(beginDateString),
-        // final_date: parseISO(finalDateString),
+        final_date: parsedFinalDateString,
         user: {
           user_profile: {
             ...restUserProfile,

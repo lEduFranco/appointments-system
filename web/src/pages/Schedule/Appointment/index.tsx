@@ -6,8 +6,6 @@ import { useToast } from '../../../hooks/toast';
 
 import api from '../../../services/api';
 
-import TextArea from '../../../components/TextArea';
-
 import {
   Container,
   AppointmentAvailability,

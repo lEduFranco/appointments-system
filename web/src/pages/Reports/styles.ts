@@ -1,4 +1,4 @@
-import { lighten, shade } from 'polished';
+import { shade } from 'polished';
 import styled, { keyframes } from 'styled-components';
 
 const appearFromStart = keyframes`
