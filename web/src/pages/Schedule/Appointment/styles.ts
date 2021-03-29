@@ -76,8 +76,8 @@ const appearFromStart = keyframes`
 `;
 
 export const StyledModal = Modal.styled`
-  width: 30rem;
-  height: 30rem;
+  width: 50rem;
+  height: 40rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,8 +118,8 @@ export const StyledModal = Modal.styled`
   }
 
   .modal {
-    width: 28rem;
-    height: 28rem;
+    width: 48rem;
+    height: 38rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -130,8 +130,36 @@ export const StyledModal = Modal.styled`
     text-transform: capitalize;
   }
 
+  .address {
+    margin-bottom: 1%;
+
+   svg {
+      color: #3172b7;
+      font-size: 20px;
+      margin-right: 0.5%;
+      margin-left: 1%;
+    }
+  }
+
+  .contact {
+    margin-top: 4%;
+  }
+
+  .select-status {
+    color: #3172b7;
+    margin-top: -3%;
+    margin-bottom: 1%;
+
+    h2 {
+      margin-bottom: 0.5%;
+    }
+  }
+
   .textarea-block {
     position: relative;
+    color: #3172b7;
+    font-size: 18px;
+    font-weight: 700;
   }
 
   .textarea-block + .textarea-block {
@@ -143,7 +171,7 @@ export const StyledModal = Modal.styled`
     width: 100%;
     height: 8rem;
     min-height: 8rem;
-    max-height: 16rem;
+    max-height: 8rem;
     margin-top: 0.8rem;
     border-radius: 15px;
     background: #F8F8FC;
@@ -164,6 +192,10 @@ export const StyledModal = Modal.styled`
     left: 1.6rem;
     right: 1.6rem;
     bottom: 7px;
+  }
+
+  .id {
+    visibility: hidden;
   }
 
   .container-buttons {

@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
+import * as Yup from 'yup';
 import has from 'lodash/has';
 import { FiAlertTriangle, FiMoreHorizontal, FiXCircle } from 'react-icons/fi';
 
+import { FormHandles } from '@unform/core';
+import { Form } from '@unform/web';
+
+import { useHistory } from 'react-router';
+import { RiRoadMapLine, RiSubwayLine } from 'react-icons/ri';
 import { useToast } from '../../../hooks/toast';
+
+import TextArea from '../../../components/TextArea';
+import SelectEdit from '../../../components/SelectEdit';
 
 import api from '../../../services/api';
 
@@ -14,6 +23,8 @@ import {
   StyleModalDelete,
   StyleModalConfirmedDelete,
 } from './styles';
+import getValidationErrors from '../../../utils/getValidationErrors';
+import InputEdit from '../../../components/InputEdit';
 
 interface AppointmentsProvider {
   provider: string;
@@ -34,6 +45,8 @@ interface AppointmentProps {
   address: string;
   complement: string;
   number: string;
+  reference_points: string;
+  nearest_subway_station: string;
   observation: string;
   provider: {
     user: {
@@ -57,6 +70,12 @@ interface AppointmentProps {
   };
 }
 
+interface Data {
+  id: string;
+  observation: string;
+  status: string;
+}
+
 interface Props {
   appointment?: AppointmentProps;
   isUnavailability?: boolean | undefined;
@@ -69,10 +88,70 @@ const Appointment: React.FC<Props> = ({
   setAppointments,
 }) => {
   const { addToast } = useToast();
+  const history = useHistory();
+  const formRef = useRef<FormHandles>(null);
+
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [isOpenConfirmedDelete, setIsOpenConfirmedDelete] = useState(false);
   const [typeDeleteAppointment, setTypeDeleteAppointment] = useState();
+  const [editAppointment, setEditAppointment] = useState<Data>();
+
+  const handleSubmit = useCallback(
+    async (data: Data) => {
+      try {
+        formRef.current?.setErrors({});
+
+        const schema = Yup.object().shape({
+          observation: Yup.string(),
+          status: Yup.string().required(),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        const dataAppointments = {
+          appointment: {
+            id: data.id,
+            observation: data.observation,
+            status: data.status,
+          },
+        };
+
+        await api.put('/appointments/update-appointment', dataAppointments);
+
+        history.push('/dashboard');
+
+        addToast({
+          type: 'success',
+          title: 'Atualização realizada!',
+          description: 'Agendamento atualizado com sucesso!',
+        });
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+
+          formRef.current?.setErrors(errors);
+
+          addToast({
+            type: 'error',
+            title: 'Erro na Atualização!',
+            description: 'Ocorreu um erro ao fazer atualizão, cheque os dados!',
+          });
+
+          return;
+        }
+
+        addToast({
+          type: 'error',
+          title: 'Erro na Atualização!',
+          description: 'Ocorreu um erro ao fazer atualizão, cheque os dados!',
+        });
+      }
+    },
+    [addToast, history],
+  );
 
   function getFrequencyName(frequency?: string): string {
     if (frequency === 'weekly') {
@@ -206,6 +285,29 @@ const Appointment: React.FC<Props> = ({
     }
   }
 
+  const selectOptions = [
+    {
+      value: 'created',
+      label: 'Criado',
+    },
+    {
+      value: 'confirmed',
+      label: 'Confirmado',
+    },
+    {
+      value: 'appeared',
+      label: 'Compareceu',
+    },
+    {
+      value: 'not_appeared',
+      label: 'Não compareceu',
+    },
+    {
+      value: 'suspended',
+      label: 'Suspenso',
+    },
+  ];
+
   return (
     <>
       <Container>
@@ -243,6 +345,11 @@ const Appointment: React.FC<Props> = ({
                 {appointment?.address} {appointment?.complement}{' '}
                 {appointment?.number}
               </p>
+              <p className="address">
+                <RiRoadMapLine /> {appointment?.reference_points}{' '}
+                <RiSubwayLine />
+                {appointment?.nearest_subway_station}
+              </p>
               <p className="contact">
                 {appointment?.client.user.user_profile.cel}{' '}
                 {appointment?.client.user.user_profile.tel}
@@ -250,118 +357,137 @@ const Appointment: React.FC<Props> = ({
               <p>{getFrequencyName(appointment?.frequency)}</p>
             </div>
 
-            <div className="textarea-block">
-              {/* <TextArea label="Observações" name="observation" /> */}
-              <textarea />
-            </div>
-            <div className="container-buttons">
-              <button type="button" onClick={toggleModal} className="save">
-                Salvar
-              </button>
-              <StyleModalDelete
-                isOpen={isOpenDelete}
-                onBackgroundClick={toggleModalDelete}
-                onEscapeKeydown={toggleModalDelete}
-              >
-                <div className="div-h1">
-                  <h1>
-                    <FiAlertTriangle /> Atenção! <FiAlertTriangle />
-                  </h1>
-                </div>
-                <br />
-                <div
-                  className="div-delete"
-                  onChange={(event) => {
-                    setTypeDeleteAppointment(event.target.value);
-                  }}
+            <Form
+              initialData={editAppointment}
+              onSubmit={handleSubmit}
+              ref={formRef}
+            >
+              <div className="select-status">
+                <h2>Status</h2>
+                <SelectEdit name="status">
+                  {selectOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </SelectEdit>
+              </div>
+
+              <div className="textarea-block">
+                <TextArea label="Observações" name="observation" />
+              </div>
+              <div className="id">
+                <InputEdit name="id" />
+              </div>
+              <div className="container-buttons">
+                <button type="submit" className="save">
+                  Salvar
+                </button>
+                <StyleModalDelete
+                  isOpen={isOpenDelete}
+                  onBackgroundClick={toggleModalDelete}
+                  onEscapeKeydown={toggleModalDelete}
                 >
+                  <div className="div-h1">
+                    <h1>
+                      <FiAlertTriangle /> Atenção! <FiAlertTriangle />
+                    </h1>
+                  </div>
                   <br />
-                  <input
-                    type="radio"
-                    name="radio-delete"
-                    value="onlyAppointment"
-                  />{' '}
-                  Deletar apenas <b>este</b> agendamento.
-                  <br />
-                  <br />
-                  <div className="input-future">
+                  <div
+                    className="div-delete"
+                    onChange={(event) => {
+                      setTypeDeleteAppointment(event.target.value);
+                    }}
+                  >
+                    <br />
                     <input
                       type="radio"
                       name="radio-delete"
-                      value="futureAppointments"
-                    />
-                    <h5>
-                      Deletar <b>este</b> agendamento e os <b>futuros</b>.
-                    </h5>
+                      value="onlyAppointment"
+                    />{' '}
+                    Deletar apenas <b>este</b> agendamento.
+                    <br />
+                    <br />
+                    <div className="input-future">
+                      <input
+                        type="radio"
+                        name="radio-delete"
+                        value="futureAppointments"
+                      />
+                      <h5>
+                        Deletar <b>este</b> agendamento e os <b>futuros</b>.
+                      </h5>
+                    </div>
                   </div>
-                </div>
 
-                <div className="container-buttons">
+                  <div className="container-buttons">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (typeDeleteAppointment) {
+                          toggleModalConfirmedDelete();
+                        }
+                      }}
+                      className="confirmed"
+                    >
+                      Confirmar
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setTypeDeleteAppointment('');
+                        toggleModalDelete();
+                      }}
+                      className="close"
+                    >
+                      Fechar
+                    </button>
+                    <StyleModalConfirmedDelete
+                      isOpen={isOpenConfirmedDelete}
+                      onBackgroundClick={toggleModalConfirmedDelete}
+                      onEscapeKeydown={toggleModalConfirmedDelete}
+                    >
+                      <div className="text-confirmed">
+                        <h1>
+                          <FiAlertTriangle /> Atenção! <FiAlertTriangle />
+                        </h1>
+                        <br />
+                        <br />
+                        <h2>
+                          Tem certeza que deseja deletar o(s) agendamento(s)?
+                        </h2>
+                      </div>
+                      <div className="container-buttons">
+                        <button
+                          type="button"
+                          onClick={checkDelete}
+                          className="confirmed"
+                        >
+                          Confirmar
+                        </button>
+                        <button
+                          type="button"
+                          onClick={toggleModalConfirmedDelete}
+                          className="close"
+                        >
+                          Fechar
+                        </button>
+                      </div>
+                    </StyleModalConfirmedDelete>
+                  </div>
+                </StyleModalDelete>
+                <div>
                   <button
                     type="button"
-                    onClick={() => {
-                      if (typeDeleteAppointment) {
-                        toggleModalConfirmedDelete();
-                      }
-                    }}
-                    className="confirmed"
+                    onClick={toggleModalDelete}
+                    className="delete"
                   >
-                    Confirmar
+                    Deletar
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setTypeDeleteAppointment('');
-                      toggleModalDelete();
-                    }}
-                    className="close"
-                  >
-                    Fechar
-                  </button>
-                  <StyleModalConfirmedDelete
-                    isOpen={isOpenConfirmedDelete}
-                    onBackgroundClick={toggleModalConfirmedDelete}
-                    onEscapeKeydown={toggleModalConfirmedDelete}
-                  >
-                    <div className="text-confirmed">
-                      <h1>
-                        <FiAlertTriangle /> Atenção! <FiAlertTriangle />
-                      </h1>
-                      <br />
-                      <br />
-                      <h2>
-                        Tem certeza que deseja deletar o(s) agendamento(s)?
-                      </h2>
-                    </div>
-                    <div className="container-buttons">
-                      <button
-                        type="button"
-                        onClick={checkDelete}
-                        className="confirmed"
-                      >
-                        Confirmar
-                      </button>
-                      <button
-                        type="button"
-                        onClick={toggleModalConfirmedDelete}
-                        className="close"
-                      >
-                        Fechar
-                      </button>
-                    </div>
-                  </StyleModalConfirmedDelete>
                 </div>
-              </StyleModalDelete>
-              <div>
-                <button
-                  type="button"
-                  onClick={toggleModalDelete}
-                  className="delete"
-                >
-                  Deletar
-                </button>
               </div>
-            </div>
+            </Form>
           </div>
         </StyledModal>
       </Container>

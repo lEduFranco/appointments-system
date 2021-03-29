@@ -266,8 +266,8 @@ export const StyledModal = Modal.styled`
   .textarea-block textarea {
     width: 100%;
     height: 8rem;
-    min-height: 8rem;
-    max-height: 8rem;
+    min-height: 9rem;
+    max-height: 9rem;
     margin-top: 0.8rem;
     border-radius: 15px;
     background: #F8F8FC;
