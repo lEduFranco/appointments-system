@@ -48,6 +48,7 @@ interface AppointmentProps {
   reference_points: string;
   nearest_subway_station: string;
   observation: string;
+  status: string;
   provider: {
     user: {
       user_profile: {
@@ -149,7 +150,7 @@ const Appointment: React.FC<Props> = ({
         });
       }
     },
-    [addToast, history],
+    [addToast, history, appointment],
   );
 
   function getFrequencyName(frequency?: string): string {
@@ -356,7 +357,15 @@ const Appointment: React.FC<Props> = ({
               <p>{getFrequencyName(appointment?.frequency)}</p>
             </div>
 
-            <Form onSubmit={handleSubmit} ref={formRef}>
+            <Form
+              initialData={{
+                id: appointment?.id,
+                observation: appointment?.observation,
+                status: appointment?.status,
+              }}
+              onSubmit={handleSubmit}
+              ref={formRef}
+            >
               <div className="select-status">
                 <h2>Status</h2>
                 <SelectEdit name="status">
