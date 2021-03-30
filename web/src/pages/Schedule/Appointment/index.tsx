@@ -95,7 +95,6 @@ const Appointment: React.FC<Props> = ({
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [isOpenConfirmedDelete, setIsOpenConfirmedDelete] = useState(false);
   const [typeDeleteAppointment, setTypeDeleteAppointment] = useState();
-  const [editAppointment, setEditAppointment] = useState<Data>();
 
   const handleSubmit = useCallback(
     async (data: Data) => {
@@ -113,7 +112,7 @@ const Appointment: React.FC<Props> = ({
 
         const dataAppointments = {
           appointment: {
-            id: data.id,
+            id: appointment?.id,
             observation: data.observation,
             status: data.status,
           },
@@ -357,11 +356,7 @@ const Appointment: React.FC<Props> = ({
               <p>{getFrequencyName(appointment?.frequency)}</p>
             </div>
 
-            <Form
-              initialData={editAppointment}
-              onSubmit={handleSubmit}
-              ref={formRef}
-            >
+            <Form onSubmit={handleSubmit} ref={formRef}>
               <div className="select-status">
                 <h2>Status</h2>
                 <SelectEdit name="status">
@@ -376,9 +371,11 @@ const Appointment: React.FC<Props> = ({
               <div className="textarea-block">
                 <TextArea label="Observações" name="observation" />
               </div>
+
               <div className="id">
                 <InputEdit name="id" />
               </div>
+
               <div className="container-buttons">
                 <button type="submit" className="save">
                   Salvar
