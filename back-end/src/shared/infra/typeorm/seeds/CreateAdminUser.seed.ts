@@ -13,7 +13,7 @@ export default class CreateAdminUsers implements Seeder {
       .into(User)
       .values([
         {
-          email: 'gerencia@tomaisvip.com',
+          email: 'admin@gmail.com',
           password,
           role: 'admin',
         },
